@@ -9,6 +9,25 @@ import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 import './index.css'
 import 'prismjs/themes/prism.css'
 
+const links = [
+  {
+    href: '/',
+    name: 'Home',
+  },
+  {
+    href: '/blog',
+    name: 'Docs',
+  },
+  {
+    href: '/tutorial',
+    name: 'Tutorial',
+  },
+  {
+    href: '/about',
+    name: 'About',
+  },
+]
+
 const Layout = ({ children, data }) => (
   <SkeBasis>
     <Helmet
@@ -25,6 +44,7 @@ const Layout = ({ children, data }) => (
       ]}
     />
     <Header
+      links={links}
       title={data.site.siteMetadata.title}
       style={{ marginBottom: '35px' }}
     />
