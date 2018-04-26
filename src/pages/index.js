@@ -88,7 +88,7 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
         style={{ margin: '30px 0' }}
       >
         In order to avoid 'wall-of-yaml' we use a declarative, composable
-        configuration format with sane defaults.
+        configuration format with sane defaults that is transformed into Kubernets objects
       </Quote>
 
       <Grid className="info-grid">
