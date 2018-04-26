@@ -81,4 +81,8 @@ a:active {
     text-decoration: none;
     background-color: #cde1f9;
   }
+
+  .main-header-menu-active {
+    background-color: #cde1f9;
+  }
 }
