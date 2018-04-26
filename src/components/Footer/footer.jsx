@@ -21,7 +21,11 @@ const FooterLinks = () => (
     <div>
       <h3>Follow</h3>
       <div>
-        <FooterLink to="#" name="GitHub" image={GitHubLogo} />
+        <FooterLink
+          to="https://github.com/Skatteetaten"
+          name="GitHub"
+          image={GitHubLogo}
+        />
       </div>
     </div>
   </div>
