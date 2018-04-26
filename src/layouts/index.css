@@ -53,12 +53,21 @@ tr {
   line-height: 32px;
 }
 
+tbody tr:nth-child(odd) {
+  background-color: #f9ede266;
+}
+
+thead tr {
+  text-transform: uppercase;
+  border-bottom: 2px solid #bbbbbb;
+}
+
 th,
 td {
   font-size: 17px;
   text-align: left;
   position: relative;
-  padding: 10px 0;
+  padding: 10px;
 }
 
 td a {

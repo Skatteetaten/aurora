@@ -6,8 +6,8 @@ import Header from '../components/Header'
 import SkeBasis from 'aurora-frontend-react-komponenter/beholdere/SkeBasis/SkeBasis'
 import Bunn from 'aurora-frontend-react-komponenter/beholdere/Bunn/Bunn'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
-import './index.css'
 import 'prismjs/themes/prism.css'
+import './index.css'
 
 const links = [
   {
