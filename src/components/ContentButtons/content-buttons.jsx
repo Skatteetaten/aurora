@@ -1,43 +1,31 @@
 import React from 'react'
 import styles from './content-buttons.module.css'
-import Ikon from 'aurora-frontend-react-komponenter/innhold/Ikon/Ikon'
 import Link from 'gatsby-link'
 
-const Content = () => (
+const Content = ({ icon, title, description }) => (
   <div>
-    <Ikon iconName="Person" style={{ fontSize: '48px' }} />
-    <h2>Aurora OpenShift</h2>
-    <p>Something important stuff</p>
+    <i className="material-icons" style={{ fontSize: '48px' }}>
+      {icon}
+    </i>
+    <h2>{title}</h2>
+    <p>{description}</p>
   </div>
 )
 
-const ContentButtons = () => (
+const ContentButtons = ({ contents }) => (
   <div>
     <h1>Documentation</h1>
     <p>some random text</p>
     <br />
     <nav className={styles['buttons-nav']}>
       <ul>
-        <li>
-          <Link to="/blog/openshift/">
-            <Content />
-          </Link>
-        </li>
-        <li>
-          <Link to="/blog/test/">
-            <Content />
-          </Link>
-        </li>
-        <li>
-          <Link to="/blog/openshift">
-            <Content />
-          </Link>
-        </li>
-        <li>
-          <Link to="/blog/openshift">
-            <Content />
-          </Link>
-        </li>
+        {contents.map(({ to, ...rest }, index) => (
+          <li key={`${to}-${index}`}>
+            <Link to={to}>
+              <Content {...rest} />
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   </div>

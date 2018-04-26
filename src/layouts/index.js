@@ -38,6 +38,10 @@ const Layout = ({ children, data }) => (
       ]}
       link={[
         {
+          href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+          rel: 'stylesheet',
+        },
+        {
           href: 'https://fonts.googleapis.com/css?family=Gugi',
           rel: 'stylesheet',
         },
@@ -49,7 +53,7 @@ const Layout = ({ children, data }) => (
       style={{ marginBottom: '35px' }}
     />
     {children()}
-    <Bunn showLogo="true">
+    <Bunn showLogo>
       <Grid.Col sm={12} lg={9} xl={9}>
         Innhold i footer
       </Grid.Col>

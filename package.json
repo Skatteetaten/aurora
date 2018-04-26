@@ -13,6 +13,7 @@
     "gatsby-remark-prismjs": "^1.2.24",
     "gatsby-source-filesystem": "^1.5.29",
     "gatsby-transformer-remark": "^1.7.40",
+    "github-slugger": "^1.2.0",
     "lodash": "^4.17.5",
     "office-ui-fabric-react": "^5.82.3",
     "prismjs": "^1.14.0",

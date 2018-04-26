@@ -19,7 +19,7 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query BlogQuery {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+    allMarkdownRemark {
       edges {
         node {
           id
@@ -28,8 +28,6 @@ export const pageQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            path
             title
           }
         }

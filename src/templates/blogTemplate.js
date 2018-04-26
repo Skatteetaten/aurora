@@ -1,5 +1,6 @@
 import React from 'react'
 import Breadcrumb from '../components/Breadcrumb'
+import TableOfContents from '../components/TableOfContents'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 import Link from 'gatsby-link'
 
@@ -22,15 +23,15 @@ const menuGrid = {
 
 export default function Template({ data }) {
   const { markdownRemark } = data
-  const { frontmatter, fields, html, tableOfContents } = markdownRemark
+  const { frontmatter, fields, html, headings } = markdownRemark
   return (
     <Grid className="ske-main-layout">
       <Grid.Row>
         <Grid.Col {...menuGrid}>
-          {tableOfContents && (
+          {headings && (
             <div>
               <h3>Table of contents</h3>
-              <div dangerouslySetInnerHTML={{ __html: tableOfContents }} />
+              <TableOfContents headings={headings} slug={fields.slug} />
             </div>
           )}
         </Grid.Col>
@@ -66,13 +67,14 @@ export const pageQuery = graphql`
   query BlogPostByPath($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
-      tableOfContents
+      headings {
+        value
+        depth
+      }
       fields {
         slug
       }
       frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        path
         title
       }
     }

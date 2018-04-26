@@ -5,8 +5,8 @@ import Link from 'gatsby-link'
 const HeaderMenu = ({ links = [] }) => (
   <nav className={styles['main-header-nav']}>
     <ul className={styles['main-header-menu']}>
-      {links.map(link => (
-        <li id={link.name}>
+      {links.map((link, index) => (
+        <li key={`${link.href}-${index}`}>
           <Link
             exact={link.href === '/'}
             to={link.href}

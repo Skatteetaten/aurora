@@ -24,32 +24,22 @@ const singleColGrid = {
 }
 
 const DocsPage = ({ data: { allMarkdownRemark: { edges } } }) => {
-  const FrontendContent = ({ path }) => {
-    const content = edges.find(edge => {
-      return edge.node.fields.slug === path
-    })
-    return (
-      content && <div dangerouslySetInnerHTML={{ __html: content.node.html }} />
-    )
-  }
+  const contents = edges
+    .filter(({ node }) => node.fields && node.fields.slug.search('/blog/') >= 0)
+    .map(({ node }) => ({
+      to: node.fields.slug,
+      icon: node.frontmatter.icon,
+      title: node.frontmatter.title,
+      description: node.frontmatter.description || '',
+    }))
 
-  const WhatAndWhyRow = () => (
-    <Grid.Row>
-      <Grid.Col {...doubleColGrid}>
-        <FrontendContent path="/frontpage/faster-development/" />
-      </Grid.Col>
-      <Grid.Col {...doubleColGrid}>
-        <FrontendContent path="/frontpage/why/" />
-      </Grid.Col>
-    </Grid.Row>
-  )
-
+  console.log(contents)
   return (
     <div>
       <Grid>
         <Grid.Row>
           <Grid.Col {...singleColGrid}>
-            <ContentButtons />
+            <ContentButtons contents={contents} />
           </Grid.Col>
         </Grid.Row>
       </Grid>
@@ -61,12 +51,16 @@ export default DocsPage
 
 export const pageQuery = graphql`
   query DocsQuery {
-    allMarkdownRemark {
+    allMarkdownRemark(sort: { order: ASC, fields: [frontmatter___title] }) {
       edges {
         node {
-          html
           fields {
             slug
+          }
+          frontmatter {
+            title
+            icon
+            description
           }
         }
       }
