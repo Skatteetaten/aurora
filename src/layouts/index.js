@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import SkeBasis from 'aurora-frontend-react-komponenter/beholdere/SkeBasis/SkeBasis'
-import Bunn from 'aurora-frontend-react-komponenter/beholdere/Bunn/Bunn'
-import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 import 'prismjs/themes/prism.css'
 import './index.css'
 
@@ -53,11 +52,7 @@ const Layout = ({ children, data }) => (
       style={{ marginBottom: '35px' }}
     />
     {children()}
-    <Bunn showLogo>
-      <Grid.Col sm={12} lg={9} xl={9}>
-        Innhold i footer
-      </Grid.Col>
-    </Bunn>
+    <Footer />
   </SkeBasis>
 )
 
