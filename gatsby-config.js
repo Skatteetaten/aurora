@@ -2,6 +2,7 @@ module.exports = {
   siteMetadata: {
     title: 'the Aurora Platform',
   },
+  pathPrefix: "/aurora",
   plugins: [
     'gatsby-plugin-react-helmet',
     {
