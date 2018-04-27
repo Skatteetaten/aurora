@@ -33,17 +33,14 @@ const DocsPage = ({ data: { allMarkdownRemark: { edges } } }) => {
       description: node.frontmatter.description || '',
     }))
 
-  console.log(contents)
   return (
-    <div>
-      <Grid>
-        <Grid.Row>
-          <Grid.Col {...singleColGrid}>
-            <ContentButtons contents={contents} />
-          </Grid.Col>
-        </Grid.Row>
-      </Grid>
-    </div>
+    <Grid>
+      <Grid.Row>
+        <Grid.Col {...singleColGrid}>
+          <ContentButtons contents={contents} />
+        </Grid.Col>
+      </Grid.Row>
+    </Grid>
   )
 }
 

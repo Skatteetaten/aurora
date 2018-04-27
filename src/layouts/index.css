@@ -10,15 +10,6 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Gugi', cursive;
-}
-
 a {
   color: rgba(19, 98, 174, 1);
   text-decoration: none;
@@ -42,6 +33,11 @@ code {
   font-size: 15px;
 }
 
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+  background: #f5f2f0;
+}
+
 table {
   width: 100%;
   margin-top: 20px;
@@ -58,7 +54,7 @@ tr {
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #f9ede266;
+  background: #f9ede266;
 }
 
 thead tr {
