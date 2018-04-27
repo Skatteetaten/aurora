@@ -27,34 +27,51 @@ const links = [
   },
 ]
 
-const Layout = ({ children, data }) => (
-  <SkeBasis>
-    <Helmet
-      title={data.site.siteMetadata.title}
-      meta={[
-        { name: 'description', content: 'Sample' },
-        { name: 'keywords', content: 'sample, something' },
-      ]}
-      link={[
-        {
-          href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
-          rel: 'stylesheet',
-        },
-        {
-          href: 'https://fonts.googleapis.com/css?family=Gugi',
-          rel: 'stylesheet',
-        },
-      ]}
-    />
-    <Header
-      links={links}
-      title={data.site.siteMetadata.title}
-      style={{ marginBottom: '35px' }}
-    />
-    {children()}
-    <Footer />
-  </SkeBasis>
-)
+class Layout extends React.Component {
+  state = {
+    showMobileMenu: false,
+  }
+
+  toggleMobileMenu = () => {
+    this.setState(state => ({
+      showMobileMenu: !state.showMobileMenu,
+    }))
+  }
+
+  render() {
+    const { children, data } = this.props
+    return (
+      <SkeBasis>
+        <Helmet
+          title={data.site.siteMetadata.title}
+          meta={[
+            { name: 'description', content: 'Sample' },
+            { name: 'keywords', content: 'sample, something' },
+          ]}
+          link={[
+            {
+              href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+              rel: 'stylesheet',
+            },
+            {
+              href: 'https://fonts.googleapis.com/css?family=Gugi',
+              rel: 'stylesheet',
+            },
+          ]}
+        />
+        <Header
+          links={links}
+          title={data.site.siteMetadata.title}
+          style={{ marginBottom: '35px' }}
+          onToggleMenu={this.toggleMobileMenu}
+          showMobileMenu={this.state.showMobileMenu}
+        />
+        {children()}
+        <Footer />
+      </SkeBasis>
+    )
+  }
+}
 
 Layout.propTypes = {
   children: PropTypes.func,

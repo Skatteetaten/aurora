@@ -34,6 +34,10 @@ a:focus {
   transition: border-color 0.5s;
 }
 
+button::-moz-focus-inner {
+  border: 0;
+}
+
 code {
   font-size: 15px;
 }

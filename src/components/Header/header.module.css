@@ -17,15 +17,41 @@
   text-transform: uppercase;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1001px) {
   .main-header-title {
     font-size: 3.2rem;
+  }
+}
+
+.main-header button {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.main-header button:hover,
+button:focus,
+button:active {
+  cursor: pointer;
+}
+
+@media (min-width: 1001px) {
+  .main-header button {
+    display: none;
   }
 }
 
 .main-header-nav {
   max-width: 500px;
   margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+  .main-header-nav-hidden {
+    background: green;
+    display: none;
+  }
 }
 
 .main-header-menu {
