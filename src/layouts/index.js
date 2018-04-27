@@ -3,39 +3,75 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import SkeBasis from 'aurora-frontend-react-komponenter/beholdere/SkeBasis/SkeBasis'
-import Bunn from 'aurora-frontend-react-komponenter/beholdere/Bunn/Bunn'
-import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
-import './index.css'
 import 'prismjs/themes/prism.css'
+import './index.css'
 
-const Layout = ({ children, data }) => (
-  <SkeBasis>
-    <Helmet
-      title={data.site.siteMetadata.title}
-      meta={[
-        { name: 'description', content: 'Sample' },
-        { name: 'keywords', content: 'sample, something' },
-      ]}
-      link={[
-        {
-          href: 'https://fonts.googleapis.com/css?family=Gugi',
-          rel: 'stylesheet',
-        },
-      ]}
-    />
-    <Header
-      title={data.site.siteMetadata.title}
-      style={{ marginBottom: '35px' }}
-    />
-    {children()}
-    <Bunn showLogo="true">
-      <Grid.Col sm={12} lg={9} xl={9}>
-        Innhold i footer
-      </Grid.Col>
-    </Bunn>
-  </SkeBasis>
-)
+const links = [
+  {
+    href: '/',
+    name: 'Home',
+  },
+  {
+    href: '/blog',
+    name: 'Docs',
+  },
+  {
+    href: '/tutorial',
+    name: 'Tutorial',
+  },
+  {
+    href: '/about',
+    name: 'About',
+  },
+]
+
+class Layout extends React.Component {
+  state = {
+    showMobileMenu: false,
+  }
+
+  toggleMobileMenu = () => {
+    this.setState(state => ({
+      showMobileMenu: !state.showMobileMenu,
+    }))
+  }
+
+  render() {
+    const { children, data } = this.props
+    return (
+      <SkeBasis>
+        <Helmet
+          title={data.site.siteMetadata.title}
+          meta={[
+            { name: 'description', content: 'Sample' },
+            { name: 'keywords', content: 'sample, something' },
+          ]}
+          link={[
+            {
+              href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+              rel: 'stylesheet',
+            },
+            {
+              href: 'https://fonts.googleapis.com/css?family=Gugi',
+              rel: 'stylesheet',
+            },
+          ]}
+        />
+        <Header
+          links={links}
+          title={data.site.siteMetadata.title}
+          style={{ marginBottom: '35px' }}
+          onToggleMenu={this.toggleMobileMenu}
+          showMobileMenu={this.state.showMobileMenu}
+        />
+        {children()}
+        <Footer />
+      </SkeBasis>
+    )
+  }
+}
 
 Layout.propTypes = {
   children: PropTypes.func,

@@ -1,3 +1,7 @@
+.main-header h1 {
+  font-family: 'Gugi', cursive;
+}
+
 .main-header::after {
   display: block;
   content: '';
@@ -17,8 +21,98 @@
   text-transform: uppercase;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1001px) {
   .main-header-title {
     font-size: 3.2rem;
+  }
+}
+
+.main-header button {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.main-header button:hover,
+button:focus,
+button:active {
+  cursor: pointer;
+}
+
+@media (min-width: 1001px) {
+  .main-header button {
+    display: none;
+  }
+}
+
+.main-header-nav {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+  .main-header-nav-hidden {
+    background: green;
+    display: none;
+  }
+}
+
+.main-header-menu {
+  display: flex;
+  list-style-type: none;
+  font-weight: 700;
+}
+
+.main-header-menu li {
+  flex: 1;
+}
+.main-header-menu-active {
+  padding-bottom: 2px;
+  border-bottom: 4px solid #6f2c3f !important;
+}
+
+.main-header-menu a {
+  color: black;
+  border: 0;
+  border-color: transparent;
+  transition: border-color 0.5s;
+}
+
+.main-header-menu a:hover,
+a:focus,
+a:active {
+  border-bottom: 4px solid #6f2c3f;
+  outline: none;
+  padding-bottom: 2px;
+  transition: border-color 0.5s;
+}
+
+@media (max-width: 1000px) {
+  .main-header-nav {
+    max-width: 100%;
+  }
+  .main-header-menu {
+    flex-direction: column;
+    padding: 0 15px 40px 20px;
+    margin: 0;
+  }
+  .main-header-menu li a {
+    display: block;
+    border-bottom: 2px solid #eee;
+    padding: 0.5rem 0;
+  }
+
+  .main-header-menu a:hover,
+  a:focus,
+  a:active {
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #eee;
+    text-decoration: none;
+    background-color: #cde1f9;
+  }
+
+  .main-header-menu-active {
+    background-color: #cde1f9;
   }
 }

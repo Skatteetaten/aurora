@@ -1,6 +1,7 @@
 ---
-path: "/blog/hendelsesliste"
-title: Hendelsesliste
+icon: "event"
+title: "Hendelsesliste"
+description: "Something"
 ---
 
 # Grensesnittbeskrivelse

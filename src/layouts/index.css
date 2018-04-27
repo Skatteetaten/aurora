@@ -1,21 +1,13 @@
 body {
   margin: 0;
   font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 @media (min-width: 900px) {
   body {
     font-size: 1.0625rem;
   }
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Gugi', cursive;
 }
 
 a {
@@ -33,8 +25,17 @@ a:focus {
   transition: border-color 0.5s;
 }
 
+button::-moz-focus-inner {
+  border: 0;
+}
+
 code {
   font-size: 15px;
+}
+
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+  background: #f5f2f0;
 }
 
 table {
@@ -52,12 +53,21 @@ tr {
   line-height: 32px;
 }
 
+tbody tr:nth-child(odd) {
+  background: #f9ede266;
+}
+
+thead tr {
+  text-transform: uppercase;
+  border-bottom: 2px solid #bbbbbb;
+}
+
 th,
 td {
   font-size: 17px;
   text-align: left;
   position: relative;
-  padding: 10px 0;
+  padding: 10px;
 }
 
 td a {

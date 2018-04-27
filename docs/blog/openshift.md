@@ -1,6 +1,7 @@
 ---
-date: "2018-04-10"
+icon: "cloud"
 title: "The Aurora OpenShift Platform"
+description: "Why? What? How?"
 ---
 
 # Introduction
