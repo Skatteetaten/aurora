@@ -5,7 +5,7 @@ import classnames from 'classnames/bind'
 
 const cx = classnames.bind(styles)
 
-const HeaderMenu = ({ links = [], showMobileMenu }) => (
+const HeaderMenu = ({ menu = [], showMobileMenu }) => (
   <nav
     className={cx({
       'main-header-nav': true,
@@ -13,14 +13,14 @@ const HeaderMenu = ({ links = [], showMobileMenu }) => (
     })}
   >
     <ul className={styles['main-header-menu']}>
-      {links.map((link, index) => (
-        <li key={`${link.href}-${index}`}>
+      {menu.map((item, index) => (
+        <li key={`${item.href}-${index}`}>
           <Link
-            exact={link.href === '/'}
-            to={link.href}
+            exact={item.href === '/'}
+            to={item.href}
             activeClassName={styles['main-header-menu-active']}
           >
-            {link.name}
+            {item.name}
           </Link>
         </li>
       ))}
@@ -28,13 +28,13 @@ const HeaderMenu = ({ links = [], showMobileMenu }) => (
   </nav>
 )
 
-const Header = ({ title, links, onToggleMenu, showMobileMenu, ...rest }) => (
+const Header = ({ title, menu, onToggleMenu, showMobileMenu, ...rest }) => (
   <div {...rest} className={styles['main-header']}>
     <h1 className={styles['main-header-title']}>{title}</h1>
     <button onClick={onToggleMenu}>
       <i className="material-icons">menu</i>
     </button>
-    {links && <HeaderMenu links={links} showMobileMenu={showMobileMenu} />}
+    {menu && <HeaderMenu menu={menu} showMobileMenu={showMobileMenu} />}
   </div>
 )
 
