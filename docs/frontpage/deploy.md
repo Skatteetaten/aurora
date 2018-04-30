@@ -1,5 +1,5 @@
 ## How we deploy
 
-An deploy starts with triggering the AuroraAPI from either of the userfacing clients [AO](/documentation/openshift/#ao), [AuroraKonsole](/documentation/openshift/#aurora-console) or [AuroraPipeline](#). The API will then extract and [merge AuroraConfig](/documentation/aurora-config/) in order to create a AuroraDeploymentSpec.
+A deploy starts in the AuroraAPI, triggered from one of the user facing clients ([AO](/documentation/openshift/#ao) and [AuroraConsole](/documentation/openshift/#aurora-console)), or automatically from the build pipeline. The API extracts and merges relevant parts of the specified AuroraConfig in order to create an AuroraDeploymentSpec for the application being deployed.
 
-[Synchrous integrations](#) are run and the result of both are assembled into Kubernetes objects that are applied to the cluster. Async integrations will that use the [controller pattern](https://kubernetes.io/docs/concepts/api-extension/custom-resources/#custom-controllers) will run and add aditional resources. The application is then rolled out either via importing a new image or triggering a new deploy. The [deploy result](#) is save for later inspection.
+From the AuroraDeploymentSpec we provision resources in our existing infrastructure and generate OpenShift objects that are applied to the cluster. The application is then rolled out either via importing a new image or triggering a new deploy. The deploy result is saved for later inspection.
