@@ -53,7 +53,6 @@ export default function Template({ data }) {
             </div>
             <div className="main-content">
               <h1>{frontmatter.title}</h1>
-              {frontmatter.date && <h2>{frontmatter.date}</h2>}
               <div dangerouslySetInnerHTML={{ __html: html }} />
             </div>
           </div>
@@ -64,7 +63,7 @@ export default function Template({ data }) {
 }
 
 export const pageQuery = graphql`
-  query BlogPostByPath($slug: String!) {
+  query DocumentationBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       headings {
