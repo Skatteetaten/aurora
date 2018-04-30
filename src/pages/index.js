@@ -3,9 +3,9 @@ import PostLink from '../components/post-link'
 import Quote from '../components/Quote'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 import { SingleColumn, DoubleColumn } from '../components/Columns'
-import auroraApi from '../assets/images/aurora-api.svg'
-import auroraObserve from '../assets/images/aurora-run.svg'
-import auroraBuild from '../assets/images/aurora-build.svg'
+import auroraApi from '../../docs/frontpage/images/aurora-api.svg'
+import auroraObserve from '../../docs/frontpage/images/aurora-run.svg'
+import auroraBuild from '../../docs/frontpage/images/aurora-build.svg'
 
 const InfoSeparator = () => (
   <Grid.Row>
