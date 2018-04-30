@@ -243,5 +243,5 @@ route: true
 database: true
 config:
   FOO: BAZ
-cluster: utv
+cluster: dev
 ```

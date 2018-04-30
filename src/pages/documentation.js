@@ -21,7 +21,6 @@ const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
       <Grid.Row>
         <SingleColumn>
           <h1>Documentation</h1>
-          <p>some random text</p>
           <br />
         </SingleColumn>
       </Grid.Row>
