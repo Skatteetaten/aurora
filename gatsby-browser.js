@@ -5,7 +5,7 @@
  */
 
 // You can delete this file if you're not using it
-exports.onClientEntry = () => {
+exports.onInitialClientRender = () => {
   const body = document.getElementsByTagName('body')[0]
   body.setAttribute('style', 'display: block')
 }

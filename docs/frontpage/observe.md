@@ -1,6 +1,3 @@
 ## Observe what is running
 
-How do you know that an application running in your cluster is behaving correctly? The AuroraAPI helps with this in that it scrapes all applications in the cluster. The process
-gathers up data from the masterApi as well as from the [managementInterface](aurora#managementInterface). This data is analysed in order to calculate an [AuroraStatus](aurora#auroraStatus) that is exposed to Prometheus and as a part of the AuroraAPI.
-
-It can then be used to create alerts in Prometheus along with rate of errors, log errors and 95% percentile responsetimes as an example.
+We augment the application status data that OpenShift already keeps by regularly inspecting the master API and the management interface (part of our runtime contract) of the applications. The extra status data collected is compiled into a separate status value called [AuroraStatus](/documentation/openshift/#application-monitoring). This allow us, among other things, to create custom wallboards, alert integrations, rate of errors and 95% percentile response times.

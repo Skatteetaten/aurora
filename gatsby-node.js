@@ -15,7 +15,9 @@ const slash = require(`slash`)
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve('src/templates/blogTemplate.js')
+    const blogPostTemplate = path.resolve(
+      'src/templates/documentation-template.js'
+    )
     // Query for markdown nodes to use in creating pages.
     resolve(
       graphql(

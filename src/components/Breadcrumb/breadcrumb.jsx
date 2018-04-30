@@ -28,7 +28,6 @@ export default class Breadcrumb extends React.PureComponent {
 
   render() {
     const { path, renderLink } = this.props
-    console.log(styles)
 
     const paths = path
       .split('/')

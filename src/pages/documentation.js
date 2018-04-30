@@ -1,31 +1,14 @@
 import React from 'react'
 import ContentButtons from '../components/ContentButtons'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
+import { SingleColumn } from '../components/Columns'
 
-const doubleColGrid = {
-  sm: 10,
-  smPush: 1,
-  md: 10,
-  mdPush: 1,
-  lg: 10,
-  lgPush: 1,
-  xl: 3,
-  xlPush: 3,
-  xxl: 3,
-  xxlPush: 3,
-}
-
-const singleColGrid = {
-  ...doubleColGrid,
-  xl: 6,
-  xlPush: 3,
-  xxl: 6,
-  xxlPush: 3,
-}
-
-const DocsPage = ({ data: { allMarkdownRemark: { edges } } }) => {
+const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const contents = edges
-    .filter(({ node }) => node.fields && node.fields.slug.search('/blog/') >= 0)
+    .filter(
+      ({ node }) =>
+        node.fields && node.fields.slug.search('/documentation/') >= 0
+    )
     .map(({ node }) => ({
       to: node.fields.slug,
       icon: node.frontmatter.icon,
@@ -36,18 +19,24 @@ const DocsPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Col {...singleColGrid}>
+        <SingleColumn>
+          <h1>Documentation</h1>
+          <br />
+        </SingleColumn>
+      </Grid.Row>
+      <Grid.Row>
+        <SingleColumn>
           <ContentButtons contents={contents} />
-        </Grid.Col>
+        </SingleColumn>
       </Grid.Row>
     </Grid>
   )
 }
 
-export default DocsPage
+export default DocumentationPage
 
 export const pageQuery = graphql`
-  query DocsQuery {
+  query DocumentationQuery {
     allMarkdownRemark(sort: { order: ASC, fields: [frontmatter___title] }) {
       edges {
         node {

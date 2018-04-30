@@ -211,13 +211,13 @@ final version, the version tag used contains not only the application version, b
 the base image, along with the base image name. We call this composite version tag the AuroraVersion and an example
 can be seen in the diagram below;
 
-![AuroraVersion](images/auroraVersion.png)
+![AuroraVersion](auroraVersion.png)
 
 When the application has a semver compliant version we additionally push individual tags for the major version,
 for the major and minor version combined, for the major, minor and patch version combined, and finally the
 latest tag. An example is provided in the following diagram;
 
-![Versioning](images/versioning.png)
+![Versioning](versioning.png)
 
 A snapshot version is a version string that ends with the literal "-SNAPSHOT", like "1.0.0-SNAPSHOT" or
 "some_new_feature-SNAPSHOT". When building a snapshot release, in addition to the AuroraVersion, we also push two
@@ -350,7 +350,7 @@ The setup process of AO is idempotent so calling it several times will only upda
 objects. After running AO on one single application the objects created on OpenShift is illustrated by the following
 diagram.
 
-![Deploy](images/deploy.png)
+![Deploy](deploy.png)
 
 # Aurora Console
 

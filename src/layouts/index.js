@@ -8,25 +8,6 @@ import SkeBasis from 'aurora-frontend-react-komponenter/beholdere/SkeBasis/SkeBa
 import 'prismjs/themes/prism.css'
 import './index.css'
 
-const links = [
-  {
-    href: '/',
-    name: 'Home',
-  },
-  {
-    href: '/blog',
-    name: 'Docs',
-  },
-  {
-    href: '/tutorial',
-    name: 'Tutorial',
-  },
-  {
-    href: '/about',
-    name: 'About',
-  },
-]
-
 class Layout extends React.Component {
   state = {
     showMobileMenu: false,
@@ -40,10 +21,11 @@ class Layout extends React.Component {
 
   render() {
     const { children, data } = this.props
+    const { title, menu } = data.site.siteMetadata
     return (
       <SkeBasis>
         <Helmet
-          title={data.site.siteMetadata.title}
+          title={title}
           meta={[
             { name: 'description', content: 'Sample' },
             { name: 'keywords', content: 'sample, something' },
@@ -60,13 +42,13 @@ class Layout extends React.Component {
           ]}
         />
         <Header
-          links={links}
-          title={data.site.siteMetadata.title}
+          menu={menu}
+          title={title}
           style={{ marginBottom: '35px' }}
           onToggleMenu={this.toggleMobileMenu}
           showMobileMenu={this.state.showMobileMenu}
         />
-        {children()}
+        <div className="main-container">{children()}</div>
         <Footer />
       </SkeBasis>
     )
@@ -84,6 +66,10 @@ export const query = graphql`
     site {
       siteMetadata {
         title
+        menu {
+          href
+          name
+        }
       }
     }
   }

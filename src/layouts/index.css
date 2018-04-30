@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.5;
+  display: none;
 }
 
 @media (min-width: 900px) {

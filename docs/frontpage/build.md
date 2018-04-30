@@ -1,8 +1,9 @@
-## How do we build
+## How we build
 
-Building an image is done with out central build logic [architect](docs#architect) that implements the [CustomBuilder](https://docs.openshift.org/latest/creating_images/custom.html) contract. 
+Applications are built, tested and verified in our custom Jenkins CI/CD pipeline. They are then passed on to the proprietary CustomBuilder, Architect, as zip files called DeliveryBundles. A DeliveryBundle contains the application files and metadata.
 
-Triggering a build can be done in several ways:
-* via [AuroraPipeline](docs#auroraPipeline) as a [semanic release](docs#semantic) or as a [wip/branch build](docs#snapshot-build)
-* as a binary-build directly from a local client for [development flow](aurora#development-flow) builds. This will buypass Nexus and read DeliveryBundle from stdin 
-* when the build logic or base image changes a trigger will be fired to rebuild in order to support [patching](docs#patching). 
+Builds are triggered in one of several ways;
+
+* via the CI/CD pipeline from commits tagged as [semanic releases](/documentation/openshift/#deployment-and-patching-strategy) or as feature branch SNAPSHOTS.
+* as a binary-build directly from a development machine. This will buypass Jenkins and read the DeliveryBundle from stdin.
+* from ImageChange triggers when either the CustomBuilder or the Base Image changes. See our [patching strategy](/documentation/openshift/#deployment-and-patching-strategy).
