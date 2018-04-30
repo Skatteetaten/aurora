@@ -46,21 +46,17 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
     )
   }
 
-  const WhatAndWhyRow = () => (
-    <Grid.Row>
-      <DoubleColumn>
-        <FrontendContent path="/frontpage/faster-development/" />
-      </DoubleColumn>
-      <DoubleColumn>
-        <FrontendContent path="/frontpage/why/" />
-      </DoubleColumn>
-    </Grid.Row>
-  )
-
   return (
     <div>
       <Grid className="info-grid">
-        <WhatAndWhyRow />
+        <Grid.Row>
+          <DoubleColumn>
+            <FrontendContent path="/frontpage/faster-development/" />
+          </DoubleColumn>
+          <DoubleColumn>
+            <FrontendContent path="/frontpage/why/" />
+          </DoubleColumn>
+        </Grid.Row>
       </Grid>
 
       <Quote
