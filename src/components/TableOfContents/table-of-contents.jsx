@@ -16,7 +16,10 @@ const TableOfContents = ({ headings, slug }) => {
     <nav className={styles.toc}>
       <ul>
         {headings.map((header, index) => (
-          <li key={`${header}-${index}`}>
+          <li
+            key={`${header}-${index}`}
+            className={styles[`toc-level-${header.depth}`]}
+          >
             <Link to={createAnchorLink(slug, header.value)}>
               {header.value}
             </Link>
