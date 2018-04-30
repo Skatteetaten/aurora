@@ -1,4 +1,4 @@
-## How do we deploy
+## How we deploy
 
 An deploy starts with triggering the AuroraAPI from either of the userfacing clients [AO](/documentation/openshift/#ao), [AuroraKonsole](/documentation/openshift/#aurora-console) or [AuroraPipeline](#). The API will then extract and [merge AuroraConfig](/documentation/aurora-config/) in order to create a AuroraDeploymentSpec.
 

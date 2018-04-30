@@ -1,4 +1,4 @@
-## How do we build
+## How we build
 
 Building an image is done with out central build logic [architect](/documentation/openshift/#the-application-image-builder-architect) that implements the [CustomBuilder](https://docs.openshift.org/latest/creating_images/custom.html) contract.
 

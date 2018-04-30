@@ -3,6 +3,7 @@ import Breadcrumb from '../components/Breadcrumb'
 import TableOfContents from '../components/TableOfContents'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 import Link from 'gatsby-link'
+import './documentation-template.css'
 
 const mainGrid = {
   sm: 10,
@@ -53,7 +54,10 @@ export default function Template({ data }) {
             </div>
             <div className="main-content">
               <h1>{frontmatter.title}</h1>
-              <div dangerouslySetInnerHTML={{ __html: html }} />
+              <div
+                className="documentation-container"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
             </div>
           </div>
         </Grid.Col>
