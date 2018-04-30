@@ -1,27 +1,7 @@
 import React from 'react'
 import ContentButtons from '../components/ContentButtons'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
-
-const doubleColGrid = {
-  sm: 10,
-  smPush: 1,
-  md: 10,
-  mdPush: 1,
-  lg: 10,
-  lgPush: 1,
-  xl: 3,
-  xlPush: 3,
-  xxl: 3,
-  xxlPush: 3,
-}
-
-const singleColGrid = {
-  ...doubleColGrid,
-  xl: 6,
-  xlPush: 3,
-  xxl: 6,
-  xxlPush: 3,
-}
+import { SingleColumn } from '../components/Columns'
 
 const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const contents = edges
@@ -39,9 +19,16 @@ const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Col {...singleColGrid}>
+        <SingleColumn>
+          <h1>Documentation</h1>
+          <p>some random text</p>
+          <br />
+        </SingleColumn>
+      </Grid.Row>
+      <Grid.Row>
+        <SingleColumn>
           <ContentButtons contents={contents} />
-        </Grid.Col>
+        </SingleColumn>
       </Grid.Row>
     </Grid>
   )

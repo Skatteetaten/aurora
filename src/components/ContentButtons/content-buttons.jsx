@@ -14,9 +14,6 @@ const Content = ({ icon, title, description }) => (
 
 const ContentButtons = ({ contents }) => (
   <div>
-    <h1>Documentation</h1>
-    <p>some random text</p>
-    <br />
     <nav className={styles['buttons-nav']}>
       <ul>
         {contents.map(({ to, ...rest }, index) => (

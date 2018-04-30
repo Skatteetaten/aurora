@@ -2,54 +2,34 @@ import React from 'react'
 import PostLink from '../components/post-link'
 import Quote from '../components/Quote'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
+import { SingleColumn, DoubleColumn } from '../components/Columns'
 import auroraApi from '../assets/images/aurora-api.svg'
 import auroraObserve from '../assets/images/aurora-run.svg'
 import auroraBuild from '../assets/images/aurora-build.svg'
 
-const doubleColGrid = {
-  sm: 10,
-  smPush: 1,
-  md: 10,
-  mdPush: 1,
-  lg: 10,
-  lgPush: 1,
-  xl: 3,
-  xlPush: 3,
-  xxl: 3,
-  xxlPush: 3,
-}
-
-const singleColGrid = {
-  ...doubleColGrid,
-  xl: 6,
-  xlPush: 3,
-  xxl: 6,
-  xxlPush: 3,
-}
-
 const InfoSeparator = () => (
   <Grid.Row>
-    <Grid.Col {...singleColGrid}>
+    <SingleColumn>
       <hr style={{ margin: '30px 0' }} />
-    </Grid.Col>
+    </SingleColumn>
   </Grid.Row>
 )
 
 const InfoRow = ({ title, picture, children, left }) => {
   const Picture = () => (
-    <Grid.Col {...doubleColGrid}>
+    <DoubleColumn>
       <img src={picture} style={{ maxWidth: '100%', maxHeight: '600px' }} />
-    </Grid.Col>
+    </DoubleColumn>
   )
 
   return (
     <div>
       <Grid.Row>
         {left && <Picture />}
-        <Grid.Col {...doubleColGrid}>
+        <DoubleColumn>
           {title && <h2>{title}</h2>}
           {children}
-        </Grid.Col>
+        </DoubleColumn>
         {!left && <Picture />}
       </Grid.Row>
     </div>
@@ -68,12 +48,12 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
 
   const WhatAndWhyRow = () => (
     <Grid.Row>
-      <Grid.Col {...doubleColGrid}>
+      <DoubleColumn>
         <FrontendContent path="/frontpage/faster-development/" />
-      </Grid.Col>
-      <Grid.Col {...doubleColGrid}>
+      </DoubleColumn>
+      <DoubleColumn>
         <FrontendContent path="/frontpage/why/" />
-      </Grid.Col>
+      </DoubleColumn>
     </Grid.Row>
   )
 
@@ -88,7 +68,8 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
         style={{ margin: '30px 0' }}
       >
         In order to avoid 'wall-of-yaml' we use a declarative, composable
-        configuration format with sane defaults that is transformed into Kubernets objects
+        configuration format with sane defaults that is transformed into
+        Kubernets objects
       </Quote>
 
       <Grid className="info-grid">
