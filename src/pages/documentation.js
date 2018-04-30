@@ -23,9 +23,12 @@ const singleColGrid = {
   xxlPush: 3,
 }
 
-const DocsPage = ({ data: { allMarkdownRemark: { edges } } }) => {
+const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const contents = edges
-    .filter(({ node }) => node.fields && node.fields.slug.search('/blog/') >= 0)
+    .filter(
+      ({ node }) =>
+        node.fields && node.fields.slug.search('/documentation/') >= 0
+    )
     .map(({ node }) => ({
       to: node.fields.slug,
       icon: node.frontmatter.icon,
@@ -44,10 +47,10 @@ const DocsPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   )
 }
 
-export default DocsPage
+export default DocumentationPage
 
 export const pageQuery = graphql`
-  query DocsQuery {
+  query DocumentationQuery {
     allMarkdownRemark(sort: { order: ASC, fields: [frontmatter___title] }) {
       edges {
         node {

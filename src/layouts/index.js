@@ -14,16 +14,8 @@ const links = [
     name: 'Home',
   },
   {
-    href: '/blog',
-    name: 'Docs',
-  },
-  {
-    href: '/tutorial',
-    name: 'Tutorial',
-  },
-  {
-    href: '/about',
-    name: 'About',
+    href: '/documentation',
+    name: 'Documentation',
   },
 ]
 

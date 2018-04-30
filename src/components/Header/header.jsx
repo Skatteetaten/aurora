@@ -5,11 +5,11 @@ import classnames from 'classnames/bind'
 
 const cx = classnames.bind(styles)
 
-const HeaderMenu = ({ links = [], showMenu }) => (
+const HeaderMenu = ({ links = [], showMobileMenu }) => (
   <nav
     className={cx({
       'main-header-nav': true,
-      'main-header-nav-hidden': !showMenu,
+      'main-header-nav-hidden': !showMobileMenu,
     })}
   >
     <ul className={styles['main-header-menu']}>
@@ -34,7 +34,7 @@ const Header = ({ title, links, onToggleMenu, showMobileMenu, ...rest }) => (
     <button onClick={onToggleMenu}>
       <i className="material-icons">menu</i>
     </button>
-    {links && <HeaderMenu links={links} showMenu={showMobileMenu} />}
+    {links && <HeaderMenu links={links} showMobileMenu={showMobileMenu} />}
   </div>
 )
 
