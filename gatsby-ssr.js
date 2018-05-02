@@ -4,4 +4,11 @@
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
 
-// You can delete this file if you're not using it
+let themeLoader = require('@microsoft/load-themed-styles')
+themeLoader.configureLoadStyles(styles => {
+  // noop
+})
+
+let library = require('office-ui-fabric-react/lib/Utilities')
+library.setSSR(true)
+library.setRTL(false)

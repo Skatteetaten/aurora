@@ -1,12 +1,3 @@
-let themeLoader = require('@microsoft/load-themed-styles')
-themeLoader.configureLoadStyles(styles => {
-  // noop
-})
-
-let library = require('office-ui-fabric-react/lib/Utilities')
-library.setSSR(true)
-library.setRTL(false)
-
 const path = require(`path`)
 const { createFilePath } = require('gatsby-source-filesystem')
 const _ = require('lodash')
@@ -15,7 +6,7 @@ const slash = require(`slash`)
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(
+    const documentationTemplate = path.resolve(
       'src/templates/documentation-template.js'
     )
     // Query for markdown nodes to use in creating pages.
@@ -46,7 +37,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
           createPage({
             path: `${edge.node.fields.slug}`, // required
-            component: slash(blogPostTemplate),
+            component: slash(documentationTemplate),
             context: {
               slug: edge.node.fields.slug,
             },
