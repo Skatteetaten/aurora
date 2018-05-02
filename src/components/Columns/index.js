@@ -1,5 +1,5 @@
-import { SingleColumn, DoubleColumn } from './columns'
+import { SingleColumnRow, DoubleColumnRow } from './columns'
 
-export { SingleColumn, DoubleColumn }
+export { SingleColumnRow, DoubleColumnRow }
 
-export default { SingleColumn, DoubleColumn }
+export default { SingleColumnRow, DoubleColumnRow }

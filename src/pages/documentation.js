@@ -1,7 +1,7 @@
 import React from 'react'
 import ContentButtons from '../components/ContentButtons'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
-import { SingleColumn } from '../components/Columns'
+import { SingleColumnRow } from '../components/Columns'
 
 const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const contents = edges
@@ -18,17 +18,15 @@ const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
 
   return (
     <Grid>
-      <Grid.Row>
-        <SingleColumn>
+      <SingleColumnRow>
+        <div>
           <h1>Documentation</h1>
           <br />
-        </SingleColumn>
-      </Grid.Row>
-      <Grid.Row>
-        <SingleColumn>
-          <ContentButtons contents={contents} />
-        </SingleColumn>
-      </Grid.Row>
+        </div>
+      </SingleColumnRow>
+      <SingleColumnRow>
+        <ContentButtons contents={contents} />
+      </SingleColumnRow>
     </Grid>
   )
 }

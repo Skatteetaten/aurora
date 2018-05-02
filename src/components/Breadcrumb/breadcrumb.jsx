@@ -27,7 +27,7 @@ export default class Breadcrumb extends React.PureComponent {
   }
 
   render() {
-    const { path, renderLink } = this.props
+    const { path, renderLink, ...rest } = this.props
 
     const paths = path
       .split('/')
@@ -43,7 +43,7 @@ export default class Breadcrumb extends React.PureComponent {
       ))
 
     return (
-      <nav aria-label="breadcrumb">
+      <nav aria-label="breadcrumb" {...rest}>
         <ol className={styles.breadcrumbs}>{paths}</ol>
       </nav>
     )

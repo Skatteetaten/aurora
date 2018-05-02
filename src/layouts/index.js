@@ -48,7 +48,7 @@ class Layout extends React.Component {
           onToggleMenu={this.toggleMobileMenu}
           showMobileMenu={this.state.showMobileMenu}
         />
-        <div className="main-container">{children()}</div>
+        <div>{children()}</div>
         <Footer />
       </SkeBasis>
     )

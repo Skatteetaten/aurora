@@ -3,7 +3,7 @@ import Breadcrumb from '../components/Breadcrumb'
 import TableOfContents from '../components/TableOfContents'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 import Link from 'gatsby-link'
-import './documentation-template.css'
+import styles from './documentation-template.module.css'
 
 const mainGrid = {
   sm: 10,
@@ -26,7 +26,7 @@ export default function Template({ data }) {
   const { markdownRemark } = data
   const { frontmatter, fields, html, headings } = markdownRemark
   return (
-    <Grid className="ske-main-layout">
+    <Grid>
       <Grid.Row>
         <Grid.Col {...menuGrid}>
           {headings && (
@@ -37,29 +37,16 @@ export default function Template({ data }) {
           )}
         </Grid.Col>
         <Grid.Col {...mainGrid}>
-          <div>
-            <div
-              style={{
-                paddingTop: '15px',
-              }}
-            >
-              <Breadcrumb
-                path={fields.slug}
-                renderLink={({ href, name }) => (
-                  <Link to={href} style={{ border: 'none' }}>
-                    {name}
-                  </Link>
-                )}
-              />
-            </div>
-            <div className="main-content">
-              <h1>{frontmatter.title}</h1>
-              <div
-                className="documentation-container"
-                dangerouslySetInnerHTML={{ __html: html }}
-              />
-            </div>
-          </div>
+          <Breadcrumb
+            className={styles.breadcrumb}
+            path={fields.slug}
+            renderLink={({ href, name }) => <Link to={href}>{name}</Link>}
+          />
+          <h1>{frontmatter.title}</h1>
+          <div
+            className={styles['documentation-container']}
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
         </Grid.Col>
       </Grid.Row>
     </Grid>

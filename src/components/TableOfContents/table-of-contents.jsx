@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Link from 'gatsby-link'
 import GithubSlugger from 'github-slugger'
 import styles from './table-of-contents.module.css'
@@ -28,6 +29,16 @@ const TableOfContents = ({ headings, slug }) => {
       </ul>
     </nav>
   )
+}
+
+TableOfContents.propTypes = {
+  slug: PropTypes.string.isRequired,
+  headings: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      depth: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 }
 
 export default TableOfContents

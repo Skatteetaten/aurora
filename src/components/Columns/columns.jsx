@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 
 const doubleColGrid = {
@@ -22,10 +23,29 @@ const singleColGrid = {
   xxlPush: 3,
 }
 
-export const SingleColumn = ({ children }) => (
-  <Grid.Col {...singleColGrid}>{children}</Grid.Col>
+const SingleColumnRow = ({ children }) => (
+  <Grid.Row>
+    <Grid.Col {...singleColGrid}>{children}</Grid.Col>
+  </Grid.Row>
 )
 
-export const DoubleColumn = ({ children }) => (
-  <Grid.Col {...doubleColGrid}>{children}</Grid.Col>
+const DoubleColumnRow = ({ children }) => (
+  <Grid.Row>
+    {React.Children.map(children, child => {
+      if (!child) {
+        return false
+      }
+      return <Grid.Col {...doubleColGrid}>{child}</Grid.Col>
+    })}
+  </Grid.Row>
 )
+
+DoubleColumnRow.propTypes = {
+  children: (props, propName, componentName) => {
+    if (props[propName].filter(child => child).length !== 2) {
+      return new Error(`${propName} must contain two elements`)
+    }
+  },
+}
+
+export { SingleColumnRow, DoubleColumnRow }
