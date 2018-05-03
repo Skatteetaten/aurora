@@ -14,6 +14,11 @@ fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.g
 }
 
 node {
+  if (env.BRANCH_NAME != "master") {
+    currentBuild.result = 'ABORTED'
+    error('Branch is not master')
+  }
+
   if (props.nodeVersion) {
     echo 'Using Node version: ' + props.nodeVersion
     npm.setVersion(props.nodeVersion)
@@ -35,7 +40,6 @@ node {
   String version = git.getTagFromCommit()
   currentBuild.displayName = "${version} (${currentBuild.number})"
 
-  if (env.BRANCH_NAME == "master") {
     stage('Deploy to GitHub') {
       try {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
@@ -52,7 +56,6 @@ node {
         sh("git config --unset credential.helper")
       }
     }
-  }
 
   stage('Clear workspace') {
     step([$class: 'WsCleanup'])
