@@ -29,7 +29,6 @@ node {
   }
 
   stage('Install') {
-    yarn.run("cache clean")
     npm.install()
   }
 
