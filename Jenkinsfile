@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 Map<String, Object> props = [
-  credentialsId                : 'aurora-bitbucket',
+  credentialsId                : 'github',
   nodeVersion                  : null  //possible values are 'node-6' and 'node-8', or whatever various node versions have been defined as in jenkins-master
 ]
 
