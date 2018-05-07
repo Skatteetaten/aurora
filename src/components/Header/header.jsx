@@ -2,6 +2,8 @@ import React from 'react'
 import styles from './header.module.css'
 import Link from 'gatsby-link'
 import classnames from 'classnames/bind'
+import Logo from 'aurora-frontend-react-komponenter/beholdere/Toppbanner/assets/ske-logo.svg'
+import Bilde from 'aurora-frontend-react-komponenter/innhold/Bilde/Bilde'
 
 const cx = classnames.bind(styles)
 
@@ -30,11 +32,17 @@ const HeaderMenu = ({ menu = [], showMobileMenu }) => (
 
 const Header = ({ title, menu, onToggleMenu, showMobileMenu, ...rest }) => (
   <div {...rest} className={styles['main-header']}>
-    <h1 className={styles['main-header-title']}>{title}</h1>
-    <button onClick={onToggleMenu}>
-      <i className="material-icons">menu</i>
-    </button>
-    {menu && <HeaderMenu menu={menu} showMobileMenu={showMobileMenu} />}
+    <div className={styles['main-header-content']}>
+      <div className={styles['main-header-wrapper']}>
+        <div>
+          <Bilde src={Logo} className={styles['main-header-logo']} />
+        </div>
+        <button onClick={onToggleMenu}>
+          <i className="material-icons">menu</i>
+        </button>
+      </div>
+      {menu && <HeaderMenu menu={menu} showMobileMenu={showMobileMenu} />}
+    </div>
   </div>
 )
 
