@@ -5,6 +5,7 @@ import Helmet from 'react-helmet'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import SkeBasis from 'aurora-frontend-react-komponenter/beholdere/SkeBasis/SkeBasis'
+import favicon from '../../favicon.png'
 import 'prismjs/themes/prism.css'
 import './index.css'
 
@@ -36,8 +37,8 @@ class Layout extends React.Component {
               rel: 'stylesheet',
             },
             {
-              href: 'https://fonts.googleapis.com/css?family=Gugi',
-              rel: 'stylesheet',
+              href: favicon,
+              rel: 'shortcut icon',
             },
           ]}
         />

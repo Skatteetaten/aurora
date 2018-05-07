@@ -59,7 +59,7 @@ tbody tr:nth-child(odd) {
 }
 
 thead tr {
-  text-transform: uppercase;
+  text-transform: capitalize;
   border-bottom: 2px solid #bbbbbb;
 }
 

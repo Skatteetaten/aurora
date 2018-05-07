@@ -13,13 +13,8 @@ const mainGrid = {
   lg: 8,
   lgPush: 2,
   xl: 6,
-  xlPush: 1,
+  xlPush: 3,
   xxl: 6,
-}
-
-const menuGrid = {
-  xl: 2,
-  xxl: 2,
 }
 
 export default function Template({ data }) {
@@ -28,14 +23,6 @@ export default function Template({ data }) {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Col {...menuGrid}>
-          {headings && (
-            <div>
-              <h3>Table of contents</h3>
-              <TableOfContents headings={headings} slug={fields.slug} />
-            </div>
-          )}
-        </Grid.Col>
         <Grid.Col {...mainGrid}>
           <Breadcrumb
             className={styles.breadcrumb}
@@ -43,6 +30,9 @@ export default function Template({ data }) {
             renderLink={({ href, name }) => <Link to={href}>{name}</Link>}
           />
           <h1>{frontmatter.title}</h1>
+          {headings && (
+            <TableOfContents headings={headings} slug={fields.slug} />
+          )}
           <div
             className={styles['documentation-container']}
             dangerouslySetInnerHTML={{ __html: html }}

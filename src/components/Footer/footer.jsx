@@ -1,12 +1,9 @@
 import React from 'react'
 import Bilde from 'aurora-frontend-react-komponenter/innhold/Bilde/Bilde'
+import Bunn from 'aurora-frontend-react-komponenter/beholdere/Bunn/Bunn'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
 
 import styles from './footer.module.css'
-
-import logo from 'aurora-frontend-react-komponenter/beholdere/Bunn/assets/ske-logo.svg'
-import footerDekor from 'aurora-frontend-react-komponenter/beholdere/Bunn/assets/footer-dekor.svg'
-
 import GitHubLogo from '../../assets/github-mark/PNG/GitHub-Mark-Light-32px.png'
 
 const FooterLink = ({ to, name, image }) => (
@@ -32,23 +29,16 @@ const FooterLinks = () => (
 )
 
 export default () => (
-  <div>
-    <Bilde src={footerDekor} />
-    <footer className={styles['footer-wrapper']}>
-      <div className={styles['footer-content']}>
-        <Grid>
-          <Grid.Row>
-            <Grid.Col sm={12} lg={12} xl={2}>
-              <div className={styles.logo}>
-                <Bilde src={logo} height="74px" />
-              </div>
-            </Grid.Col>
-            <Grid.Col sm={12} lg={12} xl={3}>
-              <FooterLinks />
-            </Grid.Col>
-          </Grid.Row>
-        </Grid>
-      </div>
-    </footer>
-  </div>
+  <Bunn>
+    <Grid>
+      <Grid.Row>
+        <Grid.Col sm={12} lg={12} xl={2}>
+          <Bunn.Logo />
+        </Grid.Col>
+        <Grid.Col sm={12} lg={12} xl={4}>
+          <FooterLinks />
+        </Grid.Col>
+      </Grid.Row>
+    </Grid>
+  </Bunn>
 )

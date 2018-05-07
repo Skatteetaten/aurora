@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'gatsby-link'
 import GithubSlugger from 'github-slugger'
 import styles from './table-of-contents.module.css'
+import Ikon from 'aurora-frontend-react-komponenter/innhold/Ikon/Ikon'
 
 const slugger = new GithubSlugger()
 
@@ -21,6 +22,7 @@ const TableOfContents = ({ headings, slug }) => {
             key={`${header}-${index}`}
             className={styles[`toc-level-${header.depth}`]}
           >
+            <Ikon iconName="down" />
             <Link to={createAnchorLink(slug, header.value)}>
               {header.value}
             </Link>

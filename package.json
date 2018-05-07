@@ -5,7 +5,7 @@
   "author": "Skatteetaten",
   "dependencies": {
     "@microsoft/load-themed-styles": "^1.7.50",
-    "aurora-frontend-react-komponenter": "^0.2.37",
+    "aurora-frontend-react-komponenter": "^0.2.40",
     "classnames": "^2.2.5",
     "gatsby": "^1.9.247",
     "gatsby-link": "^1.6.40",

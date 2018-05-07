@@ -31,7 +31,7 @@ const InfoRow = ({ title, picture, children, left }) => {
 }
 
 const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
-  const FrontendContent = ({ path }) => {
+  const FrontPageContent = ({ path }) => {
     const content = edges.find(edge => {
       return edge.node.fields.slug === path
     })
@@ -44,8 +44,8 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
     <div>
       <Grid>
         <DoubleColumnRow>
-          <FrontendContent path="/frontpage/faster-development/" />
-          <FrontendContent path="/frontpage/why/" />
+          <FrontPageContent path="/frontpage/faster-development/" />
+          <FrontPageContent path="/frontpage/why/" />
         </DoubleColumnRow>
       </Grid>
 
@@ -60,19 +60,19 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
 
       <Grid>
         <InfoRow picture={auroraApi}>
-          <FrontendContent path="/frontpage/deploy/" />
+          <FrontPageContent path="/frontpage/deploy/" />
         </InfoRow>
 
         <InfoSeparator />
 
         <InfoRow picture={auroraBuild} left>
-          <FrontendContent path="/frontpage/build/" />
+          <FrontPageContent path="/frontpage/build/" />
         </InfoRow>
 
         <InfoSeparator />
 
         <InfoRow picture={auroraObserve}>
-          <FrontendContent path="/frontpage/observe/" />
+          <FrontPageContent path="/frontpage/observe/" />
         </InfoRow>
       </Grid>
     </div>
