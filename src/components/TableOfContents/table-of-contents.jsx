@@ -4,6 +4,7 @@ import Link from 'gatsby-link'
 import GithubSlugger from 'github-slugger'
 import styles from './table-of-contents.module.css'
 import Ikon from 'aurora-frontend-react-komponenter/innhold/Ikon/Ikon'
+import classNames from 'classnames'
 
 const slugger = new GithubSlugger()
 
@@ -20,7 +21,10 @@ const TableOfContents = ({ headings, slug }) => {
         {headings.map((header, index) => (
           <li
             key={`${header}-${index}`}
-            className={styles[`toc-level-${header.depth}`]}
+            className={classNames(
+              styles['toc-level'],
+              styles[`toc-level-${header.depth}`]
+            )}
           >
             <Ikon iconName="down" />
             <Link to={createAnchorLink(slug, header.value)}>

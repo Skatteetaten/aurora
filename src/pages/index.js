@@ -43,6 +43,11 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   return (
     <div>
       <Grid>
+        <SingleColumnRow>
+          <div style={{ textAlign: 'center' }}>
+            <h1>The Aurora Platform</h1>
+          </div>
+        </SingleColumnRow>
         <DoubleColumnRow>
           <FrontPageContent path="/frontpage/faster-development/" />
           <FrontPageContent path="/frontpage/why/" />
