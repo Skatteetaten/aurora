@@ -4,7 +4,7 @@ module.exports = {
     menu: [
       {
         href: '/',
-        name: 'Home',
+        name: 'The Aurora Platform',
       },
       {
         href: '/documentation',

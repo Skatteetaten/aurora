@@ -19,6 +19,7 @@
 
 .main-header-wrapper {
   display: flex;
+  justify-content: space-between;
 }
 
 .main-header button {
@@ -26,6 +27,7 @@
   background: transparent;
   border: 0;
   outline: none;
+  flex: 0;
 }
 
 .main-header button:hover,
@@ -60,6 +62,7 @@ button:active {
 }
 
 .main-header-menu a {
+  white-space: nowrap;
   color: black;
   border: 0;
   border-color: transparent;
