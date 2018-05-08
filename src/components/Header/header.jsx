@@ -37,9 +37,11 @@ const Header = ({ title, menu, onToggleMenu, showMobileMenu, ...rest }) => (
         <div>
           <Bilde src={Logo} className={styles['main-header-logo']} />
         </div>
-        <button onClick={onToggleMenu}>
-          <i className="material-icons">menu</i>
-        </button>
+        <div className={styles['main-header-button']}>
+          <button onClick={onToggleMenu}>
+            <i className="material-icons">menu</i>
+          </button>
+        </div>
       </div>
       {menu && <HeaderMenu menu={menu} showMobileMenu={showMobileMenu} />}
     </div>

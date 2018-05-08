@@ -1,7 +1,7 @@
 import React from 'react'
 import ContentButtons from '../components/ContentButtons'
 import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
-import StartpageNav from 'aurora-frontend-react-komponenter/input/StartpageNav/StartpageNav'
+import NavigationTile from 'aurora-frontend-react-komponenter/beholdere/NavigationTile/NavigationTile'
 import { SingleColumnRow } from '../components/Columns'
 import Link from 'gatsby-link'
 
@@ -27,7 +27,7 @@ const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
         </div>
       </SingleColumnRow>
       <SingleColumnRow>
-        <StartpageNav
+        <NavigationTile
           contents={contents}
           renderLink={(to, content) => <Link to={to}>{content}</Link>}
         />

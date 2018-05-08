@@ -44,7 +44,9 @@ export default class Breadcrumb extends React.PureComponent {
 
     return (
       <nav aria-label="breadcrumb" {...rest}>
-        <ol className={styles.breadcrumbs}>{paths}</ol>
+        <ol className={styles.breadcrumbs}>
+          {paths.slice(0, paths.length - 1)}
+        </ol>
       </nav>
     )
   }
