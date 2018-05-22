@@ -191,6 +191,7 @@ In order to control routes into the application the following fields can be used
 | routeDefaults/path                  |                            | Set to create a path based route. You should use the same name/affiliation/env/seperator combination for all path based routes to get the same URL |
 | routeDefaults/annotations/<key>     |                            | Set annotations for a given route. Note that you should use                                                                                        | instead of / in annotation keys. so 'haproxy.router.openshift.io | balance'. See https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations[route annotations] for some options. |
 
+Route annotations are usable for template types but you need to create a Service with name after the NAME parameter yourself.
 
 ### Example configuration
 
