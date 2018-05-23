@@ -77,12 +77,12 @@ Other fields can be specified in any file
 | name                | $fileName | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the app file. |
 | _cluster_           |           | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                     |
 | ttl                 |           | Set a time duration in format 1d, 12h aso that indicate how long until this application should be deleted                                                                                                             |
-| _version_           |           | Version of the application to run. Can be set to any of the valid version strategies. TODO: Link to them                                                                                                              |
+| _version_           |           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                                                                                                              |
 | segment             |           | The segment the application exist in. 
 
 ### Substitution
 
-Some fields fromt header are available as substitutions when specifying the rest of the configuration
+Some fields from the header are available as substitutions when specifying the rest of the configuration
 
 * affiliation
 * cluster
