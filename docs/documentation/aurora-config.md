@@ -18,7 +18,7 @@ Config files are written either as Json or Yaml.
 
 Aurora Config is structured around a four level file structure with the top level being the most general and the bottom
 level, representing an application in a given environment, being the most specific - potentially overriding options set
-at higher levels. Environments each have their own folder with a separate file for each application in that environment,
+at higher levels. Each environment has its own folder with a separate file for each application in that environment,
 in addition to an about.yaml file describing the environment itself. The following table describes the different files;
 
 | File              | Name in AC | Description                                                                      |
@@ -42,54 +42,43 @@ For the applications App1 and App2, and the environments test and prod, a typica
        ├── about.yaml  (Configuration for all applications in environment test)
        ├── App1.yaml   (Configuration for App1 in environment test)
        └── App2.yaml   (Configuration for App2 in environment test)
-    
+
+For a given *app* file, it is possible to change the *base* and *env* file if you want to compose your configuration
+differently than the default. For instance, you may need to deploy the same application in the same environment with
+different name and configuration;
+
+File named "test/App1Beta.yaml"
+```yaml
+baseFile: App1.yaml
+```
+
+In this scenario 'App1.yaml' would be used instead of 'App1Beta.yaml' (which does not exist) as the base file for the
+App1Beta in the environment test.
+
+
+## DeploymentSpec and ApplicationId
+
 When the Aurora Config is processed a new object is generated for each *app* file, representing the configuration 
 collected from the *global* file, the *base* file for that application, the *env* file for the environment, and finally
-the *app* file itself. This object is called the DeploymentSpec for the given application. From the example above we
-would get four DeploymentSpecs;
+the *app* file itself. This object is called the DeploymentSpec for the given application. The identifier for a
+DeploymentSpec, called ApplicationId, is the combination of environment name and application name. From the example 
+above we would get four DeploymentSpecs with the following ApplicationIds;
 
-* env: prod, app: App1
-* env: prod, app: App2
-* env: test, app: App1
-* env: test, app: App2
+* prod/App1
+* prod/App2
+* test/App1
+* test/App2
+
+
+## Configuration Reference
 
 The following sections will describe the different configuration options that are available in each of the files. The
 examples will use the YAML format for the config files since it is terser and easier on the eyes than JSON.
 
 ### Dictionary
 
-AuroraConfig: A set of files that share the same schemaVersion and affiliation. Files are either json or yaml.
 LocalTemplate: An AuroraConfig can contain a templates folder with OpenShift template files.
 Template: Other templates are referenced from the default namespace in your cluster.
-ApplicationId: Identify an Application. Contains the name of the application and an environment(affiliation and env name)
-DeploymentSpec: Result of applying an ApplicationId to a given AuroraConfig
-
-### Files
-
-Given that you have an application with name 'reference' in the environment 'dev' the following files will be present
-
-Note that the suffix of the file can be either json or yaml
-
-| filename     | name   | reason                                                                      |
-| ------------ | ------ | --------------------------------------------------------------------------- |
-| about.yaml   | global | All applications in a given AuroraConfig will inherit from it               |
-| foo.yaml     | base   | All applications named 'reference' in all environments will inherit from it |
-| dev.yaml     | env    | All applications in the env 'dev' inherit from it                            |
-| dev/foo.yaml | app    | Instructions on how to deploy the application 'reference' in 'dev'           |
-
-In order to generate an DeploymentSpec for a given ApplicationId files are read in the order specified above and merged together.
-Information about what file contains what instruction is recorded so that it is possible to get a birds eye view over a DeploymentSpec and where the different instructions come from.
-
-It is possible to change the base and env file in a given app file if you want to compose your configuration.
-
-utv/reference.yaml
-
-```yaml
-baseFile: foo.yaml
-envFile: about-template.yaml
-```
-
-In this scenario 'foo.yaml' would be used instead of 'reference.yaml' as the base file and the 'about-template.yaml' file would be used instead of 'about.yaml'
 
 ### Header
 
