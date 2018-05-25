@@ -4,17 +4,57 @@ title: "Aurora Config"
 description: "Opinionated way of configuring cloud applications"
 ---
 
-Aurora Config is an opinionated way of configuring how namespaces and applications are applied to an OpenShift cluster.
+## What is Aurora Config?
 
-Config files are written either as Json or Yaml. All the examples will use YAML since it is easier on the eyes.
+Aurora Config is a custom file based configuration format developed by the Norwegian Tax Administration designed to be a concise 
+representation of how applications are configured and deployed across environments and clusters in an OpenShift
+based infrastructure. Parts of the configuration format is generally reusable by anybody deploying to OpenShift, while
+other parts of it are designed to simplify integrations with specific third party components in our infrastructure.
 
-The process for parsing an AuroraConfig is as follows
+The conciseness of the format is derived from a highly opinionated way of deploying applications to OpenShift,
+providing override options only when necessary.
 
-* find relevant files
-* extract and validate header
-* extract DeploymentSpec
+Config files are written either as Json or Yaml.
 
-Extracting is done in a process where the paths from the below tables are matched against the available files. The most specific location is chosen.
+Aurora Config is structured around a four level file structure with the top level being the most general and the bottom
+level, representing an application in a given environment, being the most specific - potentially overriding options set
+at higher levels. Environments each have their own folder with a separate file for each application in that environment,
+in addition to an about.yaml file describing the environment itself. The following table describes the different files;
+
+| File              | Name in AC | Description                                                                      |
+| ------------      | ---------- | --------------------------------------------------------------------------- |
+| about.yaml        | global     | The *global* file is the most general file in an Aurora Config. All applications will inherit options set in this file. |
+| {app}.yaml        | base       | The *base* file contains general configuration for all instances of application {app} across all environments. All instances will inherit options set in this file and will potentially override options set in the *base* file. |
+| {env}/about.yaml  | env        | The *env* file contains general configuration for all applications in environment {env}. All applications in the environment will inherit options set in this file and potentially override options set in both the *base* file and *global* file. |
+| {env}/{app}.yaml  | app        | The *app* file contains specific configuration for application {app} in environment {env}. All options set in this file will potentially override options set in other files. |
+                               
+
+For the applications App1 and App2, and the environments test and prod, a typical Aurora Config could then look like;
+  
+    ├── about.yaml     (Configuration for all applications in all environments)
+    ├── App1.yaml      (General configuration for App1)
+    ├── App2.yaml      (General configuration for App2)
+    ├── prod           (A folder named prod)
+    │  ├── about.yaml  (Configuration for all applications in environment prod)
+    │  ├── App1.yaml   (Configuration for App1 in environment prod)
+    │  └── App2.yaml   (Configuration for App2 in environment prod)
+    └── test           (A folder named test)
+       ├── about.yaml  (Configuration for all applications in environment test)
+       ├── App1.yaml   (Configuration for App1 in environment test)
+       └── App2.yaml   (Configuration for App2 in environment test)
+    
+When the Aurora Config is processed a new object is generated for each *app* file, representing the configuration 
+collected from the *global* file, the *base* file for that application, the *env* file for the environment, and finally
+the *app* file itself. This object is called the DeploymentSpec for the given application. From the example above we
+would get four DeploymentSpecs;
+
+* env: prod, app: App1
+* env: prod, app: App2
+* env: test, app: App1
+* env: test, app: App2
+
+The following sections will describe the different configuration options that are available in each of the files. The
+examples will use the YAML format for the config files since it is terser and easier on the eyes than JSON.
 
 ### Dictionary
 
