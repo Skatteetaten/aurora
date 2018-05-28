@@ -75,33 +75,43 @@ above we would get four DeploymentSpecs with the following ApplicationIds;
 The following sections will describe the different configuration options that are available in each of the files. The
 examples will use the YAML format for the config files since it is terser and easier on the eyes than JSON.
 
-### Dictionary
-
-LocalTemplate: An AuroraConfig can contain a templates folder with OpenShift template files.
-Template: Other templates are referenced from the default namespace in your cluster.
-
 ### Header
 
-Some instructions are read as a header. This is done in order to provide sane defaults for the rest of the process.
+Some options are considered header options and are read in a separate step during the configuration parsing process.
+This allows us to set defaults and make available values in the header for variable substitution in the other 
+configuration options. In order to include these into a field surround them with '@', for instance.
 
-Some of the header fields must be specified in an about file. The environment and permissions must be the same for all applications.
+```
+config/cluster : "@cluster@"
+```
 
-| path                            | default     | description                                                                                                                                                                                              |
-| ------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| _affiliation_                   |             | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                      |
-| envName                         | $folderName | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                     |
-| env/name                        |             | An alias for envName                                                                                                                                                                                     |
-| env/ttl                         |             | Set a time duration in format 1d, 12h aso that indicate how long until this namespace should be deleted                                                                                                  |
-| _permissions/admin_             |             | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required. |
-| permissions/view                |             | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
-| permissions/adminServiceAccount |             | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.  |
+Which options are available for substitution is indicated in the following tables.
 
-Other fields can be specified in any file
+Some configuration options can only be set in the *global* about file and the *env* file. These are typically options that
+are only relevant for configuring the environment, for instance environment name, permissions and env.ttl (time to live).
+Since environments have their own folder and the environment is configured in an own about-file, it is not allowed for an
+*app*-file to override any of the environment specific options. Options that can only be set in the *global* file or in
+an *env* file will be described in a section called "About files" and options that can also be set in the *base* files 
+and *app* files will be describe in a section called "Application files".
 
+
+#### About files
+
+| path                            | default     | substitution | description                                                                                                                                                                                              |
+| ------------------------------- | ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _affiliation_                   |             | Yes          | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                      |
+| envName                         | $folderName | Yes          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                     |
+| env/name                        |             | Yes          | An alias for envName                                                                                                                                                                                     |
+| env/ttl                         |             | No           | Set a time duration in format 1d, 12h aso that indicate how long until this namespace should be deleted                                                                                                  |
+| _permissions/admin_             |             | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required. |
+| permissions/view                |             | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
+| permissions/adminServiceAccount |             | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.  |
+
+#### Application files
 | path                | default   | description                                                                                                                                                                                                           |
 | ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | _schemaVersion_     |           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                               |
-| _type_              |           | What type of flow does this application follow. Options here are [deploy, development, template, localTemplate]                                                                                                       |
+| _type_              |           | [See Deployment Types](#deployment_types)
 | applicationPlatform | java      | Specify application platform. java or web are valid platforms. Is only used if type is deploy/development.                                                                                                           |
 | name                | $fileName | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the app file. |
 | _cluster_           |           | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                     |
@@ -109,29 +119,37 @@ Other fields can be specified in any file
 | _version_           |           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                                                                                                              |
 | segment             |           | The segment the application exist in. 
 
-### Substitution
 
-Some fields from the header are available as substitutions when specifying the rest of the configuration
+### <a name="deployment_types" ></a>Deployment Types
 
-* affiliation
-* cluster
-* env
-* name
-* segment
+The configuration option ```type``` indicates the deployment type the application has. The value of this field affects
+what other configuration options are available for that application. The deployment type determines primarily how
+the objects that supports the application on OpenShift are generated, but it also affects the different types of
+integrations that are supported.
 
-In order to include these into a field surround them with '@'. An example
+#### release
+The release deployment type is used for deploying applications using the conventions from the Aurora Platform. You can
+read more about these conventions here: [How we Develop and Build our Applications](https://skatteetaten.github.io/aurora/documentation/openshift/#how-we-develop-and-build-our-applications).
+This is the deployment type that will be most commonly used when deploying internally built applications. This will
+provide integrations with the rest of the NTAs infrastructure and generate the necessary objects to OpenShift to support
+the application.
 
-```
-config/cluster : "@cluster@"
-```
+#### development
+The development deployment type is similar to the release deployment type but it will not deploy a prebuilt image and
+instead create an OpenShift BuildConfig that can be used to build ad hoc images from DeliveryBundles from your local
+development machine. 
 
-This will create a config value with the actual value of the cluster.
+This will usually significantly reduce the time needed to get code from a development machine running on OpenShift
+compared to, for instance, a CI/CD pipeline.
 
-### Extracting DeploymentSpec
+#### template
+Supports deploying an application from a template available on the cluster. See [Guidelines for developing templates](#template_dev_guidelines).
 
-#### Generate application from Delivery Bundle
+#### localTemplate  
+Supports deploying an application from a template available in the AuroraConfig folder. See [Guidelines for developing templates](#template_dev_guidelines).
 
-If you use the type deploy og development the application objects are generated using a Kotlin DSL from the following fields
+
+### Configuration for Deployment Types "deploy" and "development"
 
 | path                   | default     | description                                                                                                                                                  |
 | ---------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -167,9 +185,8 @@ If you use the type deploy og development the application objects are generated 
 | replicas               | 1           | Number of replicas of this application to run.                                                                                                               |
 | pause                  | false       | Toggle to pause an application. This will scale it down to 0 and add a label showing it is paused.                                                           |
 
-#### Generate application from template
 
-If type is template or local template the application objects are generated by applying the template from the following fields.
+### Configuration for Deployment Types "template" and "localTemplate"
 
 | path             | default | description                                                                                                                   |
 | ---------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -177,13 +194,28 @@ If type is template or local template the application objects are generated by a
 | templateFile     |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate |
 | parameters/<KEY> |         | set value for a parameter in the template.                                                                                    |
 
-When creating templates the following guidelines should be followed:
- - include the following parameters VERSION, NAME and if appropriate REPLICAS. They will be populated from relevant AuroraConfig fields
- - the following labels will be added to the template: app, affiliation, updatedBy
- - if the template does not have a VERSION parameter it will not be upgradable from internal web tools
+
+### Exposing an application via HTTP
+
+The default behavior is that the application is only visible to other application in the same namespace using
+its service name.  
+
+In order to control routes into the application the following fields can be used.
+
+| path                                | default                    | description                                                                                                                                        |
+| ----------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| route                               | false                      | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.  |
+| route/<routename>/host              |                            | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                            |
+| route/<routename>/path              |                            | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL |
+| route/<routename>/annotations/<key> |                            | Set annotations for a given route. Note that you should use                                                                                        | instead of / in annotation keys. so 'haproxy.router.openshift.io | balance'. See https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations[route annotations] for some options. |
+| routeDefaults/host                  | @name@-@affiliation@-@env@ | Set the host of a route according to the given pattern.                                                                                            |
+| routeDefaults/path                  |                            | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL |
+| routeDefaults/annotations/<key>     |                            | Set annotations for a given route. Note that you should use                                                                                        | instead of / in annotation keys. so 'haproxy.router.openshift.io | balance'. See https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations[route annotations] for some options. |
+
+Route annotations are usable for template types but you need to create a Service with name after the NAME parameter yourself.
   
 
-### Enrich the application with provisioning NTA resources
+### NTA specific integrations
 
 | path                   | default | description                                                                                                                         |
 | ---------------------- | --------| ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -203,28 +235,10 @@ NTA has the following technologies that can be automated with the above fields
 
 These integrations are available for all types however note that if you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
 
-#### Exposing an application via HTTP
 
-The default behavior is that the application is only visible to other application in the same namespace using
-its service name.  
+## Example configuration
 
-In order to control routes into the application the following fields can be used.
-
-| path                                | default                    | description                                                                                                                                        |
-| ----------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| route                               | false                      | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.  |
-| route/<routename>/host              |                            | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                            |
-| route/<routename>/path              |                            | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL |
-| route/<routename>/annotations/<key> |                            | Set annotations for a given route. Note that you should use                                                                                        | instead of / in annotation keys. so 'haproxy.router.openshift.io | balance'. See https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations[route annotations] for some options. |
-| routeDefaults/host                  | @name@-@affiliation@-@env@ | Set the host of a route according to the given pattern.                                                                                            |
-| routeDefaults/path                  |                            | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL |
-| routeDefaults/annotations/<key>     |                            | Set annotations for a given route. Note that you should use                                                                                        | instead of / in annotation keys. so 'haproxy.router.openshift.io | balance'. See https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations[route annotations] for some options. |
-
-Route annotations are usable for template types but you need to create a Service with name after the NAME parameter yourself.
-
-### Example configuration
-
-#### Simple reference-application
+### Simple reference-application
 
 Below is an example of how you could configure an instance of the [reference application](https://github.com/skatteetaten/openshift-reference-springboot-server)
 
@@ -287,7 +301,7 @@ config:
 cluster: dev
 ```
 
-#### Applying template with NTA integrations
+### Applying template with NTA integrations
 
 about.yaml
 ```yaml
@@ -338,3 +352,10 @@ parameters:
   DB_NAME: atomhopper
   DOMAIN_NAME: localhost
 ```
+
+
+## <a name="template_dev_guidelines"></a>Guidelines for developing templates
+When creating templates the following guidelines should be followed:
+ - include the following parameters VERSION, NAME and if appropriate REPLICAS. They will be populated from relevant AuroraConfig fields
+ - the following labels will be added to the template: app, affiliation, updatedBy
+ - if the template does not have a VERSION parameter it will not be upgradable from internal web tools
