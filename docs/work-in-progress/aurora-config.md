@@ -137,6 +137,8 @@ If you use the type deploy og development the application objects are generated 
 | liveness/timeout       | 1           | Number of seconds timeout before giving up livenss                                                                                                           |
 | replicas               | 1           | Number of replicas of this application to run.                                                                                                               |
 | pause                  | false       | Toggle to pause an application. This will scale it down to 0 and add a label showing it is paused.                                                           |
+| toxiproxy              | false       | Toxiproxy feature toggle using default version                                                                                                                  |
+| toxiproxy/version      | 2.1.3       | Toxiproxy version                                                                                                                                              |
 
 #### Generate application from template
 
