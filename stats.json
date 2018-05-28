@@ -8,29 +8,33 @@
       "path----98e6476ef3fbfe6a4941.js",
       "path----98e6476ef3fbfe6a4941.js.map"
     ],
+    "path---documentation-aurora-config": [
+      "path---documentation-aurora-config-32aeb3aa1e37fa629544.js",
+      "path---documentation-aurora-config-32aeb3aa1e37fa629544.js.map"
+    ],
     "component---src-templates-documentation-template-js": [
       "component---src-templates-documentation-template-js-d35855665bec2f4fba5e.js",
       "component---src-templates-documentation-template-js-d35855665bec2f4fba5e.js.map"
     ],
     "path---documentation": [
-      "path---documentation-ec173a0abd77ad34a205.js",
-      "path---documentation-ec173a0abd77ad34a205.js.map"
+      "path---documentation-4ccf3230587bd40e14ca.js",
+      "path---documentation-4ccf3230587bd40e14ca.js.map"
     ],
     "component---src-layouts-index-js": [
-      "component---src-layouts-index-js-2966ae6698cd2babf4ed.js",
-      "component---src-layouts-index-js-2966ae6698cd2babf4ed.js.map"
+      "component---src-layouts-index-js-f24cafbaaa393a082428.js",
+      "component---src-layouts-index-js-f24cafbaaa393a082428.js.map"
     ],
     "path---frontpage-deploy": [
-      "path---frontpage-deploy-3603b20a103515db0fd3.js",
-      "path---frontpage-deploy-3603b20a103515db0fd3.js.map"
+      "path---frontpage-deploy-27d54acb008c4e098be5.js",
+      "path---frontpage-deploy-27d54acb008c4e098be5.js.map"
     ],
     "path---index": [
-      "path---index-aafdf9123fe7bc78d64d.js",
-      "path---index-aafdf9123fe7bc78d64d.js.map"
+      "path---index-ea4bfb06c05de2f404b7.js",
+      "path---index-ea4bfb06c05de2f404b7.js.map"
     ],
     "path---frontpage-faster-development": [
-      "path---frontpage-faster-development-14b897f087eb8c8f27b9.js",
-      "path---frontpage-faster-development-14b897f087eb8c8f27b9.js.map"
+      "path---frontpage-faster-development-7ff2e6cde7180b6bdd1b.js",
+      "path---frontpage-faster-development-7ff2e6cde7180b6bdd1b.js.map"
     ],
     "component---src-pages-404-js": [
       "component---src-pages-404-js-4503918ea3a16cfcdb75.js",
@@ -43,20 +47,20 @@
       "build-js-styles.css.map"
     ],
     "path---frontpage-build": [
-      "path---frontpage-build-7f185cf980d9899f13c6.js",
-      "path---frontpage-build-7f185cf980d9899f13c6.js.map"
+      "path---frontpage-build-32894fdf37a1bf64c352.js",
+      "path---frontpage-build-32894fdf37a1bf64c352.js.map"
     ],
     "path---404-html": [
       "path---404-html-a0e39f21c11f6a62c5ab.js",
       "path---404-html-a0e39f21c11f6a62c5ab.js.map"
     ],
     "path---frontpage-observe": [
-      "path---frontpage-observe-8f877af9d7c41fc09337.js",
-      "path---frontpage-observe-8f877af9d7c41fc09337.js.map"
+      "path---frontpage-observe-89566b3fc2a7ba63b7a8.js",
+      "path---frontpage-observe-89566b3fc2a7ba63b7a8.js.map"
     ],
     "path---documentation-openshift": [
-      "path---documentation-openshift-0714b2f3f0ec6a9c0d2c.js",
-      "path---documentation-openshift-0714b2f3f0ec6a9c0d2c.js.map"
+      "path---documentation-openshift-05a07b411d0a26ff886e.js",
+      "path---documentation-openshift-05a07b411d0a26ff886e.js.map"
     ],
     "component---src-pages-documentation-js": [
       "component---src-pages-documentation-js-1647dc936dfd04010cea.js",
@@ -67,18 +71,14 @@
       "path---frontpage-why-db81a4e3b5bbd6c80b4f.js.map"
     ],
     "app": [
-      "app-6e496cf603528e66fc76.js",
+      "app-37086ac4ada996489a57.js",
       "build-js-styles.css",
-      "app-6e496cf603528e66fc76.js.map",
+      "app-37086ac4ada996489a57.js.map",
       "build-js-styles.css.map"
     ],
     "path---404": [
       "path---404-a0e39f21c11f6a62c5ab.js",
       "path---404-a0e39f21c11f6a62c5ab.js.map"
-    ],
-    "path---work-in-progress-aurora-config": [
-      "path---work-in-progress-aurora-config-a7e388e16725d645fe22.js",
-      "path---work-in-progress-aurora-config-a7e388e16725d645fe22.js.map"
     ]
   }
 }
