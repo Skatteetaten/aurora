@@ -8,13 +8,17 @@
       "path----98e6476ef3fbfe6a4941.js",
       "path----98e6476ef3fbfe6a4941.js.map"
     ],
+    "path---documentation-aurora-config": [
+      "path---documentation-aurora-config-8f0212b85e2d6cc2a18f.js",
+      "path---documentation-aurora-config-8f0212b85e2d6cc2a18f.js.map"
+    ],
     "component---src-templates-documentation-template-js": [
       "component---src-templates-documentation-template-js-d35855665bec2f4fba5e.js",
       "component---src-templates-documentation-template-js-d35855665bec2f4fba5e.js.map"
     ],
     "path---documentation": [
-      "path---documentation-ec173a0abd77ad34a205.js",
-      "path---documentation-ec173a0abd77ad34a205.js.map"
+      "path---documentation-4ccf3230587bd40e14ca.js",
+      "path---documentation-4ccf3230587bd40e14ca.js.map"
     ],
     "component---src-layouts-index-js": [
       "component---src-layouts-index-js-f24cafbaaa393a082428.js",
@@ -25,8 +29,8 @@
       "path---frontpage-deploy-27d54acb008c4e098be5.js.map"
     ],
     "path---index": [
-      "path---index-b92550b3eb7db87566ac.js",
-      "path---index-b92550b3eb7db87566ac.js.map"
+      "path---index-9c95d1d28938eee37a18.js",
+      "path---index-9c95d1d28938eee37a18.js.map"
     ],
     "path---frontpage-faster-development": [
       "path---frontpage-faster-development-7ff2e6cde7180b6bdd1b.js",
@@ -67,18 +71,14 @@
       "path---frontpage-why-db81a4e3b5bbd6c80b4f.js.map"
     ],
     "app": [
-      "app-88747e5cafb381b35bdb.js",
+      "app-37086ac4ada996489a57.js",
       "build-js-styles.css",
-      "app-88747e5cafb381b35bdb.js.map",
+      "app-37086ac4ada996489a57.js.map",
       "build-js-styles.css.map"
     ],
     "path---404": [
       "path---404-a0e39f21c11f6a62c5ab.js",
       "path---404-a0e39f21c11f6a62c5ab.js.map"
-    ],
-    "path---work-in-progress-aurora-config": [
-      "path---work-in-progress-aurora-config-d56c52a0ba7caa4458ca.js",
-      "path---work-in-progress-aurora-config-d56c52a0ba7caa4458ca.js.map"
     ]
   }
 }
