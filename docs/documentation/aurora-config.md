@@ -34,11 +34,11 @@ For the applications App1 and App2, and the environments test and prod, a typica
     ├── about.yaml     (Configuration for all applications in all environments)
     ├── App1.yaml      (General configuration for App1)
     ├── App2.yaml      (General configuration for App2)
-    ├── prod           (A folder named prod)
+    ├── prod           (A folder named prod, representing the environment prod)
     │  ├── about.yaml  (Configuration for all applications in environment prod)
     │  ├── App1.yaml   (Configuration for App1 in environment prod)
     │  └── App2.yaml   (Configuration for App2 in environment prod)
-    └── test           (A folder named test)
+    └── test           (A folder named test, representing the environment test)
        ├── about.yaml  (Configuration for all applications in environment test)
        ├── App1.yaml   (Configuration for App1 in environment test)
        └── App2.yaml   (Configuration for App2 in environment test)
@@ -96,27 +96,27 @@ and *app* files will be describe in a section called "Application files".
 
 #### About files
 
-| path                            | default     | substitution | description                                                                                                                                                                                              |
-| ------------------------------- | ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| _affiliation_                   |             | Yes          | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                      |
-| envName                         | $folderName | Yes (env)    | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                     |
-| env/name                        |             | Yes (env)    | An alias for envName                                                                                                                                                                                     |
-| env/ttl                         |             | No           | Set a time duration in format 1d, 12h aso that indicate how long until this namespace should be deleted                                                                                                  |
-| _permissions/admin_             |             | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required. |
-| permissions/view                |             | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
-| permissions/adminServiceAccount |             | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.  |
+| path                            | required | default     | substitution | description                                                                                                                                                                                              |
+| ------------------------------- |--------- | ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| affiliation                     | Yes      |             | affiliation  | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                      |
+| envName                         |          | $folderName | env          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                     |
+| env/name                        |          |             | env          | An alias for envName                                                                                                                                                                                     |
+| env/ttl                         |          |             | No           | Set a time duration in format 1d, 12h aso that indicate how long until this namespace should be deleted                                                                                                  |
+| permissions/admin               | Yes      |             | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required. |
+| permissions/view                |          |             | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
+| permissions/adminServiceAccount |          |             | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.  |
 
 #### Application files
-| path                | default   | substitution | description                                                                                                                                                                                                           |
-| ------------------- | --------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| _schemaVersion_     |           | No           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                               |
-| _type_              |           | No           | [See Deployment Types](#deployment_types)
-| applicationPlatform | java      | No           | Specify application platform. java or web are valid platforms. Is only used if type is deploy/development.                                                                                                           |
-| name                | $fileName | Yes          | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the app file. |
-| _cluster_           |           | Yes          | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                     |
-| ttl                 |           | No           | Set a time duration in format 1d, 12h aso that indicate how long until this application should be deleted                                                                                                             |
-| _version_           |           | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                                                                                                              |
-| segment             |           | Yes          | The segment the application exist in. 
+| path                | required | default   | substitution | description                                                                                                                                                                                                           |
+| ------------------- | -------- | --------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| schemaVersion       | Yes      |           | No           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                               |
+| type                | Yes      |           | No           | [See Deployment Types](#deployment_types)
+| applicationPlatform |          | java      | No           | Specify application platform. java or web are valid platforms. Is only used if type is deploy/development.                                                                                                           |
+| name                |          | $fileName | name         | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the app file. |
+| cluster             | Yes      |           | cluster      | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                     |
+| ttl                 |          |           | No           | Set a time duration in format 1d, 12h aso that indicate how long until this application should be deleted                                                                                                             |
+| version             | Yes      |           | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                                                                                                              |
+| segment             |          |           | segment      | The segment the application exist in. 
 
 
 ### <a name="deployment_types" ></a>Deployment Types
@@ -126,8 +126,8 @@ what other configuration options are available for that application. The deploym
 the objects that supports the application on OpenShift are generated, but it also affects the different types of
 integrations that are supported.
 
-#### release
-The release deployment type is used for deploying applications using the conventions from the Aurora Platform. You can
+#### deploy
+The deploy deployment type is used for deploying applications using the conventions from the Aurora Platform. You can
 read more about these conventions here: [How we Develop and Build our Applications](https://skatteetaten.github.io/aurora/documentation/openshift/#how-we-develop-and-build-our-applications).
 This is the deployment type that will be most commonly used when deploying internally built applications. This will
 provide integrations with the rest of the NTAs infrastructure and generate the necessary objects to OpenShift to support
@@ -317,7 +317,7 @@ sample-atomhopper.yaml
 
 ```yaml
 type: template
-template: aurora-atomhopper
+template: aurora-atomhopper-1.0.0
 database: true
 route: true
 parameters:
@@ -345,7 +345,7 @@ permissions :
   group : [PAAS_OPS, PAAS_DEV]
 splunkIndex : paas-test
 type: template
-template: aurora-atomhopper
+template: aurora-atomhopper-1.0.0
 database: true
 route: true
 parameters:
