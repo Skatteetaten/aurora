@@ -94,30 +94,29 @@ Since environments have their own folder and the environment is configured in an
 an *env* file will be described in a section called "About files" and options that can also be set in the *base* files 
 and *app* files will be describe in a section called "Application files".
 
-
 #### About files
 
 | path                            | default     | substitution | description                                                                                                                                                                                              |
 | ------------------------------- | ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | _affiliation_                   |             | Yes          | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                      |
-| envName                         | $folderName | Yes          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                     |
-| env/name                        |             | Yes          | An alias for envName                                                                                                                                                                                     |
+| envName                         | $folderName | Yes (env)    | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                     |
+| env/name                        |             | Yes (env)    | An alias for envName                                                                                                                                                                                     |
 | env/ttl                         |             | No           | Set a time duration in format 1d, 12h aso that indicate how long until this namespace should be deleted                                                                                                  |
 | _permissions/admin_             |             | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required. |
 | permissions/view                |             | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
 | permissions/adminServiceAccount |             | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.  |
 
 #### Application files
-| path                | default   | description                                                                                                                                                                                                           |
-| ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| _schemaVersion_     |           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                               |
-| _type_              |           | [See Deployment Types](#deployment_types)
-| applicationPlatform | java      | Specify application platform. java or web are valid platforms. Is only used if type is deploy/development.                                                                                                           |
-| name                | $fileName | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the app file. |
-| _cluster_           |           | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                     |
-| ttl                 |           | Set a time duration in format 1d, 12h aso that indicate how long until this application should be deleted                                                                                                             |
-| _version_           |           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                                                                                                              |
-| segment             |           | The segment the application exist in. 
+| path                | default   | substitution | description                                                                                                                                                                                                           |
+| ------------------- | --------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _schemaVersion_     |           | No           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                               |
+| _type_              |           | No           | [See Deployment Types](#deployment_types)
+| applicationPlatform | java      | No           | Specify application platform. java or web are valid platforms. Is only used if type is deploy/development.                                                                                                           |
+| name                | $fileName | Yes          | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the app file. |
+| _cluster_           |           | Yes          | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                     |
+| ttl                 |           | No           | Set a time duration in format 1d, 12h aso that indicate how long until this application should be deleted                                                                                                             |
+| _version_           |           | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                                                                                                              |
+| segment             |           | Yes          | The segment the application exist in. 
 
 
 ### <a name="deployment_types" ></a>Deployment Types
