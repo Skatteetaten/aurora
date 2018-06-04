@@ -1,22 +1,26 @@
-import React from 'react'
-import ContentButtons from '../components/ContentButtons'
-import Grid from 'aurora-frontend-react-komponenter/beholdere/Grid/Grid'
-import NavigationTile from 'aurora-frontend-react-komponenter/beholdere/NavigationTile/NavigationTile'
-import { SingleColumnRow } from '../components/Columns'
-import Link from 'gatsby-link'
+import React from "react";
+import ContentButtons from "../gatsby-starter-skatteetaten/src/components/ContentButtons";
+import Grid from "aurora-frontend-react-komponenter/beholdere/Grid/Grid";
+import NavigationTile from "aurora-frontend-react-komponenter/beholdere/NavigationTile/NavigationTile";
+import { SingleColumnRow } from "../gatsby-starter-skatteetaten/src/components/Columns";
+import Link from "gatsby-link";
 
-const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
+const DocumentationPage = ({
+  data: {
+    allMarkdownRemark: { edges }
+  }
+}) => {
   const contents = edges
     .filter(
       ({ node }) =>
-        node.fields && node.fields.slug.search('/documentation/') >= 0
+        node.fields && node.fields.slug.search("/documentation/") >= 0
     )
     .map(({ node }) => ({
       to: node.fields.slug,
       icon: node.frontmatter.icon,
       title: node.frontmatter.title,
-      description: node.frontmatter.description || '',
-    }))
+      description: node.frontmatter.description || ""
+    }));
 
   return (
     <Grid>
@@ -33,10 +37,10 @@ const DocumentationPage = ({ data: { allMarkdownRemark: { edges } } }) => {
         />
       </SingleColumnRow>
     </Grid>
-  )
-}
+  );
+};
 
-export default DocumentationPage
+export default DocumentationPage;
 
 export const pageQuery = graphql`
   query DocumentationQuery {
@@ -55,4 +59,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
