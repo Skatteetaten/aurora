@@ -6,7 +6,7 @@ description: "Opinionated way of configuring cloud applications"
 
 ## What is Aurora Config?
 
-TLDR; [Take me to the Configuration Reference!](#configuration-reference).
+TLDR; [Take me to the Configuration Reference!](#configuration-reference)
 
 Aurora Config is a custom file based configuration format developed by the Norwegian Tax Administration designed to be a concise 
 representation of how applications are configured and deployed across environments and clusters in an OpenShift
