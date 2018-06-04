@@ -24,7 +24,7 @@ in addition to an about.yaml file describing the environment itself. The followi
 | File              | Name in AC | Description                                                                      |
 | ------------      | ---------- | --------------------------------------------------------------------------- |
 | about.yaml        | global     | The *global* file is the most general file in an Aurora Config. All applications will inherit options set in this file. |
-| {app}.yaml        | base       | The *base* file contains general configuration for all instances of application {app} across all environments. All instances will inherit options set in this file and will potentially override options set in the *base* file. |
+| {app}.yaml        | base       | The *base* file contains general configuration for all instances of application {app} across all environments. All instances will inherit options set in this file and will potentially override options set in the *global* file. |
 | {env}/about.yaml  | env        | The *env* file contains general configuration for all applications in environment {env}. All applications in the environment will inherit options set in this file and potentially override options set in both the *base* file and *global* file. |
 | {env}/{app}.yaml  | app        | The *app* file contains specific configuration for application {app} in environment {env}. All options set in this file will potentially override options set in other files. |
                                
