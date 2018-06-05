@@ -1,0 +1,47 @@
+.buttons-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  justify-content: space-between;
+}
+
+.buttons-nav ul li {
+  border-bottom: 0.18rem solid #1d1d1b;
+  text-align: center;
+  position: relative;
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+  margin-bottom: 2rem;
+  flex-basis: 46%;
+}
+
+.buttons-nav ul li > a {
+  color: #1d1d1b;
+  text-decoration: none;
+  padding-bottom: 2.625rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0 !important;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.buttons-nav ul li > a:active,
+.buttons-nav ul li > a:focus,
+.buttons-nav ul li > a:hover {
+  border-color: #093e61;
+  background-color: #cde1f9;
+  transition: background-color 0.5s;
+  outline: 0;
+}
+
+.buttons-nav a {
+  border: 0;
+}
+
+@media (max-width: 1000px) {
+  .buttons-nav ul li {
+    flex-basis: 100%;
+  }
+}

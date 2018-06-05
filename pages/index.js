@@ -1,6 +1,6 @@
 import React from "react";
-import PostLink from "../gatsby-starter-skatteetaten/src/components/post-link";
-import Quote from "../gatsby-starter-skatteetaten/src/components/Quote";
+import PostLink from "../components/post-link";
+import Quote from "../components/Quote";
 import Grid from "aurora-frontend-react-komponenter/beholdere/Grid/Grid";
 import {
   SingleColumnRow,

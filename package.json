@@ -1,0 +1,24 @@
+{
+  "name": "aurora",
+  "version": "1.0.0",
+  "description": "Documentation for The Aurora Platform",
+  "scripts": {
+    "start": "cd gatsby-starter-skatteetaten && npm start",
+    "build": "cd gatsby-starter-skatteetaten && npm run build",
+    "deploy": "cd gatsby-starter-skatteetaten && npm run build && gh-pages -d public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skatteetaten/aurora.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Skatteetaten/aurora/issues"
+  },
+  "homepage": "https://github.com/Skatteetaten/aurora#readme",
+  "devDependencies": {
+    "gh-pages": "^1.2.0"
+  }
+}
