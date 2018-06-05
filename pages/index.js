@@ -1,7 +1,7 @@
 import React from "react";
 import PostLink from "../components/post-link";
 import Quote from "../components/Quote";
-import Grid from "aurora-frontend-react-komponenter/beholdere/Grid/Grid";
+import Grid from "aurora-frontend-react-komponenter/Grid";
 import {
   SingleColumnRow,
   DoubleColumnRow

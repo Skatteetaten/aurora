@@ -1,7 +1,6 @@
 import React from "react";
-import ContentButtons from "../components/ContentButtons";
-import Grid from "aurora-frontend-react-komponenter/beholdere/Grid/Grid";
-// import NavigationTile from "aurora-frontend-react-komponenter/beholdere/NavigationTile/NavigationTile";
+import Grid from "aurora-frontend-react-komponenter/Grid";
+import NavigationTile from "aurora-frontend-react-komponenter/NavigationTile";
 import { SingleColumnRow } from "../gatsby-starter-skatteetaten/src/components/Columns";
 import Link from "gatsby-link";
 
@@ -31,10 +30,10 @@ const DocumentationPage = ({
         </div>
       </SingleColumnRow>
       <SingleColumnRow>
-        {/* <NavigationTile
+        <NavigationTile
           contents={contents}
           renderLink={(to, content) => <Link to={to}>{content}</Link>}
-        /> */}
+        />
       </SingleColumnRow>
     </Grid>
   );
