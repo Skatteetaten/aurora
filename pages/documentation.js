@@ -32,7 +32,7 @@ const DocumentationPage = ({
       <SingleColumnRow>
         <NavigationTile
           contents={contents}
-          renderLink={(to, content) => <Link to={to}>{content}</Link>}
+          renderContent={(to, content) => <Link to={to}>{content}</Link>}
         />
       </SingleColumnRow>
     </Grid>
