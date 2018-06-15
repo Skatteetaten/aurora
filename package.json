@@ -7,7 +7,8 @@
     "build": "cd gatsby-starter-skatteetaten && npm run build",
     "deploy": "cd gatsby-starter-skatteetaten && npm run build && gh-pages -d public",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf public"
+    "clean": "rimraf public",
+    "deploy:ci": "gh-pages -d public"
   },
   "license": "Apache-2.0",
   "devDependencies": {

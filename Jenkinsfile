@@ -19,6 +19,9 @@ node {
     error('Branch is not master')
   }
 
+  String version = git.getTagFromCommit()
+  currentBuild.displayName = "${version} (${currentBuild.number})"
+
   if (props.nodeVersion) {
     echo 'Using Node version: ' + props.nodeVersion
     npm.setVersion(props.nodeVersion)
@@ -37,25 +40,28 @@ node {
     npm.install()
   }
 
-  String version = git.getTagFromCommit()
-  currentBuild.displayName = "${version} (${currentBuild.number})"
-
-    stage('Deploy to GitHub') {
-      try {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                          credentialsId: props.credentialsId,
-                          usernameVariable: 'GIT_USERNAME',
-                          passwordVariable: 'GIT_PASSWORD']]) {
-          git.setGitConfig()
-          sh("git config credential.username ${env.GIT_USERNAME}")
-          sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-          npm.run('run deploy')
-        }
-      } finally {
-        sh("git config --unset credential.username")
-        sh("git config --unset credential.helper")
-      }
+  stage('Build') {
+    dir('gatsby-starter-skatteetaten/') {
+      npm.build()
     }
+  }
+
+  stage('Deploy to GitHub') {
+    try {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                        credentialsId: props.credentialsId,
+                        usernameVariable: 'GIT_USERNAME',
+                        passwordVariable: 'GIT_PASSWORD']]) {
+        git.setGitConfig()
+        sh("git config credential.username ${env.GIT_USERNAME}")
+        sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
+        npm.run('run deploy:ci')
+      }
+    } finally {
+      sh("git config --unset credential.username")
+      sh("git config --unset credential.helper")
+    }
+  }
 
   stage('Clear workspace') {
     step([$class: 'WsCleanup'])
