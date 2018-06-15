@@ -17,6 +17,8 @@ def withGitCredentials(operations) {
 
       operations()
     }
+  } catch(Exception e) {
+    e.printStackTrace()
   } finally {
     sh("git config --unset credential.username")
     sh("git config --unset credential.helper")
