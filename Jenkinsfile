@@ -51,8 +51,6 @@ node {
     checkout scm
   }
 
-  String version = git.getTagFromCommit()
-  currentBuild.displayName = "${version} (${currentBuild.number})"
 
   stage('Init git submodule') {
     withGitCredentials {
@@ -72,6 +70,8 @@ node {
   }
 
   stage('Deploy to GitHub') {
+    String version = git.getTagFromCommit()
+    currentBuild.displayName = "${version} (${currentBuild.number})"
     withGitCredentials {
       npm.run('run deploy:ci')
     }
