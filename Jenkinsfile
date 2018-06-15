@@ -59,7 +59,6 @@ node {
   stage('Build') {
     dir('gatsby-starter-skatteetaten/') {
       npm.install()
-      npm.build()
     }
   }
 
@@ -73,7 +72,7 @@ node {
         sh("git config --global credential.https://github.com.username ${env.GIT_USERNAME}")
         sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
-        npm.run('run deploy:ci')
+        npm.run('run deploy')
       }
     } finally {
       sh("git config --global --unset credential.https://github.com.username")
