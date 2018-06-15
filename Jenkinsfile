@@ -41,14 +41,14 @@ node {
                         passwordVariable: 'GIT_PASSWORD']]) {
         git.setGitConfig()
         sh("git config --global credential.https://github.com.username ${env.GIT_USERNAME}")
-        sh("git config --global credential.https://github.com.helper '!echo password=\$GIT_PASSWORD; echo'")
+        sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
         sh("git submodule init")
         sh("git submodule update")
       }
     } finally {
       sh("git config --global --unset credential.https://github.com.username")
-      sh("git config --global --unset credential.https://github.com.helper")
+      sh("git config --global --unset credential.helper")
     }
   }
 
@@ -71,13 +71,13 @@ node {
                         passwordVariable: 'GIT_PASSWORD']]) {
         git.setGitConfig()
         sh("git config --global credential.https://github.com.username ${env.GIT_USERNAME}")
-        sh("git config --global credential.https://github.com.helper '!echo password=\$GIT_PASSWORD; echo'")
+        sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
         npm.run('run deploy:ci')
       }
     } finally {
       sh("git config --global --unset credential.https://github.com.username")
-      sh("git config --global --unset credential.https://github.com.helper")
+      sh("git config --global --unset credential.helper")
     }
   }
 
