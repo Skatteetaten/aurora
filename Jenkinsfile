@@ -1,5 +1,23 @@
 #!/usr/bin/env groovy
 
+def withGitCredentials(operations) {
+  try {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                      credentialsId: props.credentialsId,
+                      usernameVariable: 'GIT_USERNAME',
+                      passwordVariable: 'GIT_PASSWORD']]) {
+      git.setGitConfig()
+      sh("git config credential.username ${env.GIT_USERNAME}")
+      sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
+
+      operations()
+    }
+  } finally {
+    sh("git config --unset credential.username")
+    sh("git config --unset credential.helper")
+  }
+}
+
 Map<String, Object> props = [
   credentialsId                : 'github',
   nodeVersion                  : null  //possible values are 'node-6' and 'node-8', or whatever various node versions have been defined as in jenkins-master
@@ -37,20 +55,9 @@ node {
   }
 
   stage('Init git submodule') {
-    try {
-      withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                        credentialsId: props.credentialsId,
-                        usernameVariable: 'GIT_USERNAME',
-                        passwordVariable: 'GIT_PASSWORD']]) {
-        git.setGitConfig()
-        sh("git config credential.username ${env.GIT_USERNAME}")
-        sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-        sh("git submodule init")
-        sh("git submodule update")
-      }
-    } finally {
-      sh("git config --unset credential.username")
-      sh("git config --unset credential.helper")
+    withGitCredentials {
+      sh("git submodule init")
+      sh("git submodule update")
     }
   }
 
@@ -65,19 +72,8 @@ node {
   }
 
   stage('Deploy to GitHub') {
-    try {
-      withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                        credentialsId: props.credentialsId,
-                        usernameVariable: 'GIT_USERNAME',
-                        passwordVariable: 'GIT_PASSWORD']]) {
-        git.setGitConfig()
-        sh("git config credential.username ${env.GIT_USERNAME}")
-        sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-        npm.run('run deploy:ci')
-      }
-    } finally {
-      sh("git config --unset credential.username")
-      sh("git config --unset credential.helper")
+    withGitCredentials {
+      npm.run('run deploy:ci')
     }
   }
 
