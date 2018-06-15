@@ -34,8 +34,22 @@ node {
   }
 
   stage('Init git submodule') {
-    sh("git submodule init")
-    sh("git submodule update")
+    try {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                        credentialsId: props.credentialsId,
+                        usernameVariable: 'GIT_USERNAME',
+                        passwordVariable: 'GIT_PASSWORD']]) {
+        git.setGitConfig()
+        sh("git config credential.https://github.com.username ${env.GIT_USERNAME}")
+        sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
+
+        sh("git submodule init")
+        sh("git submodule update")
+      }
+    } finally {
+      sh("git config --unset credential.username")
+      sh("git config --unset credential.helper")
+    }
   }
 
   stage('Install') {
@@ -56,7 +70,7 @@ node {
                         usernameVariable: 'GIT_USERNAME',
                         passwordVariable: 'GIT_PASSWORD']]) {
         git.setGitConfig()
-        sh("git config credential.username ${env.GIT_USERNAME}")
+        sh("git config credential.https://github.com.username ${env.GIT_USERNAME}")
         sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
         npm.run('run deploy:ci')
