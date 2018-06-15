@@ -44,6 +44,7 @@ node {
 
   stage('Build') {
     dir('gatsby-starter-skatteetaten/') {
+      npm.install()
       npm.build()
     }
   }
