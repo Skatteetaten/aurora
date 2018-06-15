@@ -5,26 +5,6 @@ Map<String, Object> props = [
   nodeVersion                  : null  //possible values are 'node-6' and 'node-8', or whatever various node versions have been defined as in jenkins-master
 ]
 
-def withGitCredentials(operations) {
-  try {
-    withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                      credentialsId: props.credentialsId,
-                      usernameVariable: 'GIT_USERNAME',
-                      passwordVariable: 'GIT_PASSWORD']]) {
-      git.setGitConfig()
-      sh("git config credential.username ${env.GIT_USERNAME}")
-      sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-
-      operations()
-    }
-  } catch(Exception e) {
-    e.printStackTrace()
-  } finally {
-    sh("git config --unset credential.username")
-    sh("git config --unset credential.helper")
-  }
-}
-
 def git
 def npm
 
@@ -53,26 +33,9 @@ node {
     checkout scm
   }
 
-
   stage('Init git submodule') {
-    try {
-      withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                        credentialsId: props.credentialsId,
-                        usernameVariable: 'GIT_USERNAME',
-                        passwordVariable: 'GIT_PASSWORD']]) {
-        git.setGitConfig()
-        sh("git config credential.username ${env.GIT_USERNAME}")
-        sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-
-        sh("git submodule init")
-        sh("git submodule update")
-      }
-    } catch(Exception e) {
-      e.printStackTrace()
-    } finally {
-      sh("git config --unset credential.username")
-      sh("git config --unset credential.helper")
-    }
+    sh("git submodule init")
+    sh("git submodule update")
   }
 
   stage('Install') {
@@ -86,10 +49,20 @@ node {
   }
 
   stage('Deploy to GitHub') {
-    String version = git.getTagFromCommit()
-    currentBuild.displayName = "${version} (${currentBuild.number})"
-    withGitCredentials {
-      npm.run('run deploy:ci')
+    try {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                        credentialsId: props.credentialsId,
+                        usernameVariable: 'GIT_USERNAME',
+                        passwordVariable: 'GIT_PASSWORD']]) {
+        git.setGitConfig()
+        sh("git config credential.username ${env.GIT_USERNAME}")
+        sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
+
+        npm.run('run deploy:ci')
+      }
+    } finally {
+      sh("git config --unset credential.username")
+      sh("git config --unset credential.helper")
     }
   }
 
