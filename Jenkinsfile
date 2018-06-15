@@ -33,7 +33,7 @@ node {
     checkout scm
   }
 
-  stage('Init git submodule') {
+  stage('Clone starter') {
     try {
       withCredentials([[$class: 'UsernamePasswordMultiBinding',
                         credentialsId: props.credentialsId,
@@ -52,17 +52,17 @@ node {
     }
   }
 
-  stage('Install') {
+  stage('Install dependencies') {
     npm.install()
   }
 
-  stage('Build') {
+  stage('Install starter dependencies') {
     dir('gatsby-starter-skatteetaten/') {
       npm.install()
     }
   }
 
-  stage('Deploy to GitHub') {
+  stage('Build & deploy to GitHub') {
     try {
       withCredentials([[$class: 'UsernamePasswordMultiBinding',
                         credentialsId: props.credentialsId,
