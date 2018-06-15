@@ -37,9 +37,6 @@ node {
     error('Branch is not master')
   }
 
-  String version = git.getTagFromCommit()
-  currentBuild.displayName = "${version} (${currentBuild.number})"
-
   if (props.nodeVersion) {
     echo 'Using Node version: ' + props.nodeVersion
     npm.setVersion(props.nodeVersion)
@@ -53,6 +50,9 @@ node {
   stage('Checkout') {
     checkout scm
   }
+
+  String version = git.getTagFromCommit()
+  currentBuild.displayName = "${version} (${currentBuild.number})"
 
   stage('Init git submodule') {
     withGitCredentials {
