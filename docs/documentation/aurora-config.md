@@ -41,6 +41,7 @@ For the applications App1 and App2, and the environments test and prod, a typica
     │  └── App2.yaml   (Configuration for App2 in environment prod)
     └── test           (A folder named test, representing the environment test)
        ├── about.yaml  (Configuration for all applications in environment test)
+       ├── about-alternative.yaml  (Alternative Configuration for all applications in environment test)
        ├── App1.yaml   (Configuration for App1 in environment test)
        └── App2.yaml   (Configuration for App2 in environment test)
 
@@ -52,10 +53,13 @@ File named "test/App1Beta.yaml"
 
 ```yaml
 baseFile: App1.yaml
+enfFile: about-alternative.yaml
+
 ```
 
 In this scenario 'App1.yaml' would be used instead of 'App1Beta.yaml' (which does not exist) as the base file for the
-App1Beta in the environment test.
+App1Beta in the environment test. The env file about-alternative will be used instead of the standard about file. 
+Note that env files must start with the prefix `about`
 
 ## DeploymentSpec and ApplicationId
 
@@ -191,11 +195,14 @@ Supports deploying an application from a template available in the AuroraConfig 
 
 ### Configuration for Deployment Types "template" and "localTemplate"
 
-| path             | default | description                                                                                                                   |
-| ---------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| template         |         | Name of template in default namespace to use. This is required if type is template                                            |
-| templateFile     |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate |
-| parameters/<KEY> |         | set value for a parameter in the template.                                                                                    |
+| path             | default | description                                                                                                                                   |
+| ---------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| template         |         | Name of template in default namespace to use. This is required if type is template                                                            |
+| templateFile     |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate                 |
+| parameters/<KEY> |         | set value for a parameter in the template.                                                                                                    |
+| version          |         | If the template has the VERSION parameter set this version will be used for its value.. This enables updating of the application in web tools |
+| name             |         | If the template has the NAME parameter this field will be used for its value.                                                                 |
+| replicas         |         | If the template has the REPLICAS parameter this field will be used for its value.                                                             |
 
 ### Exposing an application via HTTP
 
@@ -215,6 +222,34 @@ In order to control routes into the application the following fields can be used
 | routeDefaults/annotations/<key>     |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations) for some options. |
 
 Route annotations are usable for template types but you need to create a Service with name after the NAME parameter yourself.
+
+### Managing Secrets
+In order to provide secret data AuroraConfig has a concept called SecretVault. Data is by default stored encrypted in git. TODO: refer to AO documentation on how to create secrets
+
+If a secretVault mounted in this way contains a latest.properties file the contents of that file will be made available as ENV vars.
+
+If you want to mount additional secretVaults this can be done with mounting it as a volume.
+
+| path                          | default | description                                                                                          |                                                                      |
+| ----------------------------- | ------------ | ------------------------------------------------------------------------------------------------|
+| secretVault                   |              | Specify full secret vault that will be mounted under default secret location.                   |
+| secretVault/name              |              | Used instead of secretVault if you want advanced configuration                                  |
+| secretVault/keys              |              | An array of keys from the latest.properties file in the vault you want to include.              |
+| secretVault/keyMapping        |              | An map of key -> value that will rewrite the key in the secret to another ENV var name          |
+
+### Mounting volumes
+
+| path                          | default | description                                                                                          |
+| ----------------------------- | ------------ | ----------------------------------------------------------------------------------------------- |
+| mount/<mountName>/type        |              | One of Secret, ConfigMap, PVC. Required for each mount.                                         |  
+| mount/<mountName>/path        |              | Path to the volume in the container. Required for each mount.                                   |
+| mount/<mountName>/mountName   | <mountName>  | Override the name of the mount in the container.                                                |
+| mount/<mountName>/volumeName  | <mountName>  | Override the name of the volume in the DeploymentConfig.                                        |
+| mount/<mountName>/exists      | false        | If this is set to true the existing resource must exist already.                                |
+| mount/<mountName>/content     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true |
+| mount/<mountName>/content     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true |
+| mount/<mountName>/secretVault |              | The name of the secretVault to use for populating a Secret. Type must be secret, Exist false.   |
+  
 
 ### NTA specific integrations
 
@@ -361,3 +396,4 @@ When creating templates the following guidelines should be followed:
 - include the following parameters VERSION, NAME and if appropriate REPLICAS. They will be populated from relevant AuroraConfig fields
 - the following labels will be added to the template: app, affiliation, updatedBy
 - if the template does not have a VERSION parameter it will not be upgradable from internal web tools
+- Each container in the template will get aditional ENV variables applied if NTA specific integrations are applied.
