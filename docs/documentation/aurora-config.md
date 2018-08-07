@@ -199,7 +199,7 @@ Supports deploying an application from a template available in the AuroraConfig 
 | ---------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | template         |         | Name of template in default namespace to use. This is required if type is template                                                            |
 | templateFile     |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate              |
-| parameters/<KEY> |         | The parameters option is used to set values for a parameters in the template. If the template has either of the parameters VERSION, NAME or REPLICAS, the values of these parameters will be set from the standard version, name and replicas AuroraConfig options.        |
+| `parameters/<KEY>` |         | The parameters option is used to set values for parameters in the template. If the template has either of the parameters VERSION, NAME or REPLICAS, the values of these parameters will be set from the standard version, name and replicas AuroraConfig options. |
 
 
 ### Exposing an application via HTTP
@@ -212,9 +212,9 @@ In order to control routes into the application the following fields can be used
 | path                                | default                                                                                                                                                         | description                                                                                                                                                                                                                                                                                                         |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | route                               | false                                                                                                                                                           | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                   |
-| route/<routename>/host              |                                                                                                                                                                 | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                                                                                                                                      |
-| route/<routename>/path              |                                                                                                                                                                 | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                  |
-| route/<routename>/annotations/<key> |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations) for some options. |
+| `route/<routename>/host`              |                                                                                                                                                                 | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                                                                                                                                      |
+| `route/<routename>/path`              |                                                                                                                                                                 | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                  |
+| `route/<routename>/annotations/<key>` |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations) for some options. |
 | routeDefaults/host                  | @name@-@affiliation@-@env@ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Set the host of a route according to the given pattern.                                                                                                                                                                                                                                                             |
 | routeDefaults/path                  |                                                                                                                                                                 | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                  |
 | routeDefaults/annotations/<key>     |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations) for some options. |
@@ -222,11 +222,21 @@ In order to control routes into the application the following fields can be used
 Route annotations are usable for template types but you need to create a Service with name after the NAME parameter yourself.
 
 ### Managing Secrets
-In order to provide secret data AuroraConfig has a concept called SecretVault. Data is by default stored encrypted in git. TODO: refer to AO documentation on how to create secrets
 
-If a secretVault mounted in this way contains a latest.properties file the contents of that file will be made available as ENV vars.
+In order to provide sensitive data to an application (i.e. passwords that cannot be stored directly in the configuration block of the AuroraConfig) it is possible to
+access Vaults that has been created with the `ao vault` command (see internal link 
+https://wiki.sits.no/pages/viewpage.action?pageId=143517331#AO(AuroraOpenShiftCLI)-AOVault). You can access the vaults in two different ways; as a 
+*mount* or via the *secretVault* option.
 
-If you want to mount additional secretVaults this can be done with mounting it as a volume.
+If a Vault is accessed via the secretVault option and the vault contains a file called `latest.properties` the contents of that file will be made available as
+environment variables for the application. Example;
+
+```
+PASSWORD=s3cr3t
+ENCRYPTION_KEY=8cdca234-9a3b-11e8-9eb6-529269fb1459
+```
+
+If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See the next section for more details.
 
 | path                          | default | description                                                                                          |                                                                      |
 | ----------------------------- | ------------ | ------------------------------------------------------------------------------------------------|
@@ -237,16 +247,16 @@ If you want to mount additional secretVaults this can be done with mounting it a
 
 ### Mounting volumes
 
-| path                          | default | description                                                                                          |
-| ----------------------------- | ------------ | ----------------------------------------------------------------------------------------------- |
-| mount/<mountName>/type        |              | One of Secret, ConfigMap, PVC. Required for each mount.                                         |  
-| mount/<mountName>/path        |              | Path to the volume in the container. Required for each mount.                                   |
-| mount/<mountName>/mountName   | <mountName>  | Override the name of the mount in the container.                                                |
-| mount/<mountName>/volumeName  | <mountName>  | Override the name of the volume in the DeploymentConfig.                                        |
-| mount/<mountName>/exists      | false        | If this is set to true the existing resource must exist already.                                |
-| mount/<mountName>/content     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true |
-| mount/<mountName>/content     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true |
-| mount/<mountName>/secretVault |              | The name of the secretVault to use for populating a Secret. Type must be secret, Exist false.   |
+| path                          | default | description                                                                                           |
+| ----------------------------- | ------------ | ------------------------------------------------------------------------------------------------ |
+| `mount/<mountName>/type`        |              | One of Secret, ConfigMap, PVC. Required for each mount.                                          |  
+| `mount/<mountName>/path`        |              | Path to the volume in the container. Required for each mount.                                    |
+| `mount/<mountName>/mountName`   | `<mountName>`  | Override the name of the mount in the container.                                                 |
+| `mount/<mountName>/volumeName`  | `<mountName>`  | Override the name of the volume in the DeploymentConfig.                                         |
+| `mount/<mountName>/exists`      | false        | If this is set to true the existing resource must exist already.                                 |
+| `mount/<mountName>/content`     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true. |
+| `mount/<mountName>/content`     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true. |
+| `mount/<mountName>/secretVault` |              | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
   
 
 ### NTA specific integrations
