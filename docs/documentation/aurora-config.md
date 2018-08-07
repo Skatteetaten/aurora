@@ -198,11 +198,9 @@ Supports deploying an application from a template available in the AuroraConfig 
 | path             | default | description                                                                                                                                   |
 | ---------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | template         |         | Name of template in default namespace to use. This is required if type is template                                                            |
-| templateFile     |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate                 |
-| parameters/<KEY> |         | set value for a parameter in the template.                                                                                                    |
-| version          |         | If the template has the VERSION parameter set this version will be used for its value.. This enables updating of the application in web tools |
-| name             |         | If the template has the NAME parameter this field will be used for its value.                                                                 |
-| replicas         |         | If the template has the REPLICAS parameter this field will be used for its value.                                                             |
+| templateFile     |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate              |
+| parameters/<KEY> |         | The parameters option is used to set values for a parameters in the template. If the template has either of the parameters VERSION, NAME or REPLICAS, the values of these parameters will be set from the standard version, name and replicas AuroraConfig options.        |
+
 
 ### Exposing an application via HTTP
 
