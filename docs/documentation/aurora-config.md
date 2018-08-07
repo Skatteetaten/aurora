@@ -53,7 +53,7 @@ File named "test/App1Beta.yaml"
 
 ```yaml
 baseFile: App1.yaml
-enfFile: about-alternative.yaml
+envFile: about-alternative.yaml
 
 ```
 
