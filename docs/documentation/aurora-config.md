@@ -192,6 +192,7 @@ Supports deploying an application from a template available in the AuroraConfig 
 | pause                  | false       | Toggle to pause an application. This will scale it down to 0 and add a label showing it is paused.                                                           |
 | toxiproxy              | false       | Toxiproxy feature toggle using default version                                                                                                               |
 | toxiproxy/version      | 2.1.3       | Toxiproxy version                                                                                                                                            |
+| config                 |             | Contains a collection of application configuration variables. The variables are passed on as environment variables to the container. Otherwise, they are ignored by the plattform, and it is up to the application to interpret them. Note: If you are using JSON, then both key and value should be enclosed in double quotes |  
 
 ### Configuration for Deployment Types "template" and "localTemplate"
 
@@ -249,14 +250,14 @@ If you want to mount additional Vaults or access vault files directly this can b
 
 | path                          | default | description                                                                                           |
 | ----------------------------- | ------------ | ------------------------------------------------------------------------------------------------ |
-| `mount/<mountName>/type`        |              | One of Secret, ConfigMap, PVC. Required for each mount.                                          |  
-| `mount/<mountName>/path`        |              | Path to the volume in the container. Required for each mount.                                    |
-| `mount/<mountName>/mountName`   | `<mountName>`  | Override the name of the mount in the container.                                                 |
-| `mount/<mountName>/volumeName`  | `<mountName>`  | Override the name of the volume in the DeploymentConfig.                                         |
-| `mount/<mountName>/exists`      | false        | If this is set to true the existing resource must exist already.                                 |
-| `mount/<mountName>/content`     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true. |
-| `mount/<mountName>/content`     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true. |
-| `mount/<mountName>/secretVault` |              | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
+| `mounts/<mountName>/type`        |              | One of Secret, ConfigMap, PVC. Required for each mount.                                          |  
+| `mounts/<mountName>/path`        |              | Path to the volume in the container. Required for each mount.                                    |
+| `mounts/<mountName>/mountName`   | `<mountName>`  | Override the name of the mount in the container.                                                 |
+| `mounts/<mountName>/volumeName`  | `<mountName>`  | Override the name of the volume in the DeploymentConfig.                                         |
+| `mounts/<mountName>/exists`      | false        | If this is set to true the existing resource must exist already.                                 |
+| `mounts/<mountName>/content`     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true. |
+| `mounts/<mountName>/content`     |              | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true. |
+| `mounts/<mountName>/secretVault` |              | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
   
 
 ### NTA specific integrations
