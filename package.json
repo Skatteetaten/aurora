@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cd gatsby-starter-skatteetaten && npm start",
     "build": "cd gatsby-starter-skatteetaten && npm run build",
-    "deploy": "npm run build && gh-pages -d public",
+    "deploy": "npm run build && gh-pages -d public -p 0",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf public"
   },
