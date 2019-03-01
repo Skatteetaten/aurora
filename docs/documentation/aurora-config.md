@@ -210,7 +210,7 @@ The following baseImage are in use at NTA
 | wrench8 | 1  | Oracle Jdk8 |
 | wingnut8 | 1  | OpenJdk 8 |
 | wingnut11 | 1  | OpenJDK 11 |
-| yeaster | 1  | NodeJs & Nginx |
+| yeaster | 1  | NodeJs 8 & Nginx |
 
 ### Configuration for Deployment Types "template" and "localTemplate"
 
