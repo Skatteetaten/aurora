@@ -102,7 +102,7 @@ and _app_ files will be describe in a section called "Application files".
 | path                            | required | default      | substitution | description                                                                                                                                                                                            |
 | ------------------------------- | -------- | ------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | affiliation                     | Yes      |              | affiliation  | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                    |
-| envName                         |          | $folderName  | env          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                   |
+| envName                         |          | \$folderName | env          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                   |
 | env/name                        |          |              | env          | An alias for envName                                                                                                                                                                                   |
 | env/ttl                         |          |              | No           | Set a time duration in format 1d, 12h that indicate how long until this namespace should be deleted                                                                                                    |
 | permissions/admin               | Yes      |              | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required. |
@@ -111,16 +111,17 @@ and _app_ files will be describe in a section called "Application files".
 
 #### Application files
 
-| path                | required | default    | substitution | description                                                                                                                                                                                                           |
-| ------------------- | -------- | ---------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| schemaVersion       | Yes      |            | No           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                              |
-| type                | Yes      |            | No           | [See Deployment Types](#deployment_types)                                                                                                                                                                             |
-| applicationPlatform |          | java       | No           | Specify application platform. java or web are valid platforms. Is only used if type is deploy/development.                                                                                                            |
-| name                |          | $fileName  | name         | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the app file. |
-| cluster             | Yes      |            | cluster      | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                     |
-| ttl                 |          |            | No           | Set a time duration in format 1d, 12h that indicate how long until this application should be deleted                                                                                                                 |
-| version             | Yes      |            | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                               |
-| segment             |          |            | segment      | The segment the application exist in.                                                                                                                                                                                 |
+| path                | required | default        | substitution | description                                                                                                                                                                                                            |
+| ------------------- | -------- | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| schemaVersion       | Yes      |                | No           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                               |
+| type                | Yes      |                | No           | [See Deployment Types](#deployment_types)                                                                                                                                                                              |
+| applicationPlatform |          | java           | No           | Specify application platform. java or web are valid platforms. Is only used if type is deploy/development.                                                                                                             |
+| name                |          | \$baseFileName | name         | The name of the application. All objects created in the cluster will get an app label with this name. Cannot be longer then 40 (alphanumeric -). Note that the default value here is the actual name of the base file. |
+| cluster             | Yes      |                | cluster      | What cluster should the application be deployed to. Must be a valid cluster name.                                                                                                                                      |
+| ttl                 |          |                | No           | Set a time duration in format 1d, 12h that indicate how long until this application should be deleted                                                                                                                  |
+| version             | Yes      |                | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy)                                |
+| segment             |          |                | segment      | The segment the application exist in.                                                                                                                                                                                  |
+| message             |          |                | message      | An message that will be added to the ApplicationDeployment CRD.                                                                                                                                                        |
 
 ### <a name="deployment_types" ></a>Deployment Types
 
@@ -158,7 +159,7 @@ Supports deploying an application from a template available in the AuroraConfig 
 
 | path                   | default     | description                                                                                                                                                                                                                                                                                                                   |
 | ---------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| releaseTo              |             | Used to release a given version as a shared tag in the docker registry. Other env can then use it in 'version'. NB! Must be manually updated with ao/console                                                                                                                                                                  |
+| releaseTo              |             | Used to release a given version as a shared tag in the docker registry. Other env can then use it in 'version'. NB! Must be manually updated with AO/Aurora Konsoll                                                                                                                                                           |
 | path                   | default     | description                                                                                                                                                                                                                                                                                                                   |
 | debug                  | false       | Toggle to enable remote debugging on port 5005. Port forward this port locally and setup remote debugging in your Java IDE.                                                                                                                                                                                                   |
 | deployStrategy/type    | rolling     | Specify type of deployment, either rolling or recreate                                                                                                                                                                                                                                                                        |
@@ -168,7 +169,7 @@ Supports deploying an application from a template available in the AuroraConfig 
 | resources/memory/min   | 128Mi       | Specify minimum/request memory.                                                                                                                                                                                                                                                                                               |
 | resources/memory/max   | 512Mi       | Specify maximum/limit memory. By default 25% of this will be set to XMX in java.                                                                                                                                                                                                                                              |
 | groupId                |             | groupId for your application. Max 200 length. Required if deploy/development                                                                                                                                                                                                                                                  |
-| artifactId             | $fileName   | artifactId for your application. Max 50 length                                                                                                                                                                                                                                                                                |
+| artifactId             | \$fileName  | artifactId for your application. Max 50 length                                                                                                                                                                                                                                                                                |
 | splunkIndex            |             | Set to a valid splunk-index to log to splunk. Only valid if splunk is enabled in the Aurora API                                                                                                                                                                                                                               |
 | serviceAccount         |             | Set to an existing serviceAccount if you need special privileges                                                                                                                                                                                                                                                              |
 | prometheus             | true        | Toggle to false if application do not have Prometheus metrics                                                                                                                                                                                                                                                                 |
@@ -193,13 +194,31 @@ Supports deploying an application from a template available in the AuroraConfig 
 | toxiproxy/version      | 2.1.3       | Toxiproxy version                                                                                                                                                                                                                                                                                                             |
 | config                 |             | Contains a collection of application configuration variables. The variables are passed on as environment variables to the container. Otherwise, they are ignored by the platform, and it is up to the application to interpret them. Note: If you are using JSON, then both key and value should be enclosed in double quotes |
 
+For development flow the following configuration properties are available to specify how to build the image locally
+
+| path              | default   | description                                                                              |
+| ----------------- | --------- | ---------------------------------------------------------------------------------------- |
+| builder/name      | architect | Name of the builder image that is used to run the build                                  |
+| builder/version   | 1         | Version of the builder image to use. NB! This must be a tag in the architect imagestream |
+| baseImage/name    |           | Name of the baseImage to use,                                                            |
+| baseImage/version |           | Version of the baseImage to use.NB! This must be a tag in the baseImage imagestream      |
+
+The following baseImage are in use at NTA
+
+| name      | version | description      |
+| --------- | ------- | ---------------- |
+| wrench8   | 1       | Oracle Jdk8      |
+| wingnut8  | 1       | OpenJdk 8        |
+| wingnut11 | 1       | OpenJDK 11       |
+| yeaster   | 1       | NodeJs 8 & Nginx |
+
 ### Configuration for Deployment Types "template" and "localTemplate"
 
-| path               | default | description                                                                                                                                                                                                                                                       |
-| ------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| template           |         | Name of template in default namespace to use. This is required if type is template                                                                                                                                                                                |
-| templateFile       |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate                                                                                                                                     |
-| `parameters/<KEY>` |         | The parameters option is used to set values for parameters in the template. If the template has either of the parameters VERSION, NAME or REPLICAS, the values of these parameters will be set from the standard version, name and replicas AuroraConfig options. |
+| path               | default | description                                                                                                                                                                                                                                                                     |
+| ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| template           |         | Name of template in default namespace to use. This is required if type is template                                                                                                                                                                                              |
+| templateFile       |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate                                                                                                                                                   |
+| `parameters/<KEY>` |         | The parameters option is used to set values for parameters in the template. If the template has either of the parameters VERSION, NAME, SPLUNK_INDEX or REPLICAS, the values of these parameters will be set from the standard version, name and replicas AuroraConfig options. |
 
 ### Exposing an application via HTTP
 
@@ -208,14 +227,14 @@ its service name.
 
 In order to control routes into the application the following fields can be used.
 
-| path                                  | default                                                                                                                                                         | description                                                                                                                                                                                                                                                                                                         |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| route                                 | false                                                                                                                                                           | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                   |
-| `route/<routename>/host`              |                                                                                                                                                                 | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                                                                                                                                      |
-| `route/<routename>/path`              |                                                                                                                                                                 | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                  |
-| `route/<routename>/annotations/<key>` |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations) for some options. |
-| routeDefaults/host                    | @name@-@affiliation@-@env@ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Set the host of a route according to the given pattern.                                                                                                                                                                                                                                                             |
-| routeDefaults/annotations/<key>       |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#route-specific-annotations) for some options. |
+| path                                  | default                                                                                                                                                         | description                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| route                                 | false                                                                                                                                                           | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                 |
+| `route/<routename>/host`              |                                                                                                                                                                 | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                                                                                                                                    |
+| `route/<routename>/path`              |                                                                                                                                                                 | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                |
+| `route/<routename>/annotations/<key>` |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. |
+| routeDefaults/host                    | @name@-@affiliation@-@env@ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Set the host of a route according to the given pattern.                                                                                                                                                                                                                                                           |
+| routeDefaults/annotations/<key>       |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. |
 
 Route annotations are usable for template types but you need to create a Service with name after the NAME parameter yourself.
 
@@ -258,23 +277,51 @@ If you want to mount additional Vaults or access vault files directly this can b
 
 ### NTA specific integrations
 
-| path                   | default | description                                                                                                                         |
-| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| webseal                | false   | Toggle to expose application through WebSeal.                                                                                       |
-| webseal/host           |         | Set this to change the default prefix in WebSeal                                                                                    |
-| webseal/roles          |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                                    |
-| certificate            | false   | Toggle to add a certificate with CommonName $groupId.$artifactId.                                                                   |
-| certificate/commonName |         | Generate an STS certificate with the given commonName.                                                                              |
-| database               | false   | Toggle this to add a database with $name to your application.                                                                      |
-| `database/<name>`      |         | If you want to add multiple databases specify a name for each. Set the value to 'auto' for auto generation or a given ID to pin it. |
+| path                   | default | description                                                                                      |
+| ---------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| webseal                | false   | Toggle to expose application through WebSeal.                                                    |
+| webseal/host           |         | Set this to change the default prefix in WebSeal                                                 |
+| webseal/roles          |         | Set roles required to access this route. This can either be set as CSV or as an array of strings |
+| certificate            | false   | Toggle to add a certificate with CommonName $groupId.$artifactId.                                |
+| certificate/commonName |         | Generate an STS certificate with the given commonName.                                           |
 
 NTA has the following technologies that can be automated with the above fields
 
 - Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
 - STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between them
-- Oracle Databases: We haven a DBH-api that expose functionality to auto provision a Oracle schema on a shared server. The API can also handle manual SQL connections for you so the application can get the credentials in one way
 
 These integrations are available for all types however note that if you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
+
+### NTA Dbh integration
+
+[dbh](https://github.com/skatteetaten/dbh) is a service that enables an application to ask for credentials to a database schema.
+
+If there is no schema the default behavior is to create one.
+
+It is possible to change the default values for this process so that each application that wants a database can just use the `database=true` instruction
+
+| path                                   | default        | description                                                                                                                                                        |
+| -------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| databaseDefaults/flavor                | ORACLE_MANAGED | One of `ORACLE_MANAGED`, `POSTGRES_MANAGED`.                                                                                                                       |
+| databaseDefaults/generate              | true           | Set this to false to avoid generating a new schema if your lables does not match an existing one                                                                   |
+| databaseDefaults/name                  | @name@         | The default name to given a database when using database=true                                                                                                      |
+| databaseDefaults/instance/name         |                | The name of the instance you want to use for yor db schemas                                                                                                        |  |
+| databaseDefaults/instance/fallback     | true           | If your instance does not match by labels, a fallback instance will be used if available. Default is true for ORACLE_MANAGED and false for POSTGRES_MANAGED        |
+| databaseDefaults/instance/labels/<key> |                | Set key=value pair that will be sent when matching database instances. Default is affiliation=@affiliation@                                                        |
+| database                               | false          | Toggle this to add a database with \$name to your application.                                                                                                     |
+| `database/<name>`                      |                | Simplified config for multiple databases.If you want to add multiple databases specify a name for each. Set to 'auto' for auto generation or a given ID to pin it. |
+
+If you want to change the default configuration for one application you need to use the expanded syntax
+
+| path                                    | default                              | description                                       |
+| --------------------------------------- | ------------------------------------ | ------------------------------------------------- |
+| `database/<name>/flavor`                | \$databaseDefaults/flavor            | Override default flavor.                          |
+| `database/<name>/name`                  | <name>                               | Override the name of the database.                |
+| `database/<name>/id`                    |                                      | Set the id of the database to get an exact match. |
+| `database/<name>/generate`              | \$databaseDefaults/generate          | Override default generate.                        |
+| `database/<name>/instance/name`         | \$databaseDefaults/instance/name     | Override default instance/name.                   |
+| `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback | Override default instance/fallback.               |
+| `database/<name>/instnace/labels/<key>` |                                      | Add/override labels for instance.                 |
 
 ## Example configuration
 
@@ -358,6 +405,8 @@ sample-atomhopper.yaml
 ```yaml
 type: template
 template: aurora-atomhopper-1.0.0
+databaseDefaults:
+  flavor: POSTGRES_MANAGED
 database: true
 route: true
 parameters:
@@ -386,6 +435,8 @@ permissions:
 splunkIndex: paas-test
 type: template
 template: aurora-atomhopper-1.0.0
+databaseDefaults:
+  flavor: POSTGRES_MANAGED
 database: true
 route: true
 parameters:
@@ -401,4 +452,4 @@ When creating templates the following guidelines should be followed:
 - include the following parameters VERSION, NAME and if appropriate REPLICAS. They will be populated from relevant AuroraConfig fields
 - the following labels will be added to the template: app, affiliation, updatedBy
 - if the template does not have a VERSION parameter it will not be upgradable from internal web tools
-- Each container in the template will get aditional ENV variables applied if NTA specific integrations are applied.
+- Each container in the template will get additional ENV variables applied if NTA specific integrations are applied.
