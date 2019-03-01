@@ -196,21 +196,21 @@ Supports deploying an application from a template available in the AuroraConfig 
 
 For development flow the following configuration properties are available to specify how to build the image locally
 
-| path                   | default     | description                                                                                                                                                                                                                                                                                                                   |
-| ---------------------- | ----------- | -----------------------------------------------------------------------------------------|
-| builder/name           | architect   | Name of the builder image that is used to run the build                                  |      
-| builder/version        | 1           | Version of the builder image to use. NB! This must be a tag in the architect imagestream |
-| baseImage/name         |             | Name of the baseImage to use,                                                            |      
-| baseImage/version      |             | Version of the baseImage to use.NB! This must be a tag in the baseImage imagestream      |
+| path              | default   | description                                                                              |
+| ----------------- | --------- | ---------------------------------------------------------------------------------------- |
+| builder/name      | architect | Name of the builder image that is used to run the build                                  |
+| builder/version   | 1         | Version of the builder image to use. NB! This must be a tag in the architect imagestream |
+| baseImage/name    |           | Name of the baseImage to use,                                                            |
+| baseImage/version |           | Version of the baseImage to use.NB! This must be a tag in the baseImage imagestream      |
 
 The following baseImage are in use at NTA
 
-| name | version | description |
-|------|---------| ------------|
-| wrench8 | 1  | Oracle Jdk8 |
-| wingnut8 | 1  | OpenJdk 8 |
-| wingnut11 | 1  | OpenJDK 11 |
-| yeaster | 1  | NodeJs 8 & Nginx |
+| name      | version | description      |
+| --------- | ------- | ---------------- |
+| wrench8   | 1       | Oracle Jdk8      |
+| wingnut8  | 1       | OpenJdk 8        |
+| wingnut11 | 1       | OpenJDK 11       |
+| yeaster   | 1       | NodeJs 8 & Nginx |
 
 ### Configuration for Deployment Types "template" and "localTemplate"
 
