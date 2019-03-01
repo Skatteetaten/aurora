@@ -194,6 +194,24 @@ Supports deploying an application from a template available in the AuroraConfig 
 | toxiproxy/version      | 2.1.3       | Toxiproxy version                                                                                                                                                                                                                                                                                                             |
 | config                 |             | Contains a collection of application configuration variables. The variables are passed on as environment variables to the container. Otherwise, they are ignored by the platform, and it is up to the application to interpret them. Note: If you are using JSON, then both key and value should be enclosed in double quotes |
 
+For development flow the following configuration properties are available to specify how to build the image locally
+
+| path                   | default     | description                                                                                                                                                                                                                                                                                                                   |
+| ---------------------- | ----------- | -----------------------------------------------------------------------------------------|
+| builder/name           | architect   | Name of the builder image that is used to run the build                                  |      
+| builder/version        | 1           | Version of the builder image to use. NB! This must be a tag in the architect imagestream |
+| baseImage/name         |             | Name of the baseImage to use,                                                            |      
+| baseImage/version      |             | Version of the baseImage to use.NB! This must be a tag in the baseImage imagestream      |
+
+The following baseImage are in use at NTA
+
+| name | version | description |
+|------|---------| ------------|
+| wrench8 | 1  | Oracle Jdk8 |
+| wingnut8 | 1  | OpenJdk 8 |
+| wingnut11 | 1  | OpenJDK 11 |
+| yeaster | 1  | NodeJs & Nginx |
+
 ### Configuration for Deployment Types "template" and "localTemplate"
 
 | path               | default | description                                                                                                                                                                                                                                                                     |
