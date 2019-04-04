@@ -1,2 +1,0 @@
-webpackJsonp([60335399758886],{199:function(t,e){t.exports={data:{site:{siteMetadata:{title:"the Aurora Platform",menu:[{href:"/",name:"The Aurora Platform"},{href:"/documentation",name:"Documentation"}]}}},layoutContext:{}}}});
-//# sourceMappingURL=path----2504946b34bd366274bc.js.map
