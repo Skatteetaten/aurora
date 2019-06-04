@@ -252,7 +252,7 @@ access Vaults that has been created with the `ao vault` command (see internal li
 https://wiki.sits.no/pages/viewpage.action?pageId=143517331#AO(AuroraOpenShiftCLI)-AOVault). You can access the vaults in two different ways; as a
 _mount_ or via the _secretVault_ option.
 
-If a Vault is accessed via the secretVault option and the vault contains a file called `latest.properties` the contents of that file will be made available as
+If a Vault is accessed via the secretVault option and the vault contains a properties file the contents of that file will be made available as
 environment variables for the application. Example;
 
 ```
@@ -261,6 +261,18 @@ ENCRYPTION_KEY=8cdca234-9a3b-11e8-9eb6-529269fb1459
 ```
 
 If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See the next section for more details.
+| path                              | default            | description                                                                            |
+| --------------------------------- | ------------------ | -------------------------------------------------------------------------------------- | 
+| `secretVault/<svName>/name`       | \$svName           | Specify full secret vault that will be mounted under default secret location.           |
+| `secretVault/<svName>/enabled`    | true               | Set this to false to disable.|
+| `secretVault/<svName>/file`       | latest.properties  | File in vault that will be used for fetching properties.|
+| `secretVault/<svName>/keys`       |                    | An array of keys from the latest.properties file in the vault you want to include.     |
+| `secretVault/<svName>/keyMapping` |                    | An map of key -> value that will rewrite the key in the secret to another ENV var name |
+
+Note that it is possible to fetch multiple files from the same vault, the `svName` must be different for each one and you must set name to the same.
+
+The old way of specifying secretVaults (detailed below is deprecated). There will be a migration feature soon. This configuration pattern only suppored
+a single vault/file.
 
 | path                   | default | description                                                                            |     |
 | ---------------------- | ------- | -------------------------------------------------------------------------------------- | --- |
