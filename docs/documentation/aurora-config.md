@@ -206,10 +206,11 @@ The following baseImage are in use at NTA
 
 | name      | version | description      |
 | --------- | ------- | ---------------- |
-| wrench8   | 1       | Oracle Jdk8      |
+| wrench8   | 1       | Nodejs8 & Nginx  |
+| wrench10  | 1       | Nodejs10 & Nginx |
 | wingnut8  | 1       | OpenJdk 8        |
 | wingnut11 | 1       | OpenJDK 11       |
-| yeaster   | 1       | NodeJs 8 & Nginx |
+| yeaster   | 1       | Oracle Jdk8      |
 
 ### Configuration for Deployment Types "template" and "localTemplate"
 
