@@ -267,19 +267,19 @@ If you want to mount additional Vaults or access vault files directly this can b
 | `secretVault/<svName>/enabled`    | true               | Set this to false to disable.|
 | `secretVault/<svName>/file`       | latest.properties  | File in vault that will be used for fetching properties.|
 | `secretVault/<svName>/keys`       |                    | An array of keys from the latest.properties file in the vault you want to include.     |
-| `secretVault/<svName>/keyMapping` |                    | An map of key -> value that will rewrite the key in the secret to another ENV var name |
+| `secretVault/<svName>/keyMappings` |                    | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
 Note that it is possible to fetch multiple files from the same vault, the `svName` must be different for each one and you must set name to the same.
 
 The old way of specifying secretVaults (detailed below is deprecated). There will be a migration feature soon. This configuration pattern only suppored
 a single vault/file.
 
-| path                   | default | description                                                                            |     |
-| ---------------------- | ------- | -------------------------------------------------------------------------------------- | --- |
-| secretVault            |         | Specify full secret vault that will be mounted under default secret location.          |
-| secretVault/name       |         | Used instead of secretVault if you want advanced configuration                         |
-| secretVault/keys       |         | An array of keys from the latest.properties file in the vault you want to include.     |
-| secretVault/keyMapping |         | An map of key -> value that will rewrite the key in the secret to another ENV var name |
+| path                    | default | description                                                                            |     |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------- | --- |
+| secretVault             |         | Specify full secret vault that will be mounted under default secret location.          |
+| secretVault/name        |         | Used instead of secretVault if you want advanced configuration                         |
+| secretVault/keys        |         | An array of keys from the latest.properties file in the vault you want to include.     |
+| secretVault/keyMappings |         | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
 ### Mounting volumes
 
