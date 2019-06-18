@@ -261,12 +261,13 @@ ENCRYPTION_KEY=8cdca234-9a3b-11e8-9eb6-529269fb1459
 ```
 
 If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See the next section for more details.
-| path                              | default            | description                                                                            |
-| --------------------------------- | ------------------ | -------------------------------------------------------------------------------------- | 
-| `secretVaults/<svName>/name`       | \$svName           | Specify full secret vault that will be mounted under default secret location.           |
-| `secretVaults/<svName>/enabled`    | true               | Set this to false to disable.|
-| `secretVaults/<svName>/file`       | latest.properties  | File in vault that will be used for fetching properties.|
-| `secretVaults/<svName>/keys`       |                    | An array of keys from the latest.properties file in the vault you want to include.     |
+
+| path                                | default            | description                                                                            |
+| ----------------------------------- | ------------------ | -------------------------------------------------------------------------------------- | 
+| `secretVaults/<svName>/name`        | \$svName           | Specify full secret vault that will be mounted under default secret location.           |
+| `secretVaults/<svName>/enabled`     | true               | Set this to false to disable.|
+| `secretVaults/<svName>/file`        | latest.properties  | File in vault that will be used for fetching properties.|
+| `secretVaults/<svName>/keys`        |                    | An array of keys from the latest.properties file in the vault you want to include.     |
 | `secretVaults/<svName>/keyMappings` |                    | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
 Note that it is possible to fetch multiple files from the same vault, the `svName` must be different for each one and you must set name to the same.
