@@ -274,8 +274,8 @@ Note that it is possible to fetch multiple files from the same vault, the `svNam
 The old way of specifying secretVaults (detailed below is deprecated). There will be a migration feature soon. This configuration pattern only suppored
 a single vault/file.
 
-| path                    | default | description                                                                            |     |
-| ----------------------- | ------- | -------------------------------------------------------------------------------------- | --- |
+| path                    | default | description                                                                            | 
+| ----------------------- | ------- | -------------------------------------------------------------------------------------- |
 | secretVault             |         | Specify full secret vault that will be mounted under default secret location.          |
 | secretVault/name        |         | Used instead of secretVault if you want advanced configuration                         |
 | secretVault/keys        |         | An array of keys from the latest.properties file in the vault you want to include.     |
