@@ -109,6 +109,8 @@ and _app_ files will be describe in a section called "Application files".
 | permissions/view                |          |              | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
 | permissions/adminServiceAccount |          |              | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. |
 
+At least one of the groups in permissions/admin must have a user in it.
+
 #### Application files
 
 | path                | required | default        | substitution | description                                                                                                                                                                                                                                       |
