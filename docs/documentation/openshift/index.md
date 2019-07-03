@@ -94,7 +94,7 @@ automation components are also considered part of the platform.
 
 The main user facing components implementing these mechanisms are:
 
-- Aurora Konsoll: The most prominent feature of the Aurora OpenShift platform is the Aurora KOnsoll. The Aurora Konsoll is a custom
+- Aurora Konsoll: The most prominent feature of the Aurora OpenShift platform is the Aurora Konsoll. The Aurora Konsoll is a custom
   built web application that we use in conjunction with the platform provided OpenShift Console to better handle
   applications across teams and environments.
 - [AO](https://github.com/Skatteetaten/ao): The Aurora OpenShift Command Line Client. Our custom built CLI that works with a set of high level configuration
