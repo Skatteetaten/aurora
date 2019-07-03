@@ -76,10 +76,10 @@ difficulties streamlining maintenance and deployment activities across teams. Al
 letting teams freely use OpenShift their own way. For instance, we were hard press to find good answers to questions
 like;
 
-* What would be the benefit for teams to develop and maintain their own base image for their Java applications instead
+- What would be the benefit for teams to develop and maintain their own base image for their Java applications instead
   of collaborating on one?
-* What would be the benefit for teams to device their own Docker Image build processes instead of adopting a common one?
-* What would be the benefit for teams to develop and maintain their own scripts and tools for handing deployment and
+- What would be the benefit for teams to device their own Docker Image build processes instead of adopting a common one?
+- What would be the benefit for teams to develop and maintain their own scripts and tools for handing deployment and
   configuration across different environments?
 
 Going back and forth, we almost always ended up at "not a whole lot". It became pretty clear that a common effort to
@@ -94,15 +94,15 @@ automation components are also considered part of the platform.
 
 The main user facing components implementing these mechanisms are:
 
-* Aurora Console: The most prominent feature of the Aurora OpenShift platform is the Aurora Console. The Aurora Console is a custom
+- Aurora Konsoll: The most prominent feature of the Aurora OpenShift platform is the Aurora KOnsoll. The Aurora Konsoll is a custom
   built web application that we use in conjunction with the platform provided OpenShift Console to better handle
   applications across teams and environments.
-* [AO](https://github.com/Skatteetaten/ao): The Aurora OpenShift Command Line Client. Our custom built CLI that works with a set of high level configuration
+- [AO](https://github.com/Skatteetaten/ao): The Aurora OpenShift Command Line Client. Our custom built CLI that works with a set of high level configuration
   files that helps managing applications and configuration across environments.
-* AuroraConfig: A DSL config format for describing applications and groupings of applications (environments)
-* The Aurora API: The API that implements all our custom services. Used by the Aurora Console and AO. [boober](https://github.com/Skatteetaten/boober), [mokey](https://github.com/Skatteetaten/mokey), [dbh](https://github.com/Skatteetaten/dbh)
-* [Architect](https://github.com/Skatteetaten/architect): A Docker image that implements the image build process for all our supported runtime technologies
-* Base Images: A set of Alpine Linux based Docker Images that all our applications are built from. [wingnut](https://github.com/Skatteetaten/wingnut) and [wrench](https://github.com/Skatteetaten/wrench)
+- AuroraConfig: A DSL config format for describing applications and groupings of applications (environments)
+- The Aurora API: The API that implements all our custom services. Used by the Aurora Konsoll and AO. [Gobo](https://github.com/Skatteetaten/gobo), [Boober](https://github.com/Skatteetaten/boober), [Mokey](https://github.com/Skatteetaten/mokey), [DBH](https://github.com/Skatteetaten/dbh), [Gillis](https://github.com/Skatteetaten/gillis)
+- [Architect](https://github.com/Skatteetaten/architect): A Docker image that implements the image build process for all our supported runtime technologies
+- Base Images: A set of Alpine Linux based Docker Images that all our applications are built from. [Wingnut](https://github.com/Skatteetaten/wingnut) and [Wrench](https://github.com/Skatteetaten/wrench)
 
 The coming sections will describe these components in more detail.
 
@@ -113,19 +113,19 @@ The coming sections will describe these components in more detail.
 Coding an application targeted at the Aurora OpenShift Platform follows closely the principles of the
 [Twelve-Factor App](https://12factor.net/) from Heroku. Additionally the following requirements must be met;
 
-* The application must run on the JVM and, currently, must be written exclusively in Java. Node is supported when
+- The application must run on the JVM and, currently, must be written exclusively in Java. Node is supported when
   developing [Backends for Frontends](http://samnewman.io/patterns/architectural/bff/), but then only with very limited
   functionality.
-* The application must currently be built using Apache Maven.
-* The delivery mechanism is an assembly bundle zip file uploaded to our internal Nexus registry. We call this zip file
+- The application must currently be built using Apache Maven.
+- The delivery mechanism is an assembly bundle zip file uploaded to our internal Nexus registry. We call this zip file
   a Leveransepakke (Delivery Bundle)
-  * The Delivery Bundle must contain a lib folder with all the jars for the application.
-  * The Delivery Bundle must contain a metadata/openshift.json file to provide build time metadata to the application
+  - The Delivery Bundle must contain a lib folder with all the jars for the application.
+  - The Delivery Bundle must contain a metadata/openshift.json file to provide build time metadata to the application
     image building process (Architect). This includes among other things information used to generate a start script for
     the application and metadata used to label the Docker image.
-* We support both versioned releases and snapshots, but versioned releases must follow the
+- We support both versioned releases and snapshots, but versioned releases must follow the
   [Semantic Versioning](http://semver.org/) system.
-* The application must implement our proprietary management interface. This interface is described in more detail
+- The application must implement our proprietary management interface. This interface is described in more detail
   later.
 
 Additionally we prefer that the applications are built via Jenkins and that the source repository of the application
@@ -142,7 +142,7 @@ artifact (identified by the groupId and artifactId that was used when uploading 
 of the artifact that was just built as a parameter to the build.
 
 The BuildConfig is configured to use the
-OpenShift Container Platform’s [Custom build strategy](https://docs.openshift.com/container-platform/latest/dev_guide/builds/build_strategies.html#custom-strategy-options)
+OpenShift Container Platform’s [Custom build strategy](https://docs.openshift.com/container-platform/3.11/dev_guide/builds/build_strategies.html#custom-strategy-options)
 and we have created our own Docker image, dubbed Architect, to build an application Docker image from the Delivery
 Bundle based on our Java base image, dubbed Wingnut.
 
@@ -152,7 +152,7 @@ several application and platform specific version tags that is the underpinning 
 Architect, Wingnut, our versioning strategy and our deployment strategy are described in more detail below.
 
 In addition to passing parameters to Architect, the BuildConfig is also configured with two
-[ImageChange triggers](https://docs.openshift.com/container-platform/latest/dev_guide/builds/index.html#image-change-triggers).
+[ImageChange triggers](https://docs.openshift.com/container-platform/3.11/dev_guide/builds/build_inputs.html#image-source).
 One for Architect and one for Wingnut. This allows us to use OpenShift to automatically trigger a build of the most
 recent version of any application when we release a new version of either Architect or Wingnut.
 
@@ -160,7 +160,7 @@ recent version of any application when we release a new version of either Archit
 
 Architect is a Docker image built upon Alpine Linux that is responsible for building all our application images. It is
 designed to work as an OpenShift
-[CustomBuilder](https://docs.openshift.com/container-platform/3.4/creating_images/custom.html) and is mostly triggered
+[CustomBuilder](https://docs.openshift.com/container-platform/3.11/creating_images/custom.html) and is mostly triggered
 from BuildConfigs. It will download a prebuilt Delivery Bundle artifact from Nexus based on the groupId, artifactId and
 version (GAV) provided as parameters and inspect the metadata/openshift.json-file in the bundle to determine the
 technology used by the application. Based on the technology used, a suitable base image will be selected and the build
@@ -177,12 +177,12 @@ For our Java applications, Architect supports generating a start script based on
 metadata/openshift.json-file. Though not a requirement at this time (applications may provide their own start script),
 providing a mechanism for automatically generating a start script has a few major benefits;
 
-* Getting a start script for Java right on OpenShift is actually quite hard. The script must make sure that the main
+- Getting a start script for Java right on OpenShift is actually quite hard. The script must make sure that the main
   process is properly backgrounded, while still handling signals like SIGTERM. It must also trap the Java process to
   rewrite application exit codes; for instance, Java exits with 143, while OpenShift expects properly terminated
   applications to return 0. Additionally -Xmx must be set in relation to the available cgroup memory. Our generated start
   script handles all these issues.
-* We require that the Jolokia agent is enabled for all Java processes to enable the hawt.io integration in OpenShift.
+- We require that the Jolokia agent is enabled for all Java processes to enable the hawt.io integration in OpenShift.
   Our generated start script enables this by default.
 
 Additionally, the generated start script will create a deterministic class path from the lib folder, set JVM_OPTS and
@@ -223,8 +223,8 @@ A snapshot version is a version string that ends with the literal "-SNAPSHOT", l
 "some_new_feature-SNAPSHOT". When building a snapshot release, in addition to the AuroraVersion, we also push two
 snapshot tags. Using "some_new_feature-SNAPSHOT" as an example we push
 
-* SNAPSHOT-some_new_feature-{buildNumber}, where the buildNumber is fetched from Nexus
-* some_new_feature-SNAPSHOT
+- SNAPSHOT-some_new_feature-{buildNumber}, where the buildNumber is fetched from Nexus
+- some_new_feature-SNAPSHOT
 
 By applying this versioning strategy to our Docker images we in turn get tremendous flexibility when it comes to
 deploying and patching our applications on OpenShift. Our deployment and patching strategy is described next.
@@ -238,9 +238,9 @@ a couple of the objects that AO generates.
 
 Based on the configuration files given to AO, we generate the OpenShift objects that are required to run the
 application. We generate one
-[ImageStream](https://docs.openshift.com/container-platform/latest/architecture/core_concepts/builds_and_image_streams.html#image-streams)
+[ImageStream](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/builds_and_image_streams.html#image-streams)
 for each application we deploy. This ImageStream contains one (and only one) scheduled tag. We then generate a
-[DeploymentConfig](https://docs.openshift.com/container-platform/latest/architecture/core_concepts/deployments.html#deployments-and-deployment-configurations)
+[DeploymentConfig](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/deployments.html#deployments-and-deployment-configurations)
 with a single container that uses the previously generated ImageStream and scheduled tag as its image reference. We
 also register a ImageChangeTrigger to trigger redeploys when the tag in the ImageStream changes.
 
@@ -254,19 +254,19 @@ application:
 In the following list, the term infrastructure refers to the versions of the base image and Architect in the
 AuroraVersion string.
 
-* use **latest** to automatically deploy the latest image with a semver compliant version
-* use _1_ to automatically deploy the newest image for a major version (any 1.x.y version) of an application. Following
+- use **latest** to automatically deploy the latest image with a semver compliant version
+- use _1_ to automatically deploy the newest image for a major version (any 1.x.y version) of an application. Following
   the semver semantics, this includes all new features and bugfixes but no breaking changes. Infrastructure changes are
   also included.
-* use _1.1_ to automatically deploy the newest image for a minor version (any 1.1.x version) of an application.
+- use _1.1_ to automatically deploy the newest image for a minor version (any 1.1.x version) of an application.
   Following the semver semantics, this includes all bugfixes. Infrastructure changes are also included.
-* use _1.1.1_ to automatically deploy the newest image for a patch version (any 1.1.1 version) of an application.
+- use _1.1.1_ to automatically deploy the newest image for a patch version (any 1.1.1 version) of an application.
   Following the semver semantics, this actually excludes any other application version from being deployed, and hence,
   the application will only be deployed if the infrastructure changes.
-* use the full **AuroraVersion** of a release to pin the deployment to that specific combination of application version
+- use the full **AuroraVersion** of a release to pin the deployment to that specific combination of application version
   and infrastructure. OpenShift will never automatically redeploy this application since the AuroraVersion tag will never
   change for an image.
-* use **SNAPSHOT-versionname** to get the latest build from a snapshot
+- use **SNAPSHOT-versionname** to get the latest build from a snapshot
 
 Like we mentioned in the section "The Image Build Process" the OpenShift BuildConfig is configured with two
 ImageChange triggers. One for Architect and one for the base image. This allows us to automatically retrigger the build
@@ -304,14 +304,11 @@ configuration that may or may not be available at application startup, significa
 In order to support rapid development on the platform a variant of the image build process has been created. The Architect
 builder has received support for binary builds. This means that you can build a Delivery Bundle locally and then send it directly to the builder.
 
-A demo of this can be seen in the following asciicinema. [demo of development flow](https://asciinema.org/a/AU2ZyCk8X0CnJ51MarmhqIp9w)
-
 # AO
 
-History. Move this to main document
-We started out using [OpenShift Templates](https://docs.openshift.org/latest/dev_guide/templates.html) in 2015. A go-template based template engine that takes a list of parameters and replaces it into objects before applying them to the cluster. For our needs this technology was and is severly lacking. - no support for conditional logic - no support for loops - no support for optionaly including and entire object We then created a bash wrapper around the templates that would generate objects for it and modify them afterwards. The config for this bash wrapper resided along side the application code. After som experience with this we found several issues with it - writing good bash is hard and testing tools are lacking - no client-server model, so we had to duplicate functionality in web dashboard - you had to commit and change code in repo to change config. That means triggereing new jenkins builds when not really needed. This lead to the design of the start of the AuroraAPI with the [boober](aurorapi/boober), [AuroraConfig](auroraConfig) and [ao](tools/ao) components.
-
 [AO](https://github.com/Skatteetaten/ao) (Aurora OpenShift CLI) is our custom command line client for deploying applications to OpenShift.
+
+We started out using [OpenShift Templates](https://docs.okd.io/latest/dev_guide/templates.html) in 2015. A go-template based template engine that takes a list of parameters and replaces it into objects before applying them to the cluster. For our needs this technology was and is severly lacking. - no support for conditional logic - no support for loops - no support for optionaly including and entire object We then created a bash wrapper around the templates that would generate objects for it and modify them afterwards. The config for this bash wrapper resided along side the application code. After som experience with this we found several issues with it - writing good bash is hard and testing tools are lacking - no client-server model, so we had to duplicate functionality in web dashboard - you had to commit and change code in repo to change config. That means triggereing new jenkins builds when not really needed. This lead to the design of the start of the AuroraAPI with the [Boober](https://github.com/Skatteetaten/boober), [AuroraConfig](/aurora/documentation/aurora-config) and [AO](https://github.com/Skatteetaten/ao) components.
 
 The need for a custom command line client became apparent when we saw that the teams started developing their own
 scripts for deploying applications across different environments. These scripts quickly became quite complex,
@@ -326,7 +323,7 @@ API, our core automation API on the Aurora OpenShift Platform. Over time, AO has
 coordinating deployments to OpenShift, but also for triggering other infrastructure automation tasks.
 
 Finally, a custom command line client would allow us to more easily make sure that the applications were deployed and
-configured the same, allowing us to make assumptions about applications when creating the Aurora Console.
+configured the same, allowing us to make assumptions about applications when creating the Aurora Konsoll.
 
 AO is driven by a set of configuration files (AuroraConfig) that describe how applications should be deployed and configured in
 different environments. The configuration files are organized in a hierarchy and are cascading, allowing us to share and
@@ -336,15 +333,15 @@ and performs other infrastructure automation tasks.
 
 The following features can be configured in the AuroraConfig configuration
 
-* The application to deploy
-* Deployment strategy; the version to deploy
-* What database schemas to generate/reuse
-* Should a security token for secure communication be generated?
-* Config variables
-* Should a Route be generated for this application
-* Enable rolling upgrades
-* Configure Splunk index
-* Create other routes/automate opening traffic in network infrastructure (webseal/BiG-IP)
+- The application to deploy
+- Deployment strategy; the version to deploy
+- What database schemas to generate/reuse
+- Should a security token for secure communication be generated?
+- Config variables
+- Should a Route be generated for this application
+- Enable rolling upgrades
+- Configure Splunk index
+- Create other routes/automate opening traffic in network infrastructure (webseal/BiG-IP)
 
 The setup process of AO is idempotent so calling it several times will only update the required parts in the old
 objects. After running AO on one single application the objects created on OpenShift is illustrated by the following
@@ -352,9 +349,9 @@ diagram.
 
 ![Deploy](deploy.png)
 
-# Aurora Console
+# Aurora Konsoll
 
-The Aurora Console is our custom made companion web application to the of-the-shelf OpenShift Console. It does not
+The Aurora Konsoll is our custom made companion web application to the of-the-shelf OpenShift Console. It does not
 replace the OpenShift Console, nor does it try to, but it adds quite a bit of functionality that the OpenShift
 Console does not have (and probably should not have). Some of it is related to viewing and manging infrastructure
 items like firewall openings, proxy configurations, certificates and database schemas, and does not have anything to
@@ -363,16 +360,16 @@ screens for displaying, configuring, upgrading and monitoring applications for d
 
 # The Aurora API
 
-The Aurora API is our platform automation API and provides endpoints used by both AO and the Aurora Console. The main
+The Aurora API is our platform automation API and provides endpoints used by both AO and the Aurora Konsoll. The main
 features of the API includes;
 
-* Execution of the instructions given by the AuroraConfig configuration files.
-* Provides abstractions that builds on the OpenShift objects and other infrastructure objects, mainly
+- Execution of the instructions given by the AuroraConfig configuration files.
+- Provides abstractions that builds on the OpenShift objects and other infrastructure objects, mainly
   AuroraApplication, AuroraDeploymentConfiguration, AuroraVersion and AuroraStatus.
-* Endpoints for managing infrastructure components and applications, like performing upgrades and configuration
+- Endpoints for managing infrastructure components and applications, like performing upgrades and configuration
   changes.
-* Produce status metrics for an application on the platform. Fetches information from Docker registry, the cluster and the applications management interface.
-* Miscellaneous tools to aid in development and debgging infrastructure issues.
+- Produce status metrics for an application on the platform. Fetches information from Docker registry, the cluster and the applications management interface.
+- Miscellaneous tools to aid in development and debgging infrastructure issues.
 
 # Application Monitoring
 
@@ -384,7 +381,7 @@ namespaces. The support for providing application status to OpenShift is also qu
 properly, or it is not, and getting feedback for application troubleshooting is nearly completely absent.
 
 We required quite a bit more of the platform to confidently monitor our applications, and one of the most prominent
-features of the Aurora Console, the Application Monitoring Wallboard, addresses this. It presents a matrix of
+features of the Aurora Konsoll, the Application Monitoring Wallboard, addresses this. It presents a matrix of
 applications and environments with all their associated statuses. The information in the wallboard is in part provided
 by OpenShift and in part by the applications themselves, everything made available to the Wallboard via the Aurora API.
 In order for the Aurora API to provide all this information, the applications running on the Aurora OpenShift platform
