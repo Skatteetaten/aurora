@@ -109,6 +109,8 @@ and _app_ files will be describe in a section called "Application files".
 | permissions/view                |          |              | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
 | permissions/adminServiceAccount |          |              | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. |
 
+At least one of the groups in permissions/admin must have a user in it.
+
 #### Application files
 
 | path                | required | default        | substitution | description                                                                                                                                                                                                                                       |
@@ -253,7 +255,7 @@ access Vaults that has been created with the `ao vault` command (see internal li
 https://wiki.sits.no/pages/viewpage.action?pageId=143517331#AO(AuroraOpenShiftCLI)-AOVault). You can access the vaults in two different ways; as a
 _mount_ or via the _secretVault_ option.
 
-If a Vault is accessed via the secretVault option and the vault contains a file called `latest.properties` the contents of that file will be made available as
+If a Vault is accessed via the secretVault option and the vault contains a properties file the contents of that file will be made available as
 environment variables for the application. Example;
 
 ```
@@ -263,12 +265,25 @@ ENCRYPTION_KEY=8cdca234-9a3b-11e8-9eb6-529269fb1459
 
 If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See the next section for more details.
 
-| path                   | default | description                                                                            |     |
-| ---------------------- | ------- | -------------------------------------------------------------------------------------- | --- |
-| secretVault            |         | Specify full secret vault that will be mounted under default secret location.          |
-| secretVault/name       |         | Used instead of secretVault if you want advanced configuration                         |
-| secretVault/keys       |         | An array of keys from the latest.properties file in the vault you want to include.     |
-| secretVault/keyMapping |         | An map of key -> value that will rewrite the key in the secret to another ENV var name |
+| path                                | default            | description                                                                            |
+| ----------------------------------- | ------------------ | -------------------------------------------------------------------------------------- | 
+| `secretVaults/<svName>/name`        | \$svName           | Specify full secret vault that will be mounted under default secret location.           |
+| `secretVaults/<svName>/enabled`     | true               | Set this to false to disable.|
+| `secretVaults/<svName>/file`        | latest.properties  | File in vault that will be used for fetching properties.|
+| `secretVaults/<svName>/keys`        |                    | An array of keys from the latest.properties file in the vault you want to include.     |
+| `secretVaults/<svName>/keyMappings` |                    | An map of key -> value that will rewrite the key in the secret to another ENV var name |
+
+Note that it is possible to fetch multiple files from the same vault, the `svName` must be different for each one and you must set name to the same.
+
+The old way of specifying secretVaults (detailed below is deprecated). There will be a migration feature soon. This configuration pattern only suppored
+a single vault/file.
+
+| path                    | default | description                                                                            | 
+| ----------------------- | ------- | -------------------------------------------------------------------------------------- |
+| secretVault             |         | Specify full secret vault that will be mounted under default secret location.          |
+| secretVault/name        |         | Used instead of secretVault if you want advanced configuration                         |
+| secretVault/keys        |         | An array of keys from the latest.properties file in the vault you want to include.     |
+| secretVault/keyMappings |         | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
 ### Mounting volumes
 
