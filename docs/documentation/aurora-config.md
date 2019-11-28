@@ -60,6 +60,16 @@ In this scenario 'App1.yaml' would be used instead of 'App1Beta.yaml' (which doe
 App1Beta in the environment test. The env file about-alternative will be used instead of the standard about file.
 Note that env files must start with the prefix `about`
 
+For a given env file, it is possible to include another env file that is read right before you using the configuration. 
+
+In prod/about.yaml
+```yaml
+includeEnvFile: test/about.yaml
+```
+
+In this scenario 'test/about.yaml' will be read right before 'prod/about.yaml'. This will make it possible to have an
+environment that is a template for other environments. 
+
 ## DeploymentSpec and ApplicationId
 
 When the Aurora Config is processed a new object is generated for each _app_ file, representing the configuration
