@@ -330,10 +330,10 @@ Webseal is used for client traffic from within NTA to reach an application. Inte
 
 If you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
 
-### NTA sts integration
+### NTA STS integration
 STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between them
 
-For v1 of the STS service us:
+For v1 of the STS service use:
 
 | path                   | default | description                                                                                      |
 | ---------------------- | ------- | ------------------------------------------------------------------------------------------------ |
