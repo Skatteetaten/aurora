@@ -318,22 +318,35 @@ a single vault/file.
 | `mounts/<mountName>/content`     |               | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true.                                                    |
 | `mounts/<mountName>/secretVault` |               | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
 
-### NTA specific integrations
+### NTA webseal integration
+
+Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
 
 | path                   | default | description                                                                                      |
 | ---------------------- | ------- | ------------------------------------------------------------------------------------------------ |
 | webseal                | false   | Toggle to expose application through WebSeal.                                                    |
 | webseal/host           |         | Set this to change the default prefix in WebSeal                                                 |
 | webseal/roles          |         | Set roles required to access this route. This can either be set as CSV or as an array of strings |
-| certificate            | false   | Toggle to add a certificate with CommonName $groupId.$name.                                      |
-| certificate/commonName |         | Generate an STS certificate with the given commonName.                                           |
 
-NTA has the following technologies that can be automated with the above fields
+If you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
 
-- Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
-- STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between them
+### NTA sts integration
+STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between them
 
-These integrations are available for all types however note that if you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
+For v1 of the STS service us:
+
+| path                   | default | description                                                                                      |
+| ---------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| certificate            | false   | Toggle to add a certificate with CommonName $groupId.$name. |
+| certificate/commonName |         | Generate an STS certificate with the given commonName. |
+
+For v2 use:
+
+| path                   | default | description                                                                                      |
+| ---------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| sts                    | false   | Toggle to add a certificate with CommonName $groupId.$name.  |
+| sts/cn                 |         | Generate an STS certificate with the given commonName. |
+
 
 ### NTA Dbh integration
 
