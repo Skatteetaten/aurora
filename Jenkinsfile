@@ -35,10 +35,8 @@ node {
 
   stage('Clone starter') {
     try {
-      withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                        credentialsId: props.credentialsId,
-                        usernameVariable: 'GIT_USERNAME',
-                        passwordVariable: 'GIT_PASSWORD']]) {
+      withCredentials([usernamePassword(credentialsId: props.credentialsId, usernameVariable: 'GIT_USERNAME',
+        passwordVariable: 'GIT_PASSWORD')]) {
         git.setGitConfig()
         sh("git config --global credential.username ${env.GIT_USERNAME}")
         sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
@@ -63,11 +61,9 @@ node {
   }
 
   stage('Build & deploy to GitHub') {
-    try {
-      withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                        credentialsId: props.credentialsId,
-                        usernameVariable: 'GIT_USERNAME',
-                        passwordVariable: 'GIT_PASSWORD']]) {
+    try { 
+      withCredentials([usernamePassword(credentialsId: props.credentialsId, usernameVariable: 'GIT_USERNAME',
+        passwordVariable: 'GIT_PASSWORD')]) {
         git.setGitConfig()
         sh("git config --global credential.username ${env.GIT_USERNAME}")
         sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")

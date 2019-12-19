@@ -60,15 +60,16 @@ In this scenario 'App1.yaml' would be used instead of 'App1Beta.yaml' (which doe
 App1Beta in the environment test. The env file about-alternative will be used instead of the standard about file.
 Note that env files must start with the prefix `about`
 
-For a given env file, it is possible to include another env file that is read right before you using the configuration. 
+For a given env file, it is possible to include another env file that is read right before you using the configuration.
 
 In prod/about.yaml
+
 ```yaml
 includeEnvFile: test/about.yaml
 ```
 
 In this scenario 'test/about.yaml' will be read right before 'prod/about.yaml'. This will make it possible to have an
-environment that is a template for other environments. 
+environment that is a template for other environments.
 
 ## DeploymentSpec and ApplicationId
 
@@ -247,22 +248,22 @@ its service name.
 
 In order to control routes into the application the following fields can be used.
 
-| path                                  | default                    | description                                                                                                                                                                                                                                                                                                       |
-| ------------------------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| route                                 | false                      | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                 |
-| `route/<routename>/enabled`           | true                       | Set to false to turn off route |
-| `route/<routename>/host`              |                            | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                                                                                                                                    |
-| `route/<routename>/path`              |                            | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                |
-| `route/<routename>/annotations/<key>` |                            | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. If the value is empty the annotation will be ignored. |
-| `route/<routename>/tls/enabled`       |                            | Turn on/off tls for this route |
-| `route/<routename>/tls/insecuryPolicy`|                            | When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route routeDefaults/tls/insecurePolicy will be used. |
-| `route/<routename>/tls/termination`   |                            | Where to terminate TLS for this route. Edge/Passthrough. If not set use the default value from routeDefaults/tls/termination. |
-| `route/<routename>/annotations/<key>` |                            | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. If the value is empty the annotation will be ignored. |
-| routeDefaults/host                    | @name@-@affiliation@-@env@ | Set the host of a route according to the given pattern.                                                                                                                                                                                                                                                           |
-| routeDefaults/annotations/<key>       |                                                                                                                                                                 | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. |
-| routeDefaults/tls/enabled             | false                      | Enable/disable tls for all routes
-| routeDefaults/tls/insecurePolicy      | <varies for applicationPlattform>| For Java the default is None for Web the default is Redirect
-| routeDefaults/tls/termination         | edge                             | Where do you terminate TLS? Edge or Passthrough. Reencrypt is not supported for now.
+| path                                   | default                           | description                                                                                                                                                                                                                                                                                                                                                             |
+| -------------------------------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| route                                  | false                             | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                                                                       |
+| `route/<routename>/enabled`            | true                              | Set to false to turn off route                                                                                                                                                                                                                                                                                                                                          |
+| `route/<routename>/host`               |                                   | Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host                                                                                                                                                                                                                                                          |
+| `route/<routename>/path`               |                                   | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                                                                      |
+| `route/<routename>/annotations/<key>`  |                                   | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. If the value is empty the annotation will be ignored. |
+| `route/<routename>/tls/enabled`        |                                   | Turn on/off tls for this route                                                                                                                                                                                                                                                                                                                                          |
+| `route/<routename>/tls/insecuryPolicy` |                                   | When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route routeDefaults/tls/insecurePolicy will be used.                                                                                                                                                                                                                      |
+| `route/<routename>/tls/termination`    |                                   | Where to terminate TLS for this route. Edge/Passthrough. If not set use the default value from routeDefaults/tls/termination.                                                                                                                                                                                                                                           |
+| `route/<routename>/annotations/<key>`  |                                   | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. If the value is empty the annotation will be ignored. |
+| routeDefaults/host                     | @name@-@affiliation@-@env@        | Set the host of a route according to the given pattern.                                                                                                                                                                                                                                                                                                                 |
+| routeDefaults/annotations/<key>        |                                   | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options.                                                       |
+| routeDefaults/tls/enabled              | false                             | Enable/disable tls for all routes                                                                                                                                                                                                                                                                                                                                       |
+| routeDefaults/tls/insecurePolicy       | <varies for applicationPlattform> | For Java the default is None for Web the default is Redirect                                                                                                                                                                                                                                                                                                            |
+| routeDefaults/tls/termination          | edge                              | Where do you terminate TLS? Edge or Passthrough. Reencrypt is not supported for now.                                                                                                                                                                                                                                                                                    |
 
 If tls is used the host of the route cannot include the '.' key, since we do not support wildcard TLS cert.
 
@@ -285,20 +286,20 @@ ENCRYPTION_KEY=8cdca234-9a3b-11e8-9eb6-529269fb1459
 
 If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See the next section for more details.
 
-| path                                | default            | description                                                                            |
-| ----------------------------------- | ------------------ | -------------------------------------------------------------------------------------- | 
-| `secretVaults/<svName>/name`        | \$svName           | Specify full secret vault that will be mounted under default secret location.           |
-| `secretVaults/<svName>/enabled`     | true               | Set this to false to disable.|
-| `secretVaults/<svName>/file`        | latest.properties  | File in vault that will be used for fetching properties.|
-| `secretVaults/<svName>/keys`        |                    | An array of keys from the latest.properties file in the vault you want to include.     |
-| `secretVaults/<svName>/keyMappings` |                    | An map of key -> value that will rewrite the key in the secret to another ENV var name |
+| path                                | default           | description                                                                            |
+| ----------------------------------- | ----------------- | -------------------------------------------------------------------------------------- |
+| `secretVaults/<svName>/name`        | \$svName          | Specify full secret vault that will be mounted under default secret location.          |
+| `secretVaults/<svName>/enabled`     | true              | Set this to false to disable.                                                          |
+| `secretVaults/<svName>/file`        | latest.properties | File in vault that will be used for fetching properties.                               |
+| `secretVaults/<svName>/keys`        |                   | An array of keys from the latest.properties file in the vault you want to include.     |
+| `secretVaults/<svName>/keyMappings` |                   | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
 Note that it is possible to fetch multiple files from the same vault, the `svName` must be different for each one and you must set name to the same.
 
 The old way of specifying secretVaults (detailed below is deprecated). There will be a migration feature soon. This configuration pattern only suppored
 a single vault/file.
 
-| path                    | default | description                                                                            | 
+| path                    | default | description                                                                            |
 | ----------------------- | ------- | -------------------------------------------------------------------------------------- |
 | secretVault             |         | Specify full secret vault that will be mounted under default secret location.          |
 | secretVault/name        |         | Used instead of secretVault if you want advanced configuration                         |
@@ -318,22 +319,35 @@ a single vault/file.
 | `mounts/<mountName>/content`     |               | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true.                                                    |
 | `mounts/<mountName>/secretVault` |               | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
 
-### NTA specific integrations
+### NTA webseal integration
 
-| path                   | default | description                                                                                      |
-| ---------------------- | ------- | ------------------------------------------------------------------------------------------------ |
-| webseal                | false   | Toggle to expose application through WebSeal.                                                    |
-| webseal/host           |         | Set this to change the default prefix in WebSeal                                                 |
-| webseal/roles          |         | Set roles required to access this route. This can either be set as CSV or as an array of strings |
-| certificate            | false   | Toggle to add a certificate with CommonName $groupId.$name.                                      |
-| certificate/commonName |         | Generate an STS certificate with the given commonName.                                           |
+Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
 
-NTA has the following technologies that can be automated with the above fields
+| path          | default | description                                                                                      |
+| ------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| webseal       | false   | Toggle to expose application through WebSeal.                                                    |
+| webseal/host  |         | Set this to change the default prefix in WebSeal                                                 |
+| webseal/roles |         | Set roles required to access this route. This can either be set as CSV or as an array of strings |
 
-- Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
-- STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between them
+If you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
 
-These integrations are available for all types however note that if you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
+### NTA STS integration
+
+STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between them
+
+For v1 of the STS service use:
+
+| path                   | default | description                                                 |
+| ---------------------- | ------- | ----------------------------------------------------------- |
+| certificate            | false   | Toggle to add a certificate with CommonName $groupId.$name. |
+| certificate/commonName |         | Generate an STS certificate with the given commonName.      |
+
+For v2 use:
+
+| path   | default | description                                                 |
+| ------ | ------- | ----------------------------------------------------------- |
+| sts    | false   | Toggle to add a certificate with CommonName $groupId.$name. |
+| sts/cn |         | Generate an STS certificate with the given commonName.      |
 
 ### NTA Dbh integration
 
@@ -343,16 +357,16 @@ If there is no schema the default behavior is to create one.
 
 It is possible to change the default values for this process so that each application that wants a database can just use the `database=true` instruction
 
-| path                                   | default        | description                                                                                                                                                        |
-| -------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| databaseDefaults/flavor                | ORACLE_MANAGED | One of `ORACLE_MANAGED`, `POSTGRES_MANAGED`.                                                                                                                       |
-| databaseDefaults/generate              | true           | Set this to false to avoid generating a new schema if your lables does not match an existing one                                                                   |
-| databaseDefaults/name                  | @name@         | The default name to given a database when using database=true                                                                                                      |
-| databaseDefaults/instance/name         |                | The name of the instance you want to use for yor db schemas                                                                                                        |  
-| databaseDefaults/instance/fallback     | true           | If your instance does not match by labels, a fallback instance will be used if available. Default is true for ORACLE_MANAGED and false for POSTGRES_MANAGED        |
-| databaseDefaults/instance/labels/<key> |                | Set key=value pair that will be sent when matching database instances. Default is affiliation=@affiliation@                                                        |
-| database                               | false          | Toggle this to add a database with \$name to your application.                                                                                                     |
-| `database/<name>`                      |                | Simplified config for multiple databases.If you want to add multiple databases specify a name for each. Set to 'auto' for auto generation or a given ID to pin it. Set to false to turn off this database.|
+| path                                   | default        | description                                                                                                                                                                                                |
+| -------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| databaseDefaults/flavor                | ORACLE_MANAGED | One of `ORACLE_MANAGED`, `POSTGRES_MANAGED`.                                                                                                                                                               |
+| databaseDefaults/generate              | true           | Set this to false to avoid generating a new schema if your lables does not match an existing one                                                                                                           |
+| databaseDefaults/name                  | @name@         | The default name to given a database when using database=true                                                                                                                                              |
+| databaseDefaults/instance/name         |                | The name of the instance you want to use for yor db schemas                                                                                                                                                |
+| databaseDefaults/instance/fallback     | true           | If your instance does not match by labels, a fallback instance will be used if available. Default is true for ORACLE_MANAGED and false for POSTGRES_MANAGED                                                |
+| databaseDefaults/instance/labels/<key> |                | Set key=value pair that will be sent when matching database instances. Default is affiliation=@affiliation@                                                                                                |
+| database                               | false          | Toggle this to add a database with \$name to your application.                                                                                                                                             |
+| `database/<name>`                      |                | Simplified config for multiple databases.If you want to add multiple databases specify a name for each. Set to 'auto' for auto generation or a given ID to pin it. Set to false to turn off this database. |
 
 If you want to change the default configuration for one application you need to use the expanded syntax
 
