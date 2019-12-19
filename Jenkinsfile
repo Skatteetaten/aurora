@@ -2,13 +2,13 @@
 
 Map<String, Object> props = [
   credentialsId                : 'github',
-  nodeVersion                  : null  //possible values are 'node-6' and 'node-8', or whatever various node versions have been defined as in jenkins-master
+  nodeVersion                  : 'node-10'
 ]
 
 def git
 def npm
 
-fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git', 'v5') {
+fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git', 'v6') {
   git = fileLoader.load('git/git')
   npm = fileLoader.load('node.js/npm')
 }
@@ -41,8 +41,8 @@ node {
         sh("git config --global credential.username ${env.GIT_USERNAME}")
         sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
-        sh("git submodule init")
-        sh("git submodule update")
+        sh("GIT_ASKPASS=true git submodule init")
+        sh("GIT_ASKPASS=true git submodule update")
       }
     } finally {
       sh("git config --global --unset credential.username")
@@ -68,7 +68,7 @@ node {
         sh("git config --global credential.username ${env.GIT_USERNAME}")
         sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
-        npm.run('run deploy')
+        sh("GIT_ASKPASS=true npm run deploy")
       }
     } finally {
       sh("git config --global --unset credential.username")
