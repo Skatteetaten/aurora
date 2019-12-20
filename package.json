@@ -12,11 +12,11 @@
     "clean": "rimraf public gatsby-starter-skatteetaten/.cache"
   },
   "devDependencies": {
-    "gh-pages": "2.0.1",
+    "gh-pages": "2.1.1",
     "husky": "3.1.0",
+    "prettier": "1.19.1",
     "pretty-quick": "2.0.1",
-    "rimraf": "2.6.3",
-    "prettier": "1.19.1"
+    "rimraf": "3.0.0"
   },
   "husky": {
     "hooks": {
