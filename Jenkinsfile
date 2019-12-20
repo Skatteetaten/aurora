@@ -72,7 +72,7 @@ node {
         sh("git config --global credential.username ${env.GIT_USERNAME}")
         sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
-        sh("./node_modules/gh-pages -d public --git 'GIT_ASKPASS=true git'")
+        sh("./node_modules/.bin/gh-pages -d public --git 'GIT_ASKPASS=true git'")
       }
     } finally {
       sh("git config --global --unset credential.username")
