@@ -60,7 +60,11 @@ node {
     }
   }
 
-  stage('Build & deploy to GitHub') {
+  stage('Build') {
+    npm.build()
+  }
+
+  stage('Deploy to GitHub') {
     try { 
       withCredentials([usernamePassword(credentialsId: props.credentialsId, usernameVariable: 'GIT_USERNAME',
         passwordVariable: 'GIT_PASSWORD')]) {
@@ -68,7 +72,7 @@ node {
         sh("git config --global credential.username ${env.GIT_USERNAME}")
         sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
 
-        sh("GIT_ASKPASS=true npm run deploy")
+        sh("./node_modules/gh-pages -d public --git 'GIT_ASKPASS=true git'")
       }
     } finally {
       sh("git config --global --unset credential.username")
