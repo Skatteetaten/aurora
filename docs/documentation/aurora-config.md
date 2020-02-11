@@ -323,12 +323,12 @@ a single vault/file.
 
 Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
 
-| path           | default | description                                                                                                                                                                                                      |
-| -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| webseal        | false   | Toggle to expose application through WebSeal.                                                                                                                                                                    |
-| webseal/host   |         | Set this to change the default prefix in WebSeal                                                                                                                                                                 |
-| webseal/roles  |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                                                                                                                 |
-| webseal/strict | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, this can be harmful. When strict is set to true it will generate warnings. When set to false it will not generate warnings. |
+| path           | default | description                                                                                                                                                                     |
+| -------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| webseal        | false   | Toggle to expose application through WebSeal.                                                                                                                                   |
+| webseal/host   |         | Set this to change the default prefix in WebSeal                                                                                                                                |
+| webseal/roles  |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                                                                                |
+| webseal/strict | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, this can be harmful. Strict will only generate warnings. Set to false to disable warnings. |
 
 If you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
 
