@@ -168,6 +168,15 @@ Supports deploying an application from a template available on the cluster. See 
 
 Supports deploying an application from a template available in the AuroraConfig folder. See [Guidelines for developing templates](#template_dev_guidelines).
 
+#### cronjob
+
+Supports running a scheduled job as a CronJob resource on Kubernetes
+
+#### job
+
+Supports running a job as a Job resource on Kubernetes
+
+
 ### Configuration for Deployment Types "deploy" and "development"
 
 | path                   | default     | description                                                                                                                                                                                                                                                                                                                   |
@@ -241,6 +250,47 @@ The following baseImage are in use at NTA
 Note that resources and replicas have no default values for templates. If they are set they will be applied if not the value
 in the template will be used.
 
+### Configuration for job and cronjobs
+By default the image used will be a simple base image that has TLS trust and curl. If you want to use your own image and not run
+a script specify the groupId/artifactId fields. 
+
+In order to specicy what to run there are several options. If you have your own docker image that runs a job and exits then specify the `groupId` and `artifactId` parameters to point to your image.
+If you want to run a simple curl command against a host then use `script`. 
+
+The script directive will put its content into a .sh script and the run that when the job starts. It is also possible to specify `command` and `arguments` manually, but it has some corner cases that led 
+us to supporing the simple script directive.
+
+| path                 | default | description                                                                                                                                                                                                                                                                     |
+| -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| script               |         | Commands to run in the docker image. This will be put in a .sh file that will be run when the job starts
+| groupId              | aurora  | The group of the docker image to run 
+| artifactId           | turbo   | The image to use for the job
+| command              |         | Not compatible with script. Cannot assess env vars
+| arugments            |         | Not compatible with script. Can access env vars using "$(VAR)" syntax
+
+#### Aditional configuration for cronjobs
+
+| path                 | default | description                                                                                                                                                                                                                                                                     |
+| -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| schedule             |         | Cron scheduel validated against http://cron-parser.com/
+| failureCount         | 1       | Number of failed jobs to keep |
+| successCount         | 3       | Number of successfull jobs to keep |
+| concurrencyPolicy    | Forbid  | Any of [concurrencyPolicy](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy)
+| startingDeadline     | 60      | Override the starting deadline for the cronjob, see suspend below |
+| suspend              | false   | Suspend/stop the job. Nb! See [suspend](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#suspend) docs for caveats
+
+#### Supported integrations
+Jobs and Cronjobs can have
+ * secrets
+ * databases
+ * STS tokens
+ * mounts
+ 
+#### Limitations
+
+Jobs and cronjobs do not support log aggregations and prometheus metrics at the moment. Use the script directive and do a 
+http call to a service alongside your job if you need this. 
+
 ### Exposing an application via HTTP
 
 The default behavior is that the application is only visible to other application in the same namespace using
@@ -310,13 +360,12 @@ a single vault/file.
 
 | path                             | default       | description                                                                                                                                         |
 | -------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mounts/<mountName>/type`        |               | One of Secret, ConfigMap, PVC. Required for each mount.                                                                                             |
+| `mounts/<mountName>/type`        |               | One of Secret, PVC. Required for each mount.                                                                                             |
+| `mounts/<mountName>/enabled`     | true          | Set this to false to disable this mount
 | `mounts/<mountName>/path`        |               | Path to the volume in the container. Required for each mount.                                                                                       |
 | `mounts/<mountName>/mountName`   | `<mountName>` | Override the name of the mount in the container.                                                                                                    |
 | `mounts/<mountName>/volumeName`  | `<mountName>` | Override the name of the volume in the DeploymentConfig.                                                                                            |
 | `mounts/<mountName>/exists`      | false         | If this is set to true the existing resource must exist already.                                                                                    |
-| `mounts/<mountName>/content`     |               | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true.                                                    |
-| `mounts/<mountName>/content`     |               | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true.                                                    |
 | `mounts/<mountName>/secretVault` |               | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
 
 ### NTA webseal integration
