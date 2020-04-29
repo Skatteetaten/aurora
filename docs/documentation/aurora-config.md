@@ -265,6 +265,7 @@ us to supporing the simple script directive.
 | script               |         | Commands to run in the docker image. This will be put in a .sh file that will be run when the job starts
 | groupId              | aurora  | The group of the docker image to run 
 | artifactId           | turbo   | The image to use for the job
+| version              | 0       | The version of the image to use
 | command              |         | Not compatible with script. Cannot assess env vars
 | arugments            |         | Not compatible with script. Can access env vars using "$(VAR)" syntax
 
