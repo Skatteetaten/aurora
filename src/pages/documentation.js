@@ -18,7 +18,7 @@ const DocumentationPage = ({
     .map(({ node }) => ({
       to: node.fields.slug,
       icon: node.frontmatter.icon,
-      title: node.frontmatter.title,
+      heading: node.frontmatter.title,
       description: node.frontmatter.description || "",
     }));
 

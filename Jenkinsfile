@@ -8,7 +8,7 @@ Map<String, Object> props = [
 def git
 def npm
 
-fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git', 'v6') {
+fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git', 'v7') {
   git = fileLoader.load('git/git')
   npm = fileLoader.load('node.js/npm')
 }
@@ -33,31 +33,8 @@ node {
     checkout scm
   }
 
-  stage('Clone starter') {
-    try {
-      withCredentials([usernamePassword(credentialsId: props.credentialsId, usernameVariable: 'GIT_USERNAME',
-        passwordVariable: 'GIT_PASSWORD')]) {
-        git.setGitConfig()
-        sh("git config --global credential.https://github.com.username ${env.GIT_USERNAME}")
-        sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-
-        sh("GIT_ASKPASS=true git submodule init")
-        sh("GIT_ASKPASS=true git submodule update")
-      }
-    } finally {
-      sh("git config --global --unset credential.https://github.com.username")
-      sh("git config --global --unset credential.helper")
-    }
-  }
-
   stage('Install dependencies') {
-    npm.install()
-  }
-
-  stage('Install starter dependencies') {
-    dir('gatsby-starter-skatteetaten/') {
-      npm.install()
-    }
+    npm.run('ci')
   }
 
   stage('Build') {

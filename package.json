@@ -5,11 +5,11 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "gatsby develop --verbose",
-    "format": "prettier --write '{src,docs}/**/*{.js,.css,.md}'",
     "prebuild": "npm run clean",
     "build": "gatsby build --prefix-paths",
     "deploy": "gh-pages -d public -p 0",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier:fix": "prettier --write '{src,docs}/**/*.{js,jsx,css,md}'",
+    "test": "echo \"Error: no test specified\"",
     "clean": "rimraf public .cache"
   },
   "devDependencies": {

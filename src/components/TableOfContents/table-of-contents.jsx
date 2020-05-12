@@ -30,7 +30,7 @@ const TableOfContents = ({ headings, slug, minHeaders = 8 }) => {
               styles[`tocLevel${header.depth}`]
             )}
           >
-            <Icon iconName="down" />
+            <Icon iconName="ArrowDown" />
             <Link to={createAnchorLink(slug, header.value)}>
               {header.value}
             </Link>
