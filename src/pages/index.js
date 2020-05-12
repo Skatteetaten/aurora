@@ -1,14 +1,10 @@
 import React from "react";
-import PostLink from "../components/post-link";
+import Grid from "@skatteetaten/frontend-components/Grid";
 import Quote from "../components/Quote";
-import Grid from "aurora-frontend-react-komponenter/Grid";
-import {
-  SingleColumnRow,
-  DoubleColumnRow
-} from "../gatsby-starter-skatteetaten/src/components/Columns";
-import auroraApi from "../docs/frontpage/images/aurora-api.svg";
-import auroraObserve from "../docs/frontpage/images/aurora-run.svg";
-import auroraBuild from "../docs/frontpage/images/aurora-build.svg";
+import { SingleColumnRow, DoubleColumnRow } from "../components/Columns";
+import auroraApi from "../../docs/frontpage/images/aurora-api.svg";
+import auroraObserve from "../../docs/frontpage/images/aurora-run.svg";
+import auroraBuild from "../../docs/frontpage/images/aurora-build.svg";
 
 const InfoSeparator = () => (
   <SingleColumnRow>
@@ -35,11 +31,11 @@ const InfoRow = ({ title, picture, children, left }) => {
 
 const IndexPage = ({
   data: {
-    allMarkdownRemark: { edges }
-  }
+    allMarkdownRemark: { edges },
+  },
 }) => {
   const FrontPageContent = ({ path }) => {
-    const content = edges.find(edge => {
+    const content = edges.find((edge) => {
       return edge.node.fields.slug === path;
     });
     return (
