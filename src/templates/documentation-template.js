@@ -12,11 +12,12 @@ const mainGrid = {
   smPush: 1,
   md: 10,
   mdPush: 1,
-  lg: 8,
-  lgPush: 2,
-  xl: 6,
-  xlPush: 3,
-  xxl: 6,
+  lg: 10,
+  lgPush: 1,
+  xl: 10,
+  xlPush: 1,
+  xxl: 10,
+  xxlPush: 1,
 };
 
 export default function Template({ data }) {
