@@ -101,6 +101,9 @@ config/cluster : "@cluster@"
 
 Which options are available for substitution is indicated in the following tables.
 
+Substitutions should be used with care and double checked that the resulting configuration is valid in all environments if used
+in a very general file. 
+
 Some configuration options can only be set in the _global_ about file and the _env_ file. These are typically options that
 are only relevant for configuring the environment, for instance environment name, permissions and env.ttl (time to live).
 Since environments have their own folder and the environment is configured in an own about-file, it is not allowed for an
