@@ -191,6 +191,7 @@ Supports running a job as a Job resource on Kubernetes
 | resources/memory/max   | 512Mi       | Specify maximum/limit memory. By default 25% of this will be set to XMX in java.                                                                                                                                                                                                                                              |
 | groupId                |             | groupId for your application. Max 200 length. Required if deploy/development                                                                                                                                                                                                                                                  |
 | artifactId             | \$fileName  | artifactId for your application. Max 50 length                                                                                                                                                                                                                                                                                |
+| version                |             | The version of the image you want to run.
 | splunkIndex            |             | Set to a valid splunk-index to log to splunk. Only valid if splunk is enabled in the Aurora API                                                                                                                                                                                                                               |
 | serviceAccount         |             | Set to an existing serviceAccount if you need special privileges                                                                                                                                                                                                                                                              |
 | prometheus             | true        | Toggle to false if application do not have Prometheus metrics                                                                                                                                                                                                                                                                 |
@@ -251,23 +252,13 @@ Note that resources and replicas have no default values for templates. If they a
 in the template will be used.
 
 ### Configuration for job and cronjobs
-By default the image used will be a simple base image that has TLS trust and curl. If you want to use your own image and not run
-a script specify the groupId/artifactId fields. 
-
-In order to specicy what to run there are several options. If you have your own docker image that runs a job and exits then specify the `groupId` and `artifactId` parameters to point to your image.
-If you want to run a simple curl command against a host then use `script`. 
-
-The script directive will put its content into a .sh script and the run that when the job starts. It is also possible to specify `command` and `arguments` manually, but it has some corner cases that led 
-us to supporing the simple script directive.
+For jobs and cronjobs you have to create an application that terminates when it is done and point to it using the normal groupId/artifactId:version semantics
 
 | path                 | default | description                                                                                                                                                                                                                                                                     |
 | -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| script               |         | Commands to run in the docker image. This will be put in a .sh file that will be run when the job starts
-| groupId              | aurora  | The group of the docker image to run 
-| artifactId           | turbo   | The image to use for the job
-| version              | 0       | The version of the image to use
-| command              |         | Not compatible with script. Cannot assess env vars
-| arugments            |         | Not compatible with script. Can access env vars using "$(VAR)" syntax
+| groupId                |             | groupId for your application. Max 200 length. Required if deploy/development                                                                                                                                                                                                                                                  |
+| artifactId             | \$fileName  | artifactId for your application. Max 50 length                                                                                                                                                                                                                                                                                |
+| version                |             | The version of the image you want to run.
 
 #### Aditional configuration for cronjobs
 
