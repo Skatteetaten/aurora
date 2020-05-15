@@ -351,6 +351,8 @@ a single vault/file.
 | secretVault/keys        |         | An array of keys from the latest.properties file in the vault you want to include.     |
 | secretVault/keyMappings |         | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
+It is possible to use substitutions in keys/keyMappings but it should be used with care and doublechecked.
+
 ### Mounting volumes
 
 | path                             | default       | description                                                                                                                                         |
