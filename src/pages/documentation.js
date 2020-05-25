@@ -8,6 +8,7 @@ import Link from "gatsby-link";
 const DocumentationPage = ({
   data: {
     allMarkdownRemark: { edges },
+    site: { pathPrefix },
   },
 }) => {
   const contents = edges
@@ -16,7 +17,7 @@ const DocumentationPage = ({
         node.fields && node.fields.slug.search("/documentation/") >= 0
     )
     .map(({ node }) => ({
-      to: node.fields.slug,
+      to: `${pathPrefix}${node.fields.slug}`,
       icon: node.frontmatter.icon,
       heading: node.frontmatter.title,
       description: node.frontmatter.description || "",
@@ -46,6 +47,9 @@ export default DocumentationPage;
 
 export const pageQuery = graphql`
   query DocumentationQuery {
+    site {
+      pathPrefix
+    }
     allMarkdownRemark(sort: { order: ASC, fields: [frontmatter___title] }) {
       edges {
         node {

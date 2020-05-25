@@ -4,6 +4,7 @@
   "description": "Documentation for The Aurora Platform",
   "license": "Apache-2.0",
   "scripts": {
+    "prestart": "npm run clean",
     "start": "gatsby develop --verbose",
     "prebuild": "npm run clean",
     "build": "gatsby build --prefix-paths",
