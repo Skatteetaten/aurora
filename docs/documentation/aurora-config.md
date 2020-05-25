@@ -101,6 +101,8 @@ config/cluster : "@cluster@"
 
 Which options are available for substitution is indicated in the following tables.
 
+Substitutions should be used with care especially if they occur in a file that applies to multiple application instances, e.g. env files and base files.
+
 Some configuration options can only be set in the _global_ about file and the _env_ file. These are typically options that
 are only relevant for configuring the environment, for instance environment name, permissions and env.ttl (time to live).
 Since environments have their own folder and the environment is configured in an own about-file, it is not allowed for an
@@ -168,6 +170,14 @@ Supports deploying an application from a template available on the cluster. See 
 
 Supports deploying an application from a template available in the AuroraConfig folder. See [Guidelines for developing templates](#template_dev_guidelines).
 
+#### cronjob
+
+Supports running a scheduled job as a CronJob resource on Kubernetes
+
+#### job
+
+Supports running a job as a Job resource on Kubernetes
+
 ### Configuration for Deployment Types "deploy" and "development"
 
 | path                           | default     | description                                                                                                                                                                                                                                                                                                                   |
@@ -184,6 +194,7 @@ Supports deploying an application from a template available in the AuroraConfig 
 | config/JAVA_MAX_RAM_PERCENTAGE | 75.0        | Specify heap percentage for Java 11 applications                                                                                                                                                                                                                                                                              |
 | groupId                        |             | groupId for your application. Max 200 length. Required if deploy/development                                                                                                                                                                                                                                                  |
 | artifactId                     | \$fileName  | artifactId for your application. Max 50 length                                                                                                                                                                                                                                                                                |
+| version                        |             | The version of the image you want to run.                                                                                                                                                                                                                                                                                     |
 | splunkIndex                    |             | Set to a valid splunk-index to log to splunk. Only valid if splunk is enabled in the Aurora API                                                                                                                                                                                                                               |
 | serviceAccount                 |             | Set to an existing serviceAccount if you need special privileges                                                                                                                                                                                                                                                              |
 | prometheus                     | true        | Toggle to false if application do not have Prometheus metrics                                                                                                                                                                                                                                                                 |
@@ -242,6 +253,41 @@ The following baseImage are in use at NTA
 
 Note that resources and replicas have no default values for templates. If they are set they will be applied if not the value
 in the template will be used.
+
+### Configuration for job and cronjobs
+
+For jobs and cronjobs you have to create an application that terminates when it is done and point to it using the normal groupId/artifactId:version semantics
+
+| path       | default    | description                                                                  |
+| ---------- | ---------- | ---------------------------------------------------------------------------- |
+| groupId    |            | groupId for your application. Max 200 length. Required if deploy/development |
+| artifactId | \$fileName | artifactId for your application. Max 50 length                               |
+| version    |            | The version of the image you want to run.                                    |
+
+#### Aditional configuration for cronjobs
+
+| path              | default | description                                                                                                                            |
+| ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| schedule          |         | Cron scheduel validated against http://cron-parser.com/                                                                                |
+| failureCount      | 1       | Number of failed jobs to keep                                                                                                          |
+| successCount      | 3       | Number of successfull jobs to keep                                                                                                     |
+| concurrencyPolicy | Forbid  | Any of [concurrencyPolicy](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy)                    |
+| startingDeadline  | 60      | Override the starting deadline for the cronjob, see suspend below                                                                      |
+| suspend           | false   | Suspend/stop the job. Nb! See [suspend](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#suspend) docs for caveats |
+
+#### Supported integrations
+
+Jobs and Cronjobs can have
+
+- secrets
+- databases
+- STS tokens
+- mounts
+
+#### Limitations
+
+Jobs and cronjobs do not support log aggregations and prometheus metrics at the moment. Use the script directive and do a
+http call to a service alongside your job if you need this.
 
 ### Exposing an application via HTTP
 
@@ -308,18 +354,21 @@ a single vault/file.
 | secretVault/keys        |         | An array of keys from the latest.properties file in the vault you want to include.     |
 | secretVault/keyMappings |         | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
+It is possible to use substitutions in keys/keyMappings but it should be used with care and doublechecked.
+
 ### Mounting volumes
 
 | path                             | default       | description                                                                                                                                         |
 | -------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mounts/<mountName>/type`        |               | One of Secret, ConfigMap, PVC. Required for each mount.                                                                                             |
+| `mounts/<mountName>/type`        |               | One of Secret, PVC. Required for each mount.                                                                                                        |
+| `mounts/<mountName>/enabled`     | true          | Set this to false to disable this mount                                                                                                             |
 | `mounts/<mountName>/path`        |               | Path to the volume in the container. Required for each mount.                                                                                       |
 | `mounts/<mountName>/mountName`   | `<mountName>` | Override the name of the mount in the container.                                                                                                    |
 | `mounts/<mountName>/volumeName`  | `<mountName>` | Override the name of the volume in the DeploymentConfig.                                                                                            |
-| `mounts/<mountName>/exists`      | false         | If this is set to true the existing resource must exist already.                                                                                    |
-| `mounts/<mountName>/content`     |               | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true.                                                    |
-| `mounts/<mountName>/content`     |               | If type is ConfigMap, set this to a content that will be put in that Volume. Exist must be true.                                                    |
+| `mounts/<mountName>/exist`       | false         | If this is set to true the existing resource must exist already.                                                                                    |
 | `mounts/<mountName>/secretVault` |               | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
+
+The combination of type=PVC and exist=true is not supported by policy. We do not want normal java/web applications to use PVC mounts unnless strictly neccesary.
 
 ### NTA webseal integration
 
