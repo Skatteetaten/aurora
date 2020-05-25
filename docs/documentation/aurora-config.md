@@ -101,8 +101,7 @@ config/cluster : "@cluster@"
 
 Which options are available for substitution is indicated in the following tables.
 
-Substitutions should be used with care and double checked that the resulting configuration is valid in all environments if used
-in a very general file. 
+Substitutions should be used with care especially if they occur in a file that applies to multiple application instances, e.g. env files and base files.
 
 Some configuration options can only be set in the _global_ about file and the _env_ file. These are typically options that
 are only relevant for configuring the environment, for instance environment name, permissions and env.ttl (time to live).
