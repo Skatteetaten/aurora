@@ -362,8 +362,10 @@ It is possible to use substitutions in keys/keyMappings but it should be used wi
 | `mounts/<mountName>/path`        |               | Path to the volume in the container. Required for each mount.                                                                                       |
 | `mounts/<mountName>/mountName`   | `<mountName>` | Override the name of the mount in the container.                                                                                                    |
 | `mounts/<mountName>/volumeName`  | `<mountName>` | Override the name of the volume in the DeploymentConfig.                                                                                            |
-| `mounts/<mountName>/exists`      | false         | If this is set to true the existing resource must exist already.                                                                                    |
+| `mounts/<mountName>/exist`       | false         | If this is set to true the existing resource must exist already. 
 | `mounts/<mountName>/secretVault` |               | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
+
+The combination of type=PVC and exist=true is not supported by policy. We do not want normal java/web applications to use PVC mounts unnless strictly neccesary.
 
 ### NTA webseal integration
 
