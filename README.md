@@ -27,6 +27,8 @@ will start a local web server and continuously build the documentation as you ma
 
 ## Deploying to github pages
 
+Before deploying, you need to set a jekyll theme in the GitHub Pages settings (see https://github.community/t/github-pages-are-not-published-after-following-the-documentation/10555). The "minimal" theme works fine.
+
 To update the gh-pages branch and in turn publish to https://skatteetaten.github.io/aurora/ run
 
     npm deploy
