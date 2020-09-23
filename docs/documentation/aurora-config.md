@@ -379,7 +379,8 @@ Webseal is used for client traffic from within NTA to reach an application. Inte
 | webseal        | false   | Toggle or assign an object to expose application through WebSeal.                                                                                                                                                                           |
 | webseal/host   |         | Set the hostname of the WebSEAL route (domain varies by cluster). Default is `@name@-@affiliation@-@env@`
 | webseal/roles  |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                                                                                                                        |
-| webseal/strict | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, as clients may then be able to bypass the authorization. Strict will only generate warnings when both routes will be created. Set strict to false to disable warnings. |
+| webseal/strict | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, this can be harmful. Strict will only generate warnings when both routes will be created. Set strict to false to disable warnings. |
+| webseal/cluterTimeout |     | Set he timeout of the openshift route for this webseal junction. Should be valid durationString. Example 1s |
 
 If you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
 
