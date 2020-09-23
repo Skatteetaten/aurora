@@ -939,12 +939,12 @@ a single vault/file.</p>
 <tr>
 <td>webseal</td>
 <td>false</td>
-<td>Toggle to expose application through WebSeal.</td>
+<td>Toggle or assign an object to expose application through WebSeal.</td>
 </tr>
 <tr>
 <td>webseal/host</td>
 <td></td>
-<td>Set this to change the default prefix in WebSeal</td>
+<td>Set the hostname of the WebSEAL route (domain varies by cluster). Default is <code class="language-text">@name@-@affiliation@-@env@</code></td>
 </tr>
 <tr>
 <td>webseal/roles</td>
@@ -952,9 +952,9 @@ a single vault/file.</p>
 <td>Set roles required to access this route. This can either be set as CSV or as an array of strings</td>
 </tr>
 <tr>
-<td>webseal/strict</td>
-<td>true</td>
-<td>If the application relies on WebSEAL security it should not have an OpenShift Route, this can be harmful. Strict will only generate warnings when both routes will be created. Set strict to false to disable warnings.</td>
+<td>webseal/cluterTimeout</td>
+<td></td>
+<td>Set he timeout of the openshift route for this webseal junction. Should be valid durationString. Example 1s</td>
 </tr>
 </tbody>
 </table>
