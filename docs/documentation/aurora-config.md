@@ -217,7 +217,14 @@ Supports running a job as a Job resource on Kubernetes
 | pause                          | false       | Toggle to pause an application. This will scale it down to 0 and add a label showing it is paused.                                                                                                                                                                                                                            |
 | toxiproxy                      | false       | Toxiproxy feature toggle using default version                                                                                                                                                                                                                                                                                |
 | toxiproxy/version              | 2.1.3       | Toxiproxy version                                                                                                                                                                                                                                                                                                             |
-| config                         |             | Contains a collection of application configuration variables. The variables are passed on as environment variables to the container. Otherwise, they are ignored by the platform, and it is up to the application to interpret them. Note: If you are using JSON, then both key and value should be enclosed in double quotes |
+| config                         |             | Contains a collection of application configuration variables. Keys are normalized according to [XCU](https://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html). The value of the env vars is passed as is. Note: If you are using JSON string as the value of the config field, then both key and value should be enclosed in double quotes |
+
+Example specification of an json env var
+````yaml
+config:
+  FOO: "{\"BAR\": \"BAZ\"}"     
+````
+This will result in a json object with the key BAR and the value BAZ
 
 For development flow the following configuration properties are available to specify how to build the image locally
 
