@@ -501,10 +501,14 @@ compared to, for instance, a CI/CD pipeline.</p>
 <tr>
 <td>config</td>
 <td></td>
-<td>Contains a collection of application configuration variables. The variables are passed on as environment variables to the container. Otherwise, they are ignored by the platform, and it is up to the application to interpret them. Note: If you are using JSON, then both key and value should be enclosed in double quotes</td>
+<td>Contains a collection of application configuration variables. Keys are normalized according to <a href="https://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html">XCU</a>. More specifically we replace "-. " with _. If a key will be normalized there will be an warning emitted for that key. The value of the env vars is passed as is. Note: If you are using JSON string as the value of the config field, then all quotes in the json value must be esacped. See example below.</td>
 </tr>
 </tbody>
 </table>
+<p>Example specification of an json env var</p>
+<div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">config</span><span class="token punctuation">:</span>
+  <span class="token key atrule">FOO</span><span class="token punctuation">:</span> <span class="token string">"{\"BAR\": \"BAZ\"}"</span>     </code></pre></div>
+<p>This will result in a json object with the key BAR and the value BAZ</p>
 <p>For development flow the following configuration properties are available to specify how to build the image locally</p>
 <table>
 <thead>
