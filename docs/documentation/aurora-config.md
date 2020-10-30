@@ -381,12 +381,13 @@ The combination of type=PVC and exist=true is not supported by policy. We do not
 
 Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
 
-| path           | default | description                                                                                                                                                                                                             |
-| -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| webseal        | false   | Toggle or assign an object to expose application through WebSeal.                                                                                                                                                                           |
-| webseal/host   |         | Set the hostname of the WebSEAL route (domain varies by cluster). Default is `@name@-@affiliation@-@env@`
-| webseal/roles  |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                           | webseal/strict | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, as clients may then be able to bypass the authorization. Strict will only generate warnings when both routes will be created. Set strict to false to disable warnings. |                      
-| webseal/cluterTimeout |     | Set he timeout of the openshift route for this webseal junction. Should be valid durationString. Example 1s |
+| path                   | default | description                                                                                                                                                                                                                                                 |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| webseal                | false   | Toggle or assign an object to expose application through WebSeal.                                                                                                                                                                                           |
+| webseal/host           |         | Set the hostname of the WebSEAL route (domain varies by cluster). Default is `@name@-@affiliation@-@env@`                                                                                                                                                   |
+| webseal/roles          |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                                                                                                                                                            |
+| webseal/strict         | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, as clients may then be able to bypass the authorization. Strict will only generate warnings when both routes will be created. Set strict to false to disable warnings. |
+| webseal/clusterTimeout |         | Set he timeout of the openshift route for this webseal junction. Should be valid durationString. Example 1s                                                                                                                                                 |
 
 If you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
 
@@ -439,6 +440,31 @@ If you want to change the default configuration for one application you need to 
 | `database/<name>/instance/name`         | \$databaseDefaults/instance/name     | Override default instance/name.                   |
 | `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback | Override default instance/fallback.               |
 | `database/<name>/instnace/labels/<key>` |                                      | Add/override labels for instance.                 |
+
+### NTA S3 Minio integration
+
+To use the S3 integration, a bucket needs to exist before enabling s3 in auroraconfig.
+Refer to internal documentation to see how a new bucket is created.
+
+It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
+| path                                   | default        | description                                                                                                                                                                                                |
+| -------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| s3Defaults/bucketName                  |                | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined
+| s3Defaults/objectArea                  |                | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined
+
+The simplified syntax is as follows:
+
+| path                                   | default        | description                                                                                                                                                                                                |
+| -------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| s3                                     | false          | Simplified config that is dependant upon that s3Defaults/bucketName and s3Defaults/objectArea is set
+
+For expanded syntax the following applies:
+
+| path                       | default | description                                                                                                                      |
+| -------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| s3/<objectArea>/enabled    | true    | Enabled lets you disable s3 for that specific objectArea.
+| s3/<objectArea>/bucketName |         | Set the bucketName for that specific objectArea. 
+| s3/<objectArea>/objectArea |         | Overrides the objectArea set in <objectArea>
 
 ## Example configuration
 
