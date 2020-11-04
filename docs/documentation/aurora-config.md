@@ -448,6 +448,8 @@ If you want to change the default configuration for one application you need to 
 To use the S3 integration, a bucket needs to exist before enabling s3 in auroraconfig.
 Refer to internal documentation to see how a new bucket is created.
 
+The config field objectArea(specified below) has the following acceptable pattern: lowercase characters, numbers, hyphen(-) and period(.).
+
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
 | path                  | default | description                                                                                                                |
