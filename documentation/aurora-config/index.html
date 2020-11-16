@@ -1043,6 +1043,11 @@ a single vault/file.</p>
 <td>The default name to given a database when using database=true</td>
 </tr>
 <tr>
+<td>databaseDefaults/tryReuse</td>
+<td>false</td>
+<td>Try to reuse schema in cooldown if there is no active schema. Sets this as the default behavior</td>
+</tr>
+<tr>
 <td>databaseDefaults/instance/name</td>
 <td></td>
 <td>The name of the instance you want to use for yor db schemas</td>
@@ -1100,6 +1105,11 @@ a single vault/file.</p>
 <td>Set the id of the database to get an exact match.</td>
 </tr>
 <tr>
+<td><code class="language-text">database/&lt;name&gt;/tryReuse</code></td>
+<td>false</td>
+<td>If there is no active schema, try to find schema in cooldown.</td>
+</tr>
+<tr>
 <td><code class="language-text">database/&lt;name&gt;/generate</code></td>
 <td>$databaseDefaults/generate</td>
 <td>Override default generate.</td>
@@ -1124,6 +1134,7 @@ a single vault/file.</p>
 <h3 id="nta-s3-minio-integration" style="position:relative;"><a href="#nta-s3-minio-integration" aria-label="nta s3 minio integration permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>NTA S3 Minio integration</h3>
 <p>To use the S3 integration, a bucket needs to exist before enabling s3 in auroraconfig.
 Refer to internal documentation to see how a new bucket is created.</p>
+<p>The config field objectArea(specified below) has the following acceptable pattern: lowercase characters, numbers, hyphen(-) and period(.).</p>
 <p>It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:</p>
 <table>
 <thead>
