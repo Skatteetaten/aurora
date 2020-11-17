@@ -136,7 +136,9 @@ At least one of the groups in permissions/admin must have a user in it.
 | ttl                 |          |                | No           | Set a time duration in format 1d, 12h that indicate how long until this application should be deleted                                                                                                                                             |
 | version             | Yes      |                | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy). Version is not required for template/localTemplate files |
 | segment             |          |                | segment      | The segment the application exist in.                                                                                                                                                                                                             |
-| message             |          |                | message      | An message that will be added to the ApplicationDeployment CRD.                                                                                                                                                                                   |
+| message             |          |                | message      | An message that will be added to the ApplicationDeployment CRD.    |
+| notification/email  |          |                |              | Email that will receive notifications. Can either be an array or a space delimited string.  |          
+| notification/mattermost  |      |                |              | Mattermost channels that will receive notifications.  Can either be an array or a space delimited string. |          
 
 ### Deployment Types
 
