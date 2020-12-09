@@ -140,7 +140,11 @@ At least one of the groups in permissions/admin must have a user in it.
 
 ### Notifications
 
-Today we have an integration with mattermost for notification messages when an application or env has been deployed. In order to use this feature
+Get notification messages when an application or environment/namespace has been deployed. 
+
+#### Mattermost
+
+In order to use this feature
 one has to use the channelId, which is not the same as the channel name. The channelId can be retrieved by going to a channel, then hitting view
 info in the channel header. At the bottom of the dialog box you will find a greyed out channel id.
 
