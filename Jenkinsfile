@@ -13,7 +13,7 @@ fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.g
   npm = fileLoader.load('node.js/npm')
 }
 
-node {
+node(props.nodeVersion) {
   if (env.BRANCH_NAME != "master") {
     currentBuild.result = 'ABORTED'
     error('Branch is not master')
