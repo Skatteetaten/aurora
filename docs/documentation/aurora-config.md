@@ -25,7 +25,7 @@ in addition to an about.yaml file describing the environment itself. The followi
 
 | File             | Name in AC | Description                                                                                                                                                                                                                                        |
 | ---------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| about.yaml       | global     | The _global_ file is the most general file in an Aurora Config. All applications will inherit options set in this file, unless _globalFile_ is spesifically set in the base or env file.                                                           |
+| about.yaml       | global     | The _global_ file is the most general file in an Aurora Config. All applications will inherit options set in this file, unless _globalFile_ is specifically set in the base or env file.                                                           |
 | {app}.yaml       | base       | The _base_ file contains general configuration for all instances of application {app} across all environments. All instances will inherit options set in this file and will potentially override options set in the _global_ file.                 |
 | {env}/about.yaml | env        | The _env_ file contains general configuration for all applications in environment {env}. All applications in the environment will inherit options set in this file and potentially override options set in both the _base_ file and _global_ file. |
 | {env}/{app}.yaml | app        | The _app_ file contains specific configuration for application {app} in environment {env}. All options set in this file will potentially override options set in other files.                                                                      |
@@ -78,7 +78,7 @@ _In App1.yaml_
 globalFile: about-alternative.yaml
 ```
 
-In this scenario 'prod/App1.yaml' and 'test/App1.yaml' will inherit from 'about-alternative.yaml' at root level, replacing the default _global_ file.This makes it possible to have alternative global configurations for particular applications.
+In this scenario 'prod/App1.yaml' and 'test/App1.yaml' will inherit from 'about-alternative.yaml' at root level, replacing the default _global_ file. This makes it possible to have alternative global configurations for particular applications.
 
 _In prod/about.yaml_
 
