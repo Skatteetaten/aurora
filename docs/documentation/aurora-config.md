@@ -25,7 +25,7 @@ in addition to an about.yaml file describing the environment itself. The followi
 
 | File             | Name in AC | Description                                                                                                                                                                                                                                        |
 | ---------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| about.yaml       | global     | The _global_ file is the most general file in an Aurora Config. All applications will inherit options set in this file.                                                                                                                            |
+| about.yaml       | global     | The _global_ file is the most general file in an Aurora Config. All applications will inherit options set in this file, unless _globalFile_ is spesifically set in the base or env file.                                                           |
 | {app}.yaml       | base       | The _base_ file contains general configuration for all instances of application {app} across all environments. All instances will inherit options set in this file and will potentially override options set in the _global_ file.                 |
 | {env}/about.yaml | env        | The _env_ file contains general configuration for all applications in environment {env}. All applications in the environment will inherit options set in this file and potentially override options set in both the _base_ file and _global_ file. |
 | {env}/{app}.yaml | app        | The _app_ file contains specific configuration for application {app} in environment {env}. All options set in this file will potentially override options set in other files.                                                                      |
@@ -33,6 +33,7 @@ in addition to an about.yaml file describing the environment itself. The followi
 For the applications App1 and App2, and the environments test and prod, a typical Aurora Config could then look like;
 
     ├── about.yaml     (Configuration for all applications in all environments)
+    ├── about-alternative.yaml (Alternative global configuration)
     ├── App1.yaml      (General configuration for App1)
     ├── App2.yaml      (General configuration for App2)
     ├── prod           (A folder named prod, representing the environment prod)
@@ -49,7 +50,7 @@ For a given _app_ file, it is possible to change the _base_ and _env_ file if yo
 differently than the default. For instance, you may need to deploy the same application in the same environment with
 different name and configuration;
 
-File named "test/App1Beta.yaml"
+_File named 'test/App1Beta.yaml'_
 
 ```yaml
 baseFile: App1.yaml
@@ -62,7 +63,7 @@ Note that env files must start with the prefix `about`
 
 For a given env file, it is possible to include another env file that is read right before you using the configuration.
 
-In prod/about.yaml
+_In prod/about.yaml_
 
 ```yaml
 includeEnvFile: test/about.yaml
@@ -70,6 +71,22 @@ includeEnvFile: test/about.yaml
 
 In this scenario 'test/about.yaml' will be read right before 'prod/about.yaml'. This will make it possible to have an
 environment that is a template for other environments.
+
+_In App1.yaml_
+
+```yaml
+globalFile: about-alternative.yaml
+```
+
+In this scenario 'prod/App1.yaml' and 'test/App1.yaml' will inherit from 'about-alternative.yaml' at root level, replacing the default _global_ file.This makes it possible to have alternative global configurations for particular applications.
+
+_In prod/about.yaml_
+
+```yaml
+globalFile: about-alternative.yaml
+```
+
+In this scenario 'prod/about.yaml' will inherit from 'about-alternative.yaml' at root level. This makes it possible to have alternative global configurations for entire environments.
 
 ## DeploymentSpec and ApplicationId
 
@@ -121,6 +138,7 @@ and _app_ files will be describe in a section called "Application files".
 | permissions/admin               | Yes      |              | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required. |
 | permissions/view                |          |              | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.            |
 | permissions/adminServiceAccount |          |              | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. |
+| globalFile                      | No       | about.yaml   | globalFile   | Replaces the global file of the project. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                             |
 
 At least one of the groups in permissions/admin must have a user in it.
 
@@ -137,10 +155,11 @@ At least one of the groups in permissions/admin must have a user in it.
 | version             | Yes      |                | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy). Version is not required for template/localTemplate files |
 | segment             |          |                | segment      | The segment the application exist in.                                                                                                                                                                                                             |
 | message             |          |                | message      | An message that will be added to the ApplicationDeployment CRD.                                                                                                                                                                                   |
+| globalFile          | No       | about.yaml     | globalFile   | Replaces the global file of the application. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                    |
 
 ### Notifications
 
-Get notification messages when an application or environment/namespace has been deployed. 
+Get notification messages when an application or environment/namespace has been deployed.
 
 #### Mattermost
 
