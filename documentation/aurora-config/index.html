@@ -73,7 +73,7 @@ in addition to an about.yaml file describing the environment itself. The followi
 <tr>
 <td>about.yaml</td>
 <td>global</td>
-<td>The <em>global</em> file is the most general file in an Aurora Config. All applications will inherit options set in this file.</td>
+<td>The <em>global</em> file is the most general file in an Aurora Config. All applications will inherit options set in this file, unless <em>globalFile</em> is specifically set in the base or env file.</td>
 </tr>
 <tr>
 <td>{app}.yaml</td>
@@ -94,6 +94,7 @@ in addition to an about.yaml file describing the environment itself. The followi
 </table>
 <p>For the applications App1 and App2, and the environments test and prod, a typical Aurora Config could then look like;</p>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">├── about.yaml     (Configuration for all applications in all environments)
+├── about-alternative.yaml (Alternative global configuration)
 ├── App1.yaml      (General configuration for App1)
 ├── App2.yaml      (General configuration for App2)
 ├── prod           (A folder named prod, representing the environment prod)
@@ -108,17 +109,23 @@ in addition to an about.yaml file describing the environment itself. The followi
 <p>For a given <em>app</em> file, it is possible to change the <em>base</em> and <em>env</em> file if you want to compose your configuration
 differently than the default. For instance, you may need to deploy the same application in the same environment with
 different name and configuration;</p>
-<p>File named "test/App1Beta.yaml"</p>
+<p><em>File named 'test/App1Beta.yaml'</em></p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">baseFile</span><span class="token punctuation">:</span> App1.yaml
 <span class="token key atrule">envFile</span><span class="token punctuation">:</span> about<span class="token punctuation">-</span>alternative.yaml</code></pre></div>
 <p>In this scenario 'App1.yaml' would be used instead of 'App1Beta.yaml' (which does not exist) as the base file for the
 App1Beta in the environment test. The env file about-alternative will be used instead of the standard about file.
 Note that env files must start with the prefix <code class="language-text">about</code></p>
 <p>For a given env file, it is possible to include another env file that is read right before you using the configuration.</p>
-<p>In prod/about.yaml</p>
+<p><em>In prod/about.yaml</em></p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">includeEnvFile</span><span class="token punctuation">:</span> test/about.yaml</code></pre></div>
 <p>In this scenario 'test/about.yaml' will be read right before 'prod/about.yaml'. This will make it possible to have an
 environment that is a template for other environments.</p>
+<p><em>In App1.yaml</em></p>
+<div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">globalFile</span><span class="token punctuation">:</span> about<span class="token punctuation">-</span>alternative.yaml</code></pre></div>
+<p>In this scenario 'prod/App1.yaml' and 'test/App1.yaml' will inherit from 'about-alternative.yaml' at root level, replacing the default <em>global</em> file. This makes it possible to have alternative global configurations for particular applications.</p>
+<p><em>In prod/about.yaml</em></p>
+<div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">globalFile</span><span class="token punctuation">:</span> about<span class="token punctuation">-</span>alternative.yaml</code></pre></div>
+<p>In this scenario 'prod/about.yaml' will inherit from 'about-alternative.yaml' at root level. This makes it possible to have alternative global configurations for entire environments.</p>
 <h2 id="deploymentspec-and-applicationid" style="position:relative;"><a href="#deploymentspec-and-applicationid" aria-label="deploymentspec and applicationid permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>DeploymentSpec and ApplicationId</h2>
 <p>When the Aurora Config is processed a new object is generated for each <em>app</em> file, representing the configuration
 collected from the <em>global</em> file, the <em>base</em> file for that application, the <em>env</em> file for the environment, and finally
@@ -208,6 +215,13 @@ and <em>app</em> files will be describe in a section called "Application files".
 <td>No</td>
 <td>The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.</td>
 </tr>
+<tr>
+<td>globalFile</td>
+<td>No</td>
+<td>about.yaml</td>
+<td>globalFile</td>
+<td>Replaces the global file of the project. Note that the default file is the <em>global</em> about file. This option can only be specified in either the <em>base</em> file or <em>env</em> file.</td>
+</tr>
 </tbody>
 </table>
 <p>At least one of the groups in permissions/admin must have a user in it.</p>
@@ -286,10 +300,17 @@ and <em>app</em> files will be describe in a section called "Application files".
 <td>message</td>
 <td>An message that will be added to the ApplicationDeployment CRD.</td>
 </tr>
+<tr>
+<td>globalFile</td>
+<td>No</td>
+<td>about.yaml</td>
+<td>globalFile</td>
+<td>Replaces the global file of the application. Note that the default file is the <em>global</em> about file. This option can only be specified in either the <em>base</em> file or <em>env</em> file.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="notifications" style="position:relative;"><a href="#notifications" aria-label="notifications permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Notifications</h3>
-<p>Get notification messages when an application or environment/namespace has been deployed. </p>
+<p>Get notification messages when an application or environment/namespace has been deployed.</p>
 <h4 id="mattermost" style="position:relative;"><a href="#mattermost" aria-label="mattermost permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Mattermost</h4>
 <p>In order to use this feature
 one has to use the channelId, which is not the same as the channel name. The channelId can be retrieved by going to a channel, then hitting view
