@@ -4,11 +4,6 @@ Documentation for The Aurora Platform
 
 ## Initial setup
 
-Getting the gatsby-starter-skatteetaten module (TODO: Add more docs)
-
-    git submodule init
-    git submodule update
-
 ## How to build
 
 The project is built using npm from the current Node LTS. Install with [nvm](https://github.com/creationix/nvm);
@@ -17,7 +12,7 @@ The project is built using npm from the current Node LTS. Install with [nvm](htt
 
 Then run
 
-    npm install
+    npm ci
 
 to install the dependencies.
 
