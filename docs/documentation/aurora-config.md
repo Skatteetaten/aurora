@@ -479,7 +479,7 @@ If you want to change the default configuration for one application you need to 
 | `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback | Override default instance/fallback.                           |
 | `database/<name>/instnace/labels/<key>` |                                      | Add/override labels for instance.                             |
 
-### NTA S3 Minio integration
+### NTA S3 integration
 
 To use the S3 integration, a bucket needs to exist before enabling s3 in auroraconfig.
 Refer to internal documentation to see how a new bucket is created.
@@ -488,16 +488,17 @@ The config field objectArea(specified below) has the following acceptable patter
 
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
-| path                  | default | description                                                                                                                |
-| --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
-| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                   |
-| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined |
+| path                  | default | description                                                                                                                          |
+| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                             |
+| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined           |
+| s3Defaults/tenant     |         | Tenant account where buckets are created, format: <affiliation>-<cluster>. In order to use simplified config, this has to be defined |
 
 The simplified syntax is as follows:
 
-| path | default | description                                                                                          |
-| ---- | ------- | ---------------------------------------------------------------------------------------------------- |
-| s3   | false   | Simplified config that is dependant upon that s3Defaults/bucketName and s3Defaults/objectArea is set |
+| path | default | description                                                                                                             |
+| ---- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| s3   | false   | Simplified config that is dependant upon that s3Defaults/bucketName, s3Defaults/objectArea and s3Defaults/tenant is set |
 
 For expanded syntax the following applies:
 
@@ -506,6 +507,7 @@ For expanded syntax the following applies:
 | `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea. |
 | `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.          |
 | `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in <objectArea>              |
+| `s3/<objectArea>/tenant`     |         | Overrides the Tenant set in <tenant>                      |
 
 ## Example configuration
 
