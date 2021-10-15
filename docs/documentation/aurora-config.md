@@ -512,15 +512,15 @@ For expanded syntax the following applies:
 ### Registration of alerts
 Application specific alerts can be automatically registered by adding the following configuration.
 
-| path                             | default | description |
-| -------------------------------- | ------- | ---------------------------------------------------------------------------------------- |
-| `alerts/<alertName>/enabled`     | false   | Enabled lets you enable the specified alert                                              |
-| `alerts/<alertName>/expr`        |         | Set the promql expression that should trigger an alert                                   |
-| `alerts/<alertName>/delay`       |         | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
-| `alerts/<alertName>/connection`  |         | Connection rule between alert definition and recipients via specific channels            |
-| `alerts/<alertName>/severity`    |         | Severity of alert that is registered, values: critical, warning                          |
-| `alerts/<alertName>/summary`     |         | Clear text summary of what the alert does                                                |
-| `alerts/<alertName>/description` |         | Clear text description of the alert                                                      |
+| path                             | default                              | description                                                                              |
+| -------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `alerts/<alertName>/enabled`     | false                                | Enabled lets you enable the specified alert                                              |
+| `alerts/<alertName>/expr`        |                                      | Set the promql expression that should trigger an alert                                   |
+| `alerts/<alertName>/delay`       |                                      | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
+| `alerts/<alertName>/connection`  |                                      | Connection rule between alert definition and recipients via specific channels            |
+| `alerts/<alertName>/severity`    |                                      | Severity of alert that is registered, values: critical, warning                          |
+| `alerts/<alertName>/summary`     | oppsummering av alarm er ikke angitt | Clear text summary of what the alert does                                                |
+| `alerts/<alertName>/description` | beskrivelse av alarm er ikke angitt  | Clear text description of the alert                                                      |
 
 Some configuration values can be set with defaults, these values will be used unless an alert-configuration overrides it.
 `alertsDefaults` can be set in the _base_ file if they should be used for all instances of an application across all environments,
