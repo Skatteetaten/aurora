@@ -509,6 +509,29 @@ For expanded syntax the following applies:
 | `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in <objectArea>              |
 | `s3/<objectArea>/tenant`     |         | Overrides the Tenant set in <tenant>                      |
 
+### Registration of alerts
+Application specific alerts can be automatically registered by adding the following configuration.
+
+| path                             | default                              | description                                                                              |
+| -------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `alerts/<alertName>/enabled`     | false                                | Enabled lets you enable the specified alert                                              |
+| `alerts/<alertName>/expr`        |                                      | Set the promql expression that should trigger an alert                                   |
+| `alerts/<alertName>/delay`       |                                      | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
+| `alerts/<alertName>/connection`  |                                      | Connection rule between alert definition and recipients via specific channels            |
+| `alerts/<alertName>/severity`    |                                      | Severity of alert that is registered, values: critical, warning                          |
+| `alerts/<alertName>/summary`     | oppsummering av alarm er ikke angitt | Clear text summary of what the alert does                                                |
+| `alerts/<alertName>/description` | beskrivelse av alarm er ikke angitt  | Clear text description of the alert                                                      |
+
+Some configuration values can be set with defaults, these values will be used unless an alert-configuration overrides it.
+`alertsDefaults` can be set in the _base_ file if they should be used for all instances of an application across all environments,
+or in the _env_ file if they should be used for all applications in that environment.
+
+| path                        | default | desctiption                                                                              |
+| --------------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| `alertsDefaults/enabled`    | false   | Enabled lets you enable the specified alert                                              |
+| `alertsDefaults/connection` |         | Connection rule between alert definition and recipients via specific channels            |
+| `alertsDefaults/delay`      |         | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
+
 ## Example configuration
 
 ### Simple reference-application
@@ -629,6 +652,61 @@ parameters:
   FEED_NAME: feed
   DB_NAME: atomhopper
   DOMAIN_NAME: localhost
+```
+
+### Example configuration for alerts
+Single application _utv/sample-app.yaml_
+```yaml
+baseFile: "sample-app.yaml"
+...
+alerts:
+  failed-connections:
+    enabled: true
+    delay: "2"
+    connection: "aurora"
+    expr: "failed_connections > 5"
+    severity: "critical"
+    summary: "Connections has failed over 5 times"
+    description: "Instance has had over 5 connection failures"
+  duplicate-entries:
+    enabled: true
+    delay: "5"
+    connection: "aurora"
+    expr: "duplicate_entries > 10"
+    severity: "warning"
+    summary: "Duplicate entries has been registered over 10 times"
+    Description: "Application has registered over 10 duplicates"
+...
+```
+
+Default alert configuration with override
+_sample-app.yaml_
+```yaml
+...
+alertsDefaults:
+  enabled: true
+  delay: "5"
+  connection: "aurora"
+...
+```
+
+_utv/sample-app.yaml_
+```yaml
+baseFile: "sample-app.yaml"
+...
+alerts:
+  failed-connections:
+    delay: "1"
+    expr: "failed_connections > 5"
+    severity: "critical"
+    summary: "Connections has failed over 5 times"
+    description: "Instance has had over 5 connection failures"
+  duplicate-entries:
+    expr: "duplicate_entries > 10"
+    severity: "warning"
+    summary: "Duplicate entries has been registered over 10 times"
+    Description: "Application has registered over 10 duplicates"
+...
 ```
 
 ## Guidelines for developing templates
