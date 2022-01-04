@@ -347,7 +347,7 @@ In order to control routes into the application the following fields can be used
 | `route/<routename>/path`               |                                   | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                                                                      |
 | `route/<routename>/annotations/<key>`  |                                   | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. If the value is empty the annotation will be ignored. |
 | `route/<routename>/tls/enabled`        |                                   | Turn on/off tls for this route                                                                                                                                                                                                                                                                                                                                          |
-| `route/<routename>/tls/insecuryPolicy` |                                   | When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route routeDefaults/tls/insecurePolicy will be used.                                                                                                                                                                                                                      |
+| `route/<routename>/tls/insecurePolicy` |                                   | When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route `routeDefaults/tls/insecurePolicy` will be used.                                                                                                                                                                                                                    |
 | `route/<routename>/tls/termination`    |                                   | Where to terminate TLS for this route. Edge/Passthrough. If not set use the default value from routeDefaults/tls/termination.                                                                                                                                                                                                                                           |
 | `route/<routename>/annotations/<key>`  |                                   | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. If the value is empty the annotation will be ignored. |
 | routeDefaults/host                     | @name@-@affiliation@-@env@        | Set the host of a route according to the given pattern.                                                                                                                                                                                                                                                                                                                 |
@@ -510,6 +510,7 @@ For expanded syntax the following applies:
 | `s3/<objectArea>/tenant`     |         | Overrides the Tenant set in <tenant>                      |
 
 ### Registration of alerts
+
 Application specific alerts can be automatically registered by adding the following configuration.
 
 | path                             | default                              | description                                                                              |
@@ -655,10 +656,12 @@ parameters:
 ```
 
 ### Example configuration for alerts
+
 Single application _utv/sample-app.yaml_
+
 ```yaml
 baseFile: "sample-app.yaml"
-...
+---
 alerts:
   failed-connections:
     enabled: true
@@ -676,24 +679,25 @@ alerts:
     severity: "warning"
     summary: "Duplicate entries has been registered over 10 times"
     Description: "Application has registered over 10 duplicates"
-...
 ```
 
 Default alert configuration with override
 _sample-app.yaml_
+
 ```yaml
-...
+
+---
 alertsDefaults:
   enabled: true
   delay: "5"
   connection: "aurora"
-...
 ```
 
 _utv/sample-app.yaml_
+
 ```yaml
 baseFile: "sample-app.yaml"
-...
+---
 alerts:
   failed-connections:
     delay: "1"
@@ -706,7 +710,6 @@ alerts:
     severity: "warning"
     summary: "Duplicate entries has been registered over 10 times"
     Description: "Application has registered over 10 duplicates"
-...
 ```
 
 ## Guidelines for developing templates
