@@ -805,9 +805,9 @@ its service name.</p>
 <td>Turn on/off tls for this route</td>
 </tr>
 <tr>
-<td><code class="language-text">route/&lt;routename&gt;/tls/insecuryPolicy</code></td>
+<td><code class="language-text">route/&lt;routename&gt;/tls/insecurePolicy</code></td>
 <td></td>
-<td>When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route routeDefaults/tls/insecurePolicy will be used.</td>
+<td>When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route <code class="language-text">routeDefaults/tls/insecurePolicy</code> will be used.</td>
 </tr>
 <tr>
 <td><code class="language-text">route/&lt;routename&gt;/tls/termination</code></td>
@@ -1419,7 +1419,7 @@ or in the <em>env</em> file if they should be used for all applications in that 
 <h3 id="example-configuration-for-alerts" style="position:relative;"><a href="#example-configuration-for-alerts" aria-label="example configuration for alerts permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example configuration for alerts</h3>
 <p>Single application <em>utv/sample-app.yaml</em></p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">baseFile</span><span class="token punctuation">:</span> <span class="token string">"sample-app.yaml"</span>
-<span class="token punctuation">...</span>
+<span class="token punctuation">---</span>
 <span class="token key atrule">alerts</span><span class="token punctuation">:</span>
   <span class="token key atrule">failed-connections</span><span class="token punctuation">:</span>
     <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
@@ -1436,19 +1436,17 @@ or in the <em>env</em> file if they should be used for all applications in that 
     <span class="token key atrule">expr</span><span class="token punctuation">:</span> <span class="token string">"duplicate_entries > 10"</span>
     <span class="token key atrule">severity</span><span class="token punctuation">:</span> <span class="token string">"warning"</span>
     <span class="token key atrule">summary</span><span class="token punctuation">:</span> <span class="token string">"Duplicate entries has been registered over 10 times"</span>
-    <span class="token key atrule">Description</span><span class="token punctuation">:</span> <span class="token string">"Application has registered over 10 duplicates"</span>
-<span class="token punctuation">...</span></code></pre></div>
+    <span class="token key atrule">Description</span><span class="token punctuation">:</span> <span class="token string">"Application has registered over 10 duplicates"</span></code></pre></div>
 <p>Default alert configuration with override
 <em>sample-app.yaml</em></p>
-<div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">...</span>
+<div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">---</span>
 <span class="token key atrule">alertsDefaults</span><span class="token punctuation">:</span>
   <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
   <span class="token key atrule">delay</span><span class="token punctuation">:</span> <span class="token string">"5"</span>
-  <span class="token key atrule">connection</span><span class="token punctuation">:</span> <span class="token string">"aurora"</span>
-<span class="token punctuation">...</span></code></pre></div>
+  <span class="token key atrule">connection</span><span class="token punctuation">:</span> <span class="token string">"aurora"</span></code></pre></div>
 <p><em>utv/sample-app.yaml</em></p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">baseFile</span><span class="token punctuation">:</span> <span class="token string">"sample-app.yaml"</span>
-<span class="token punctuation">...</span>
+<span class="token punctuation">---</span>
 <span class="token key atrule">alerts</span><span class="token punctuation">:</span>
   <span class="token key atrule">failed-connections</span><span class="token punctuation">:</span>
     <span class="token key atrule">delay</span><span class="token punctuation">:</span> <span class="token string">"1"</span>
@@ -1460,8 +1458,7 @@ or in the <em>env</em> file if they should be used for all applications in that 
     <span class="token key atrule">expr</span><span class="token punctuation">:</span> <span class="token string">"duplicate_entries > 10"</span>
     <span class="token key atrule">severity</span><span class="token punctuation">:</span> <span class="token string">"warning"</span>
     <span class="token key atrule">summary</span><span class="token punctuation">:</span> <span class="token string">"Duplicate entries has been registered over 10 times"</span>
-    <span class="token key atrule">Description</span><span class="token punctuation">:</span> <span class="token string">"Application has registered over 10 duplicates"</span>
-<span class="token punctuation">...</span></code></pre></div>
+    <span class="token key atrule">Description</span><span class="token punctuation">:</span> <span class="token string">"Application has registered over 10 duplicates"</span></code></pre></div>
 <h2 id="guidelines-for-developing-templates" style="position:relative;"><a href="#guidelines-for-developing-templates" aria-label="guidelines for developing templates permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Guidelines for developing templates</h2>
 <p>When creating templates the following guidelines should be followed:</p>
 <ul>
