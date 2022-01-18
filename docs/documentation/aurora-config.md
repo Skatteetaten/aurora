@@ -533,6 +533,55 @@ or in the _env_ file if they should be used for all applications in that environ
 | `alertsDefaults/connection` |         | Connection rule between alert definition and recipients via specific channels            |
 | `alertsDefaults/delay`      |         | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
 
+### Logging configuration
+To configure logging it is necessary to add the logging configuration block to the aurora config.
+If the configuration is not specified then the application(s) will log via Splunk Connect to a default index `log-ocp-<env>`.
+
+**Note**: Log files are expected to reside under ```/u01/logs```
+
+#### Simple configuration
+A minimal configuration specifying the log index can be added to the configuration.
+```yaml
+logging:              # configuration block
+  index: myapp-index  # splunk index where logs will be indexed 
+```
+
+#### Separate indexes
+It is possible to define separate splunk indexes for different types of logs.
+Logs that are not specified explicitly will be indexed to the index specified in `logging.index`.
+
+Available defined log types:
+
+| Name          | Type              | Log file pattern  |
+|------------------|----------------|-------------------|
+| access        | access_combined   | *.access          |
+| application   | log4j             | *.log             |
+| audit_json    | _json             | *.audit.json      |
+| audit_text    | log4j             | *.audit.text      |
+| gc            | gc_log            | *.gc              |
+| sensitive     | log4j             | *.sensitive       |
+| slow          | log4j             | *.slow            |
+| stacktrace    | log4j             | *.stacktrace      |
+
+To configure a specific, of the available log types, then `logging.loggers.<logname>` must be configured (replace `<logname>` with one of the log type names).
+
+```yaml
+logging:
+  index: myapp-index                    # splunk index log where will be indexed
+  loggers:
+    stacktrace: myapp-stacktrace-index  # splunk index where stacktraces will be indexed
+    audit_text: aud-myapp-inxed         # splunk index where audit_text logs will be indexed
+```
+
+#### Disable fluent-bit sidecar logging
+Setting `logging.index` to an empty value will prevent the application from running with a logging sidecar.
+This can be useful in situations where a fluent-bit sidecar is unwanted, for example a job that may hang if the pod starts with a fluent-bit container.
+
+```yaml
+logging:
+  index: ""
+```
+
 ## Example configuration
 
 ### Simple reference-application
