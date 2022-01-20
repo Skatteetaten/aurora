@@ -547,6 +547,21 @@ compared to, for instance, a CI/CD pipeline.</p>
 <td>Toxiproxy version</td>
 </tr>
 <tr>
+<td>toxiproxy/endpointsFromConfig/&#x3C;name></td>
+<td>false</td>
+<td><name> is the name of the environment variable to manipulate. This variable must be present in the config section and contain a valid URL. If set to <code class="language-text">true</code>, this will enable a Toxiproxy proxy for this URL with an automatically ganerated proxy name.</td>
+</tr>
+<tr>
+<td>toxiproxy/endpointsFromConfig/&#x3C;name>/enabled</td>
+<td>false</td>
+<td>Set to true to enable a Toxiproxy proxy for the URL given in the environment variable with the name <name>.</td>
+</tr>
+<tr>
+<td>toxiproxy/endpointsFromConfig/&#x3C;name>/proxyname</td>
+<td>endpoint_&#x3C;name></td>
+<td>Sets the proxy name of the Toxiproxy proxy.</td>
+</tr>
+<tr>
 <td>config</td>
 <td></td>
 <td>Contains a collection of application configuration variables. Keys are normalized according to <a href="https://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html">XCU</a>. More specifically we replace "-. " with _. If a key will be normalized there will be an warning emitted for that key. The value of the env vars is passed as is. Note: If you are using JSON string as the value of the config field, then all quotes in the json value must be esacped. See example below.</td>
