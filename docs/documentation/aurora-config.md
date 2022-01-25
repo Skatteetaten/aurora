@@ -567,7 +567,7 @@ To configure a specific, of the available log types, then `logging.loggers.<logn
 
 ```yaml
 logging:
-  index: myapp-index                    # splunk index log where will be indexed
+  index: myapp-index                    # splunk index where log will be indexed
   loggers:
     stacktrace: myapp-stacktrace-index  # splunk index where stacktraces will be indexed
     audit_text: aud-myapp-inxed         # splunk index where audit_text logs will be indexed
