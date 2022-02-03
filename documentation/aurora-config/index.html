@@ -554,12 +554,17 @@ compared to, for instance, a CI/CD pipeline.</p>
 <tr>
 <td>toxiproxy/endpointsFromConfig/&#x3C;name>/enabled</td>
 <td>false</td>
-<td>Set to true to create a Toxiproxy proxy for the URL given in the environment variable with the name <name>.</td>
+<td>Set to true to create a Toxiproxy proxy for the URL given in the environment variable with the name &#x3C;name>. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.</td>
 </tr>
 <tr>
 <td>toxiproxy/endpointsFromConfig/&#x3C;name>/proxyname</td>
 <td>endpoint_&#x3C;name></td>
 <td>Set the name of the Toxiproxy proxy.</td>
+</tr>
+<tr>
+<td>toxiproxy/endpointsFromConfig/&#x3C;name>/initialEnabledState</td>
+<td>true</td>
+<td>Set the <em>enabled</em> state of the proxy.</td>
 </tr>
 <tr>
 <td>toxiproxy/serverAndPortFromConfig/&#x3C;proxyname>/serverVariable</td>
@@ -572,9 +577,14 @@ compared to, for instance, a CI/CD pipeline.</p>
 <td>Name of the environment variable that holds the port. This variable must be present in the config section and contain a valid port number. <proxyname> is the name of the Toxiproxy proxy that will be created.</td>
 </tr>
 <tr>
+<td>toxiproxy/serverAndPortFromConfig/&#x3C;proxyname>/initialEnabledState</td>
+<td>true</td>
+<td>Set the <em>enabled</em> state of the proxy.</td>
+</tr>
+<tr>
 <td>config</td>
 <td></td>
-<td>Contains a collection of application configuration variables. Keys are normalized according to <a href="https://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html">XCU</a>. More specifically we replace "-. " with _. If a key will be normalized there will be an warning emitted for that key. The value of the env vars is passed as is. Note: If you are using JSON string as the value of the config field, then all quotes in the json value must be esacped. See example below.</td>
+<td>Contains a collection of application configuration variables. Keys are normalized according to <a href="https://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html">XCU</a>. More specifically we replace "-. " with _. If a key will be normalized there will be an warning emitted for that key. The value of the env vars is passed as is. Note: If you are using JSON string as the value of the config field, then all quotes in the json value must be escaped. See example below.</td>
 </tr>
 </tbody>
 </table>
@@ -799,6 +809,7 @@ http call to a service alongside your job if you need this.</p>
 <h3 id="exposing-an-application-via-http" style="position:relative;"><a href="#exposing-an-application-via-http" aria-label="exposing an application via http permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Exposing an application via HTTP</h3>
 <p>The default behavior is that the application is only visible to other application in the same namespace using
 its service name.</p>
+<p>By using routes and CNAME entries, the application can be exposed in a cluster-independent way both on-premise and to Azure resources.</p>
 <p>In order to control routes into the application the following fields can be used.</p>
 <table>
 <thead>
@@ -822,7 +833,7 @@ its service name.</p>
 <tr>
 <td><code class="language-text">route/&lt;routename&gt;/host</code></td>
 <td></td>
-<td>Set the host of a route according to the given pattern. If not specified the default will be routeDefault/host</td>
+<td>Set the host of a route according to the given pattern. If not specified the default will be <code class="language-text">routeDefault/host</code>. If you specify <code class="language-text">cname.enabled</code> or <code class="language-text">azure.enabled</code>, this should be a fully qualified host name.</td>
 </tr>
 <tr>
 <td><code class="language-text">route/&lt;routename&gt;/path</code></td>
@@ -833,6 +844,26 @@ its service name.</p>
 <td><code class="language-text">route/&lt;routename&gt;/annotations/&lt;key&gt;</code></td>
 <td></td>
 <td>Set annotations for a given route. Note that you should use | instead of / in annotation keys. so 'haproxy.router.openshift.io | balance'. See <a href="https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations">route annotations</a> for some options. If the value is empty the annotation will be ignored.</td>
+</tr>
+<tr>
+<td><code class="language-text">route/&lt;routename&gt;/cname/enabled</code></td>
+<td></td>
+<td>If set to <code class="language-text">true</code>, a CNAME entry is created on-prem, allowing for cluster-independent access to the application. If not set for a route <code class="language-text">routeDefaults/cname/enabled</code> will be used.</td>
+</tr>
+<tr>
+<td><code class="language-text">route/&lt;routename&gt;/cname/ttl</code></td>
+<td></td>
+<td>Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route <code class="language-text">routeDefaults/cname/ttl</code> will be used.</td>
+</tr>
+<tr>
+<td><code class="language-text">route/&lt;routename&gt;/azure/enabled</code></td>
+<td></td>
+<td>If set to <code class="language-text">true</code>, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure. If not set for a route <code class="language-text">routeDefaults/azure/enabled</code> will be used.</td>
+</tr>
+<tr>
+<td><code class="language-text">route/&lt;routename&gt;/azure/cnameTtl</code></td>
+<td></td>
+<td>Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route <code class="language-text">routeDefaults/azure/cnameTtl</code> will be used.</td>
 </tr>
 <tr>
 <td><code class="language-text">route/&lt;routename&gt;/tls/enabled</code></td>
@@ -857,12 +888,32 @@ its service name.</p>
 <tr>
 <td>routeDefaults/host</td>
 <td>@name@-@affiliation@-@env@</td>
-<td>Set the host of a route according to the given pattern.</td>
+<td>Set the host of a route according to the given pattern.  If you specify <code class="language-text">cname.enabled</code> or <code class="language-text">azure.enabled</code>, this should be a fully qualified host name.</td>
 </tr>
 <tr>
 <td>routeDefaults/annotations/<key></td>
 <td></td>
 <td>Set annotations for a given route. Note that you should use | instead of / in annotation keys. so 'haproxy.router.openshift.io | balance'. See <a href="https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations">route annotations</a> for some options.</td>
+</tr>
+<tr>
+<td>routeDefaults/cname/enabled</td>
+<td>false</td>
+<td>If set to <code class="language-text">true</code>, a CNAME entry is created on-prem, allowing for cluster-independent access to the application for all routes.</td>
+</tr>
+<tr>
+<td>routeDefaults/cname/ttl</td>
+<td></td>
+<td>Default time to live for the CNAME entry for all routes, after which the client should discard or refresh its cache.</td>
+</tr>
+<tr>
+<td>routeDefaults/azure/enabled</td>
+<td>false</td>
+<td>If set to <code class="language-text">true</code>, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure for all routes.</td>
+</tr>
+<tr>
+<td>routeDefaults/azure/cnameTtl</td>
+<td></td>
+<td>Default time to live for the CNAME entry of all routes, after which the client should discard or refresh its cache.</td>
 </tr>
 <tr>
 <td>routeDefaults/tls/enabled</td>
@@ -882,7 +933,7 @@ its service name.</p>
 </tbody>
 </table>
 <p>If tls is used the host of the route cannot include the '.' key, since we do not support wildcard TLS cert.</p>
-<p>Route annotations are usable for template types but you need to create a Service with name after the NAME parameter yourself.</p>
+<p>Route annotations are usable for template types, but you need to create a Service with name after the NAME parameter yourself.</p>
 <h3 id="managing-secrets" style="position:relative;"><a href="#managing-secrets" aria-label="managing secrets permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Managing Secrets</h3>
 <p>In order to provide sensitive data to an application (i.e. passwords that cannot be stored directly in the configuration block of the AuroraConfig) it is possible to
 access Vaults that has been created with the <code class="language-text">ao vault</code> command (see internal link
