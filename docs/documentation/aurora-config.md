@@ -593,7 +593,7 @@ logging:
   index: myapp-index # splunk index where log will be indexed
   loggers:
     stacktrace: myapp-stacktrace-index # splunk index where stacktraces will be indexed
-    audit_text: aud-myapp-inxed # splunk index where audit_text logs will be indexed
+    audit_text: aud-myapp-index # splunk index where audit_text logs will be indexed
 ```
 
 #### Separate indexes with custom file pattern
@@ -601,7 +601,7 @@ logging:
 We have support for specifying custom file patterns if you do not follow the default patterns. We strongly advice you to use the default loggers config if possible.
 We do not allow custom sourcetypes, we currently support [_json, access_combined, gc_log, log4j].
 If you need support for another sourcetype you need to contact us.
-When you use custom logging, you practically takes full ownership of capturing logs with correct file pattern.
+When you use custom logging, you take full ownership and responsibility of capturing logs with correct file pattern.
 If you specify custom logging you cannot have the config fields `logging/index` or `logging/loggers`.
 For custom logging you have to specify one logger that is named application, see example below.
 
