@@ -553,8 +553,8 @@ compared to, for instance, a CI/CD pipeline.</p>
 </tr>
 <tr>
 <td>toxiproxy/endpointsFromConfig/&#x3C;name>/enabled</td>
-<td>false</td>
-<td>Set to true to create a Toxiproxy proxy for the URL given in the environment variable with the name &#x3C;name>. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.</td>
+<td>true</td>
+<td>Set to true to create a Toxiproxy proxy for the URL given in the environment variable with the name &#x3C;name>. If set to false, it will be skipped. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.</td>
 </tr>
 <tr>
 <td>toxiproxy/endpointsFromConfig/&#x3C;name>/proxyname</td>
@@ -1374,7 +1374,12 @@ Refer to internal documentation to see how a new bucket is created.</p>
 <tr>
 <td><code class="language-text">alerts/&lt;alertName&gt;/connection</code></td>
 <td></td>
-<td>Connection rule between alert definition and recipients via specific channels</td>
+<td>Connection rule between alert definition and recipients via specific channels (deprecated: use <code class="language-text">connections</code>)</td>
+</tr>
+<tr>
+<td><code class="language-text">alerts/&lt;alertName&gt;/connections</code></td>
+<td></td>
+<td>Array of connection rules between alert definition and recipients via specific channels</td>
 </tr>
 <tr>
 <td><code class="language-text">alerts/&lt;alertName&gt;/severity</code></td>
@@ -1413,7 +1418,12 @@ or in the <em>env</em> file if they should be used for all applications in that 
 <tr>
 <td><code class="language-text">alertsDefaults/connection</code></td>
 <td></td>
-<td>Connection rule between alert definition and recipients via specific channels</td>
+<td>Connection rule between alert definition and recipients via specific channels (deprecated: use <code class="language-text">connections</code>)</td>
+</tr>
+<tr>
+<td><code class="language-text">alertsDefaults/connections</code></td>
+<td></td>
+<td>Array of connection rules between alert definition and recipients via specific channels</td>
 </tr>
 <tr>
 <td><code class="language-text">alertsDefaults/delay</code></td>
@@ -1602,7 +1612,8 @@ This can be useful in situations where a fluent-bit sidecar is unwanted, for exa
   <span class="token key atrule">failed-connections</span><span class="token punctuation">:</span>
     <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
     <span class="token key atrule">delay</span><span class="token punctuation">:</span> <span class="token string">"2"</span>
-    <span class="token key atrule">connection</span><span class="token punctuation">:</span> <span class="token string">"aurora"</span>
+    <span class="token key atrule">connections</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"aurora"</span>
     <span class="token key atrule">expr</span><span class="token punctuation">:</span> <span class="token string">"failed_connections > 5"</span>
     <span class="token key atrule">severity</span><span class="token punctuation">:</span> <span class="token string">"critical"</span>
     <span class="token key atrule">summary</span><span class="token punctuation">:</span> <span class="token string">"Connections has failed over 5 times"</span>
@@ -1610,7 +1621,8 @@ This can be useful in situations where a fluent-bit sidecar is unwanted, for exa
   <span class="token key atrule">duplicate-entries</span><span class="token punctuation">:</span>
     <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
     <span class="token key atrule">delay</span><span class="token punctuation">:</span> <span class="token string">"5"</span>
-    <span class="token key atrule">connection</span><span class="token punctuation">:</span> <span class="token string">"aurora"</span>
+    <span class="token key atrule">connections</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"aurora"</span>
     <span class="token key atrule">expr</span><span class="token punctuation">:</span> <span class="token string">"duplicate_entries > 10"</span>
     <span class="token key atrule">severity</span><span class="token punctuation">:</span> <span class="token string">"warning"</span>
     <span class="token key atrule">summary</span><span class="token punctuation">:</span> <span class="token string">"Duplicate entries has been registered over 10 times"</span>
@@ -1621,7 +1633,8 @@ This can be useful in situations where a fluent-bit sidecar is unwanted, for exa
 <span class="token key atrule">alertsDefaults</span><span class="token punctuation">:</span>
   <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
   <span class="token key atrule">delay</span><span class="token punctuation">:</span> <span class="token string">"5"</span>
-  <span class="token key atrule">connection</span><span class="token punctuation">:</span> <span class="token string">"aurora"</span></code></pre></div>
+  <span class="token key atrule">connections</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token string">"aurora"</span></code></pre></div>
 <p><em>utv/sample-app.yaml</em></p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">baseFile</span><span class="token punctuation">:</span> <span class="token string">"sample-app.yaml"</span>
 <span class="token punctuation">---</span>
