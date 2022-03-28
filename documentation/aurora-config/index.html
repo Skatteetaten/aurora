@@ -554,7 +554,7 @@ compared to, for instance, a CI/CD pipeline.</p>
 <tr>
 <td>toxiproxy/endpointsFromConfig/&#x3C;name>/enabled</td>
 <td>true</td>
-<td>Set to true to create a Toxiproxy proxy for the URL given in the environment variable with the name &#x3C;name>. If set to false, it will be skipped. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.</td>
+<td>Set to <code class="language-text">true</code> to create a Toxiproxy proxy for the URL given in the environment variable with the name &#x3C;name>. If set to <code class="language-text">false</code>, it will be skipped. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.</td>
 </tr>
 <tr>
 <td>toxiproxy/endpointsFromConfig/&#x3C;name>/proxyname</td>
@@ -578,6 +578,31 @@ compared to, for instance, a CI/CD pipeline.</p>
 </tr>
 <tr>
 <td>toxiproxy/serverAndPortFromConfig/&#x3C;proxyname>/initialEnabledState</td>
+<td>true</td>
+<td>Set the <em>enabled</em> state of the proxy.</td>
+</tr>
+<tr>
+<td>toxiproxy/database</td>
+<td>false</td>
+<td>Set to <code class="language-text">true</code> to enable Toxiproxy for all databases defined in the database config section.</td>
+</tr>
+<tr>
+<td>toxiproxy/database/&#x3C;name></td>
+<td>false</td>
+<td>&#x3C;name> is the name of the database. It must be present in database config section. If set to <code class="language-text">true</code>, this will enable a Toxiproxy proxy for this database with an automatically generated proxy name.</td>
+</tr>
+<tr>
+<td>toxiproxy/database/&#x3C;name>/enabled</td>
+<td>true</td>
+<td>Set to <code class="language-text">true</code> to create a Toxiproxy proxy for the database with the name &#x3C;name>. If set to <code class="language-text">false</code>, it will be skipped. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.</td>
+</tr>
+<tr>
+<td>toxiproxy/database/&#x3C;name>/proxyname</td>
+<td>database_&#x3C;name></td>
+<td>Set the name of the Toxiproxy proxy.</td>
+</tr>
+<tr>
+<td>toxiproxy/database/&#x3C;name>/initialEnabledState</td>
 <td>true</td>
 <td>Set the <em>enabled</em> state of the proxy.</td>
 </tr>
