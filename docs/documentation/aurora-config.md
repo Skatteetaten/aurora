@@ -491,17 +491,21 @@ It is possible to change the default values for this process so that each applic
 
 If you want to change the default configuration for one application you need to use the expanded syntax
 
-| path                                    | default                              | description                                                   |
-| --------------------------------------- | ------------------------------------ | ------------------------------------------------------------- |
-| `database/<name>/enabled`               | true                                 | Set to false to disable database                              |
-| `database/<name>/flavor`                | \$databaseDefaults/flavor            | Override default flavor.                                      |
-| `database/<name>/name`                  | <name>                               | Override the name of the database.                            |
-| `database/<name>/id`                    |                                      | Set the id of the database to get an exact match.             |
-| `database/<name>/tryReuse`              | false                                | If there is no active schema, try to find schema in cooldown. |
-| `database/<name>/generate`              | \$databaseDefaults/generate          | Override default generate.                                    |
-| `database/<name>/instance/name`         | \$databaseDefaults/instance/name     | Override default instance/name.                               |
-| `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback | Override default instance/fallback.                           |
-| `database/<name>/instnace/labels/<key>` |                                      | Add/override labels for instance.                             |
+| path                                    | default                              | description                                                    |
+|-----------------------------------------|--------------------------------------|----------------------------------------------------------------|
+| `database/<name>/enabled`               | true                                 | Set to false to disable database                               |
+| `database/<name>/flavor`                | \$databaseDefaults/flavor            | Override default flavor.                                       |
+| `database/<name>/name`                  | <name>                               | Override the name of the database.                             |
+| `database/<name>/id`                    |                                      | Set the id of the database to get an exact match.              |
+| `database/<name>/tryReuse`              | false                                | If there is no active schema, try to find schema in cooldown.  |
+| `database/<name>/applicationLabel`      |                                      | Override the application name set on the database registration |
+| `database/<name>/generate`              | \$databaseDefaults/generate          | Override default generate.                                     |
+| `database/<name>/instance/name`         | \$databaseDefaults/instance/name     | Override default instance/name.                                |
+| `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback | Override default instance/fallback.                            |
+| `database/<name>/instnace/labels/<key>` |                                      | Add/override labels for instance.                              | 
+
+To share a database schema between multiple applications then one application must be defined as the owner of the schema.
+The `<name>` must be the same in the configuration files, and for applications that do not own the schema `applicationLabel` must be set and match the name of the application owning the schema.
 
 ### NTA S3 integration
 
