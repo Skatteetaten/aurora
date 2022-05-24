@@ -507,6 +507,11 @@ If you want to change the default configuration for one application you need to 
 To share a database schema between multiple applications then one application must be defined as the owner of the schema.
 The `<name>` must be the same in the configuration files, and for applications that do not own the schema `applicationLabel` must be set and match the name of the application owning the schema.
 
+The `database` property configuration should not be put in global or env files.
+For `databaseDefaults` should be used for database configuration for a whole or multiple environments.
+configuration that should be the same for all applications in an environment should be set in
+`databaseDefaults` placed in a global or env file. 
+
 ### NTA S3 integration
 
 To use the S3 integration, a bucket needs to exist before enabling s3 in auroraconfig.
