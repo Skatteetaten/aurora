@@ -504,7 +504,7 @@ If you want to change the default configuration for one application you need to 
 | `database/<name>/ignoreMissingSchema`   | \$databaseDefaults/ignoreMissingSchema | Override default ignoreMissingSchema.                          |
 | `database/<name>/instance/name`         | \$databaseDefaults/instance/name       | Override default instance/name.                                |
 | `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback   | Override default instance/fallback.                            |
-| `database/<name>/instnace/labels/<key>` |                                        | Add/override labels for instance.                              | 
+| `database/<name>/instance/labels/<key>` |                                        | Add/override labels for instance.                              | 
 
 To share a database schema between multiple applications then one application must be defined as the owner of the schema.
 The `<name>` must be the same in the configuration files, and for applications that do not own the schema `applicationLabel` must be set and match the name of the application owning the schema.
