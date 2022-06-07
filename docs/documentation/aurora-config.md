@@ -478,9 +478,10 @@ If there is no schema the default behavior is to create one.
 It is possible to change the default values for this process so that each application that wants a database can just use the `database=true` instruction
 
 | path                                   | default        | description                                                                                                                                                                                                |
-| -------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | databaseDefaults/flavor                | ORACLE_MANAGED | One of `ORACLE_MANAGED`, `POSTGRES_MANAGED`.                                                                                                                                                               |
 | databaseDefaults/generate              | true           | Set this to false to avoid generating a new schema if your lables does not match an existing one                                                                                                           |
+| databaseDefaults/ignoreMissingSchema   | false          | Set this to ignore missing schema when generate = false. Schemas identified with ID are not ignored.                                                                                                       |
 | databaseDefaults/name                  | @name@         | The default name to given a database when using database=true                                                                                                                                              |
 | databaseDefaults/tryReuse              | false          | Try to reuse schema in cooldown if there is no active schema. Sets this as the default behavior                                                                                                            |
 | databaseDefaults/instance/name         |                | The name of the instance you want to use for yor db schemas                                                                                                                                                |
@@ -491,17 +492,27 @@ It is possible to change the default values for this process so that each applic
 
 If you want to change the default configuration for one application you need to use the expanded syntax
 
-| path                                    | default                              | description                                                   |
-| --------------------------------------- | ------------------------------------ | ------------------------------------------------------------- |
-| `database/<name>/enabled`               | true                                 | Set to false to disable database                              |
-| `database/<name>/flavor`                | \$databaseDefaults/flavor            | Override default flavor.                                      |
-| `database/<name>/name`                  | <name>                               | Override the name of the database.                            |
-| `database/<name>/id`                    |                                      | Set the id of the database to get an exact match.             |
-| `database/<name>/tryReuse`              | false                                | If there is no active schema, try to find schema in cooldown. |
-| `database/<name>/generate`              | \$databaseDefaults/generate          | Override default generate.                                    |
-| `database/<name>/instance/name`         | \$databaseDefaults/instance/name     | Override default instance/name.                               |
-| `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback | Override default instance/fallback.                           |
-| `database/<name>/instnace/labels/<key>` |                                      | Add/override labels for instance.                             |
+| path                                    | default                                | description                                                    |
+|-----------------------------------------|----------------------------------------|----------------------------------------------------------------|
+| `database/<name>/enabled`               | true                                   | Set to false to disable database                               |
+| `database/<name>/flavor`                | \$databaseDefaults/flavor              | Override default flavor.                                       |
+| `database/<name>/name`                  | <name>                                 | Override the name of the database.                             |
+| `database/<name>/id`                    |                                        | Set the id of the database to get an exact match.              |
+| `database/<name>/tryReuse`              | false                                  | If there is no active schema, try to find schema in cooldown.  |
+| `database/<name>/applicationLabel`      |                                        | Override the application name set on the database registration |
+| `database/<name>/generate`              | \$databaseDefaults/generate            | Override default generate.                                     |
+| `database/<name>/ignoreMissingSchema`   | \$databaseDefaults/ignoreMissingSchema | Override default ignoreMissingSchema.                          |
+| `database/<name>/instance/name`         | \$databaseDefaults/instance/name       | Override default instance/name.                                |
+| `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback   | Override default instance/fallback.                            |
+| `database/<name>/instance/labels/<key>` |                                        | Add/override labels for instance.                              | 
+
+To share a database schema between multiple applications then one application must be defined as the owner of the schema.
+The `<name>` must be the same in the configuration files, and for applications that do not own the schema `applicationLabel` must be set and match the name of the application owning the schema.
+
+The `database` property configuration should not be put in global or env files.
+For `databaseDefaults` should be used for database configuration for a whole or multiple environments.
+configuration that should be the same for all applications in an environment should be set in
+`databaseDefaults` placed in a global or env file. 
 
 ### NTA S3 integration
 
