@@ -1197,6 +1197,11 @@ a single vault/file.</p>
 <td>Set this to false to avoid generating a new schema if your lables does not match an existing one</td>
 </tr>
 <tr>
+<td>databaseDefaults/ignoreMissingSchema</td>
+<td>false</td>
+<td>Set this to ignore missing schema when generate = false. Schemas identified with ID are not ignored.</td>
+</tr>
+<tr>
 <td>databaseDefaults/name</td>
 <td>@name@</td>
 <td>The default name to given a database when using database=true</td>
@@ -1269,9 +1274,19 @@ a single vault/file.</p>
 <td>If there is no active schema, try to find schema in cooldown.</td>
 </tr>
 <tr>
+<td><code class="language-text">database/&lt;name&gt;/applicationLabel</code></td>
+<td></td>
+<td>Override the application name set on the database registration</td>
+</tr>
+<tr>
 <td><code class="language-text">database/&lt;name&gt;/generate</code></td>
 <td>$databaseDefaults/generate</td>
 <td>Override default generate.</td>
+</tr>
+<tr>
+<td><code class="language-text">database/&lt;name&gt;/ignoreMissingSchema</code></td>
+<td>$databaseDefaults/ignoreMissingSchema</td>
+<td>Override default ignoreMissingSchema.</td>
 </tr>
 <tr>
 <td><code class="language-text">database/&lt;name&gt;/instance/name</code></td>
@@ -1284,12 +1299,18 @@ a single vault/file.</p>
 <td>Override default instance/fallback.</td>
 </tr>
 <tr>
-<td><code class="language-text">database/&lt;name&gt;/instnace/labels/&lt;key&gt;</code></td>
+<td><code class="language-text">database/&lt;name&gt;/instance/labels/&lt;key&gt;</code></td>
 <td></td>
 <td>Add/override labels for instance.</td>
 </tr>
 </tbody>
 </table>
+<p>To share a database schema between multiple applications then one application must be defined as the owner of the schema.
+The <code class="language-text">&lt;name&gt;</code> must be the same in the configuration files, and for applications that do not own the schema <code class="language-text">applicationLabel</code> must be set and match the name of the application owning the schema.</p>
+<p>The <code class="language-text">database</code> property configuration should not be put in global or env files.
+For <code class="language-text">databaseDefaults</code> should be used for database configuration for a whole or multiple environments.
+configuration that should be the same for all applications in an environment should be set in
+<code class="language-text">databaseDefaults</code> placed in a global or env file. </p>
 <h3 id="nta-s3-integration" style="position:relative;"><a href="#nta-s3-integration" aria-label="nta s3 integration permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>NTA S3 integration</h3>
 <p>To use the S3 integration, a bucket needs to exist before enabling s3 in auroraconfig.
 Refer to internal documentation to see how a new bucket is created.</p>
