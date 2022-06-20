@@ -648,6 +648,25 @@ logging:
   index: ""
 ```
 
+### Topology
+Support for organizing the topology view is available with the `topology` configuration.
+
+| Name                  | Default | Description                                                             |
+|-----------------------|---------|-------------------------------------------------------------------------|
+| `topology/partOf`     |         | Define the group the deployment belongs to.                             |
+| `topology/runtime`    |         | Single value defining the runtime (i.e spring-boot) of the application. |
+| `topology/connectsTo` |         | List of application names the deployment connects to.                   |
+
+A deployment can only belong to one group.
+
+Icon selection is based on the `runtime` property, for example if `runtime` = `spring-boot` a spring-boot icon will be used.
+Supported icons can be found in the links below (note that there may be other icons available not listed).
+- https://rawgit.com/openshift/openshift-logos-icon/master/demo.html
+- https://fontawesome.com/v4/icons/
+
+The `connectsTo` property indicate which applications the deployment connects to in one direction (sends requests to).
+The visualization can only show connections to deployments in the same namespace.
+
 ## Example configuration
 
 ### Simple reference-application
