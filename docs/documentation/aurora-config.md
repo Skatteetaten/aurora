@@ -649,15 +649,22 @@ logging:
 ```
 
 ### Topology
-Support for organizing the topology view is available with the `topology` configuration.
+Support for organizing the [OpenShift topology view](https://docs.openshift.com/container-platform/4.10/applications/odc-viewing-application-composition-using-topology-view.html)
+is available with the `topology` configuration.
 
 | Name                  | Default | Description                                                             |
 |-----------------------|---------|-------------------------------------------------------------------------|
-| `topology/partOf`     |         | Define the group the deployment belongs to.                             |
+| `topology/partOf`     |         | Used to group deployments visually.                                     |
 | `topology/runtime`    |         | Single value defining the runtime (i.e spring-boot) of the application. |
 | `topology/connectsTo` |         | List of application names the deployment connects to.                   |
 
-A deployment can only belong to one group.
+Notes:
+- All fields are optional.
+- `partOf` can only hold one value.
+- For which values to use in `connectsTo` see the description for `name` in [Application files](#application-files).
+
+The `partOf` property is only used for visual grouping of deployments,
+Each project decide themselves how to use the visual grouping, and there are no pre-defined values.
 
 Icon selection is based on the `runtime` property, for example if `runtime` = `spring-boot` a spring-boot icon will be used.
 Supported icons can be found in the links below (note that there may be other icons available not listed).
@@ -665,7 +672,12 @@ Supported icons can be found in the links below (note that there may be other ic
 - https://fontawesome.com/v4/icons/
 
 The `connectsTo` property indicate which applications the deployment connects to in one direction (sends requests to).
-The visualization can only show connections to deployments in the same namespace.
+The topology view can only visualize connections in the same namespace.
+
+The topology configuration will add the following labels and annotations to the deployment
+- `topology/partOf` adds the label `app.kubernetes.io/part-of=<config-value>` on all resources belonging to the deployment.
+- `topology/runtime` adds the label `app.kubernetes.io/runtime=<config-value>` on all resources belonging to the deployment.
+- `topology/connectsTo` adds the annotation `app.openshift.io/connects-to=['config-value']` on the DeploymentConfig.
 
 ## Example configuration
 
