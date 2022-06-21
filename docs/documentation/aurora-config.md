@@ -666,10 +666,10 @@ Notes:
 The `partOf` property is only used for visual grouping of deployments,
 Each project decide themselves how to use the visual grouping, and there are no pre-defined values.
 
-Icon selection is based on the `runtime` property, for example if `runtime` = `spring-boot` a spring-boot icon will be used.
-Supported icons can be found in the links below (note that there may be other icons available not listed).
-- https://rawgit.com/openshift/openshift-logos-icon/master/demo.html
-- https://fontawesome.com/v4/icons/
+The `runtime` property is used to select a display icon. For example when `topology/runtime=spring-boot` is set, the topology view will show a spring-boot icon.
+Supported icons are listed in the logos array in the link below (it is not necessary to include the `icon-` part of the name):
+- https://github.com/openshift/console/blob/master/frontend/public/components/catalog/catalog-item-icon.tsx
+Alternatively supported icons can be found by right-click on the topology view and `Add to project` -> `Container image` and check the `Runtime icon` dropdown list.
 
 The `connectsTo` property indicate which applications the deployment connects to in one direction (sends requests to).
 The topology view can only visualize connections in the same namespace.
