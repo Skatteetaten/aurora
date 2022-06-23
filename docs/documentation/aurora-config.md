@@ -669,7 +669,7 @@ Each project decide themselves how to use the visual grouping, and there are no 
 The `runtime` property is used to select a display icon. For example when `topology/runtime=spring-boot` is set, the topology view will show a spring-boot icon.
 Supported icons are listed in the logos array in the link below (it is not necessary to include the `icon-` part of the name):
 - https://github.com/openshift/console/blob/master/frontend/public/components/catalog/catalog-item-icon.tsx
-Alternatively supported icons can be found by right-click on the topology view and `Add to project` -> `Container image` and check the `Runtime icon` dropdown list.
+- Alternatively supported icons can be found by right-click on the topology view and `Add to project` -> `Container image` and check the `Runtime icon` dropdown list.
 
 The `connectsTo` property indicate which applications the deployment connects to in one direction (sends requests to).
 The topology view can only visualize connections in the same namespace.
