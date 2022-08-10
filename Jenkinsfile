@@ -2,7 +2,7 @@
 
 Map<String, Object> props = [
   credentialsId                : 'github',
-  nodeVersion                  : 'node-16'
+  nodeVersion                  : 'node-12'
 ]
 
 def git
