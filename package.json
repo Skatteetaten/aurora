@@ -26,7 +26,7 @@
     }
   },
   "dependencies": {
-    "@skatteetaten/frontend-components": "3.3.5",
+    "@skatteetaten/frontend-components": "5.0.6",
     "classnames": "2.2.6",
     "gatsby": "2.21.26",
     "gatsby-plugin-react-helmet": "3.3.1",
