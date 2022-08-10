@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import classnames from "classnames/bind";
-import Logo from "@skatteetaten/frontend-components/TopBanner/assets/ske-logo.svg";
+import Logo from "@skatteetaten/frontend-components/TopBanner/assets/logoSKEen.svg";
 import Image from "@skatteetaten/frontend-components/Image";
 
 import styles from "./header.module.css";
