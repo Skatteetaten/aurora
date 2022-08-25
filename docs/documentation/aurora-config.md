@@ -24,7 +24,7 @@ at higher levels. Each environment has its own folder with a separate file for e
 in addition to an about.yaml file describing the environment itself. The following table describes the different files;
 
 | File             | Name in AC | Description                                                                                                                                                                                                                                        |
-| ---------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | about.yaml       | global     | The _global_ file is the most general file in an Aurora Config. All applications will inherit options set in this file, unless _globalFile_ is specifically set in the base or env file.                                                           |
 | {app}.yaml       | base       | The _base_ file contains general configuration for all instances of application {app} across all environments. All instances will inherit options set in this file and will potentially override options set in the _global_ file.                 |
 | {env}/about.yaml | env        | The _env_ file contains general configuration for all applications in environment {env}. All applications in the environment will inherit options set in this file and potentially override options set in both the _base_ file and _global_ file. |
@@ -130,7 +130,7 @@ and _app_ files will be describe in a section called "Application files".
 #### About files
 
 | path                            | required | default      | substitution | description                                                                                                                                                                                            |
-| ------------------------------- | -------- | ------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|---------------------------------|----------|--------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | affiliation                     | Yes      |              | affiliation  | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                    |
 | envName                         |          | \$folderName | env          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                   |
 | env/name                        |          |              | env          | An alias for envName                                                                                                                                                                                   |
@@ -145,7 +145,7 @@ At least one of the groups in permissions/admin must have a user in it.
 #### Application files
 
 | path                | required | default        | substitution | description                                                                                                                                                                                                                                       |
-| ------------------- | -------- | -------------- | ------------ |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|---------------------|----------|----------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | schemaVersion       | Yes      |                | No           | All files in a given AuroraConfig must share a schemaVersion. For now only v1 is supported, it is here in case we need to break compatibility. Required.                                                                                          |
 | type                | Yes      |                | No           | [See Deployment Types](#deployment_types)                                                                                                                                                                                                         |
 | applicationPlatform |          | java           | No           | Specify application platform. java, web, python or doozer are valid platforms. Is only used if type is deploy/development.                                                                                                                        |
@@ -168,7 +168,7 @@ one has to use the channelId, which is not the same as the channel name. The cha
 info in the channel header. At the bottom of the dialog box you will find a greyed out channel id.
 
 | path                                          | default | description                                                                                                |
-| --------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+|-----------------------------------------------|---------|------------------------------------------------------------------------------------------------------------|
 | `notification/mattermost/<channelId>`         |         | Simplified config for enabling a mattermost notification for the given channelId. This requires a boolean. |
 | `notification/mattermost/<channelId>/enabled` | true    | Set to false to disable notification for the given channel.                                                |
 
@@ -237,6 +237,7 @@ Supports running a job as a Job resource on Kubernetes
 | management                                          | true        | Toggle of if your application does not expose an management interface                                                                                                                                                                                                                                                                                                                                                                                                               |
 | management/path                                     | /actuator   | Change the path of where the management interface is exposed                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | management/port                                     | 8081        | Change the port of where the management interface is exposed                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| nodeSelector                                        |             | Configure node-selector to use specific node. Takes map-value e.g. `nodeSelector/\<label\>/\<value\>`. Note that this must only be used in agreement with operations who will provide the label name and value.                                                                                                                                                                                                                                                                     |
 | readiness                                           | true        | Toggle to false to turn off default readiness check                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | readiness/path                                      |             | Set to a path to do a GET request to that path as a readiness check                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | readiness/port                                      | 8080        | If no path present readiness will check if this port is open                                                                                                                                                                                                                                                                                                                                                                                                                        |
@@ -272,7 +273,7 @@ This will result in a json object with the key BAR and the value BAZ
 For development flow the following configuration properties are available to specify how to build the image locally
 
 | path              | default   | description                                                                              |
-| ----------------- | --------- | ---------------------------------------------------------------------------------------- |
+|-------------------|-----------|------------------------------------------------------------------------------------------|
 | builder/name      | architect | Name of the builder image that is used to run the build                                  |
 | builder/version   | 1         | Version of the builder image to use. NB! This must be a tag in the architect imagestream |
 | baseImage/name    |           | Name of the baseImage to use,                                                            |
@@ -281,7 +282,7 @@ For development flow the following configuration properties are available to spe
 The following baseImage are in use at NTA
 
 | name      | version | description      |
-| --------- | ------- | ---------------- |
+|-----------|---------|------------------|
 | wrench10  | 2       | Nodejs10 & Nginx |
 | wrench12  | 2       | Nodejs12 & Nginx |
 | wrench14  | 2       | Nodejs14 & Nginx |
@@ -293,7 +294,7 @@ The following baseImage are in use at NTA
 ### Configuration for Deployment Types "template" and "localTemplate"
 
 | path                 | default | description                                                                                                                                                                                                                                                                     |
-| -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | template             |         | Name of template in default namespace to use. This is required if type is template                                                                                                                                                                                              |
 | templateFile         |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate                                                                                                                                                   |
 | `parameters/<KEY>`   |         | The parameters option is used to set values for parameters in the template. If the template has either of the parameters VERSION, NAME, SPLUNK_INDEX or REPLICAS, the values of these parameters will be set from the standard version, name and replicas AuroraConfig options. |
@@ -311,7 +312,7 @@ in the template will be used.
 For jobs and cronjobs you have to create an application that terminates when it is done and point to it using the normal groupId/artifactId:version semantics
 
 | path       | default    | description                                                                  |
-| ---------- | ---------- | ---------------------------------------------------------------------------- |
+|------------|------------|------------------------------------------------------------------------------|
 | groupId    |            | groupId for your application. Max 200 length. Required if deploy/development |
 | artifactId | \$fileName | artifactId for your application. Max 50 length                               |
 | version    |            | The version of the image you want to run.                                    |
@@ -319,7 +320,7 @@ For jobs and cronjobs you have to create an application that terminates when it 
 #### Aditional configuration for cronjobs
 
 | path              | default | description                                                                                                                            |
-| ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------|
 | schedule          |         | Cron scheduel validated against http://cron-parser.com/                                                                                |
 | failureCount      | 1       | Number of failed jobs to keep                                                                                                          |
 | successCount      | 3       | Number of successfull jobs to keep                                                                                                     |
@@ -351,7 +352,7 @@ By using routes and CNAME entries, the application can be exposed in a cluster-i
 In order to control routes into the application the following fields can be used.
 
 | path                                   | default                           | description                                                                                                                                                                                                                                                                                                                                                             |
-| -------------------------------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------------------------|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | route                                  | false                             | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                                                                       |
 | `route/<routename>/enabled`            | true                              | Set to false to turn off route                                                                                                                                                                                                                                                                                                                                          |
 | `route/<routename>/host`               |                                   | Set the host of a route according to the given pattern. If not specified the default will be `routeDefault/host`. If you specify `cname.enabled` or `azure.enabled`, this should be a fully qualified host name.                                                                                                                                                        |
@@ -397,7 +398,7 @@ ENCRYPTION_KEY=8cdca234-9a3b-11e8-9eb6-529269fb1459
 If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See the next section for more details.
 
 | path                                | default           | description                                                                            |
-| ----------------------------------- | ----------------- | -------------------------------------------------------------------------------------- |
+|-------------------------------------|-------------------|----------------------------------------------------------------------------------------|
 | `secretVaults/<svName>/name`        | \$svName          | Specify full secret vault that will be mounted under default secret location.          |
 | `secretVaults/<svName>/enabled`     | true              | Set this to false to disable.                                                          |
 | `secretVaults/<svName>/file`        | latest.properties | File in vault that will be used for fetching properties.                               |
@@ -410,7 +411,7 @@ The old way of specifying secretVaults (detailed below is deprecated). There wil
 a single vault/file.
 
 | path                    | default | description                                                                            |
-| ----------------------- | ------- | -------------------------------------------------------------------------------------- |
+|-------------------------|---------|----------------------------------------------------------------------------------------|
 | secretVault             |         | Specify full secret vault that will be mounted under default secret location.          |
 | secretVault/name        |         | Used instead of secretVault if you want advanced configuration                         |
 | secretVault/keys        |         | An array of keys from the latest.properties file in the vault you want to include.     |
@@ -421,7 +422,7 @@ It is possible to use substitutions in keys/keyMappings but it should be used wi
 ### Mounting volumes
 
 | path                             | default       | description                                                                                                                                         |
-| -------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `mounts/<mountName>/type`        |               | One of Secret, PVC. Required for each mount.                                                                                                        |
 | `mounts/<mountName>/enabled`     | true          | Set this to false to disable this mount                                                                                                             |
 | `mounts/<mountName>/path`        |               | Path to the volume in the container. Required for each mount.                                                                                       |
@@ -437,7 +438,7 @@ The combination of type=PVC and exist=true is not supported by policy. We do not
 Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
 
 | path                   | default | description                                                                                                                                                                                                                                                 |
-| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | webseal                | false   | Toggle or assign an object to expose application through WebSeal.                                                                                                                                                                                           |
 | webseal/host           |         | Set the hostname of the WebSEAL route (domain varies by cluster). Default is `@name@-@affiliation@-@env@`                                                                                                                                                   |
 | webseal/roles          |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                                                                                                                                                            |
@@ -453,14 +454,14 @@ STS certificate: An SSL certificate with a given commonName is used to identify 
 For v1 of the STS service use:
 
 | path                   | default | description                                                 |
-| ---------------------- | ------- | ----------------------------------------------------------- |
+|------------------------|---------|-------------------------------------------------------------|
 | certificate            | false   | Toggle to add a certificate with CommonName $groupId.$name. |
 | certificate/commonName |         | Generate an STS certificate with the given commonName.      |
 
 For v2 use:
 
 | path   | default | description                                                 |
-| ------ | ------- | ----------------------------------------------------------- |
+|--------|---------|-------------------------------------------------------------|
 | sts    | false   | Toggle to add a certificate with CommonName $groupId.$name. |
 | sts/cn |         | Generate an STS certificate with the given commonName.      |
 
@@ -519,7 +520,7 @@ The config field objectArea(specified below) has the following acceptable patter
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
 | path                  | default | description                                                                                                                          |
-| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+|-----------------------|---------|--------------------------------------------------------------------------------------------------------------------------------------|
 | s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                             |
 | s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined           |
 | s3Defaults/tenant     |         | Tenant account where buckets are created, format: <affiliation>-<cluster>. In order to use simplified config, this has to be defined |
@@ -527,13 +528,13 @@ It could be wise to set some defaults in your base configuration files. The s3De
 The simplified syntax is as follows:
 
 | path | default | description                                                                                                             |
-| ---- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+|------|---------|-------------------------------------------------------------------------------------------------------------------------|
 | s3   | false   | Simplified config that is dependant upon that s3Defaults/bucketName, s3Defaults/objectArea and s3Defaults/tenant is set |
 
 For expanded syntax the following applies:
 
 | path                         | default | description                                               |
-| ---------------------------- | ------- | --------------------------------------------------------- |
+|------------------------------|---------|-----------------------------------------------------------|
 | `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea. |
 | `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.          |
 | `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in <objectArea>              |
@@ -589,7 +590,7 @@ Logs that are not specified explicitly will be indexed to the index specified in
 Available defined log types:
 
 | Name        | Type            | Log file pattern |
-| ----------- | --------------- | ---------------- |
+|-------------|-----------------|------------------|
 | access      | access_combined | \*.access        |
 | application | log4j           | \*.log           |
 | audit_json  | \_json          | \*.audit.json    |
