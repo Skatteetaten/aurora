@@ -477,6 +477,11 @@ compared to, for instance, a CI/CD pipeline.</p>
 <td>Change the port of where the management interface is exposed</td>
 </tr>
 <tr>
+<td>nodeSelector</td>
+<td></td>
+<td>Configure node-selector to use specific node. Takes map-value e.g. <code class="language-text">nodeSelector/\&lt;label\&gt;/\&lt;value\&gt;</code>. Note that this must only be used in agreement with operations who will provide the label name and value.</td>
+</tr>
+<tr>
 <td>readiness</td>
 <td>true</td>
 <td>Toggle to false to turn off default readiness check</td>
