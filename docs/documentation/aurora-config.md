@@ -636,8 +636,9 @@ logging:
 
 #### Add fluent-bit sidecar container for additional types
 
-Fluent-bit is only supported for types: [deploy, development], however it is support to opt-in for the types [localTemplate, template], but you are not guaranteed that it will work for all.
-Your specific usecase may require you to configure custom logging in case you have a specific filename. An example configuration:
+Fluent-bit is only supported for types: [deploy, development], however it is support to opt-in for the types [localTemplate, template].
+You are not guaranteed that it will work for all types and your specific use case. You might have to configure custom logging
+if the logfiles does not conform to the normal filenames.
 
 ```yaml
 logging:
