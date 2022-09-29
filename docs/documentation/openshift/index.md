@@ -113,7 +113,7 @@ The coming sections will describe these components in more detail.
 Coding an application targeted at the Aurora OpenShift Platform follows closely the principles of the
 [Twelve-Factor App](https://12factor.net/) from Heroku. Additionally the following requirements must be met;
 
-- The application must run on the JVM and, currently, must be written exclusively in Java. Node is supported when
+- The application must run on the JVM and, currently, must be written exclusively in Java and/or Kotlin. Node is supported when
   developing [Backends for Frontends](http://samnewman.io/patterns/architectural/bff/), but then only with very limited
   functionality.
 - The application must currently be built using Apache Maven.
