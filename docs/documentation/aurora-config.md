@@ -637,7 +637,7 @@ logging:
 
 #### Add fluent-bit sidecar container for additional types
 
-Fluent-bit is only supported for types: [deploy, development], however it is possible to opt-in for the types [localTemplate, template].
+Fluent-bit is only supported for types: [deploy, development], however it is possible to opt-in for the types [localTemplate, template, job, cronJob].
 You are not guaranteed that it will work for all types and your specific use case. You might have to configure custom logging
 if the logfiles do not conform to the normal filenames.
 
@@ -647,6 +647,8 @@ logging:
   enableForAdditionalTypes:
     localTemplate: true
     template: true
+    job: true
+    cronjob: true
 ```
 
 #### Disable fluent-bit sidecar logging
