@@ -641,7 +641,6 @@ By default, descriptive fields will be added to the messages logged by the appli
 
 | Name                       | Default | Description                          |
 |----------------------------|---------|--------------------------------------|
-| logging/fields/host        | true    | Add field host to log message        |
 | logging/fields/environment | true    | Add field environment to log message |
 | logging/fields/version     | true    | Add field version to log message     |
 | logging/fields/nodetype    | true    | Add field nodetype to log message    |
