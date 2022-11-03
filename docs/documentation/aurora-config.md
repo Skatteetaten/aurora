@@ -635,6 +635,20 @@ logging:
       pattern: "*-custom-aud.log"
 ```
 
+#### Configurable fields
+
+By default, descriptive fields will be added to the messages logged by the application. It is possible to toggle these fields on or off.
+
+| Name                       | Default | Description                          |
+|----------------------------|---------|--------------------------------------|
+| logging/fields/host        | true    | Add field host to log message        |
+| logging/fields/environment | true    | Add field environment to log message |
+| logging/fields/version     | true    | Add field version to log message     |
+| logging/fields/nodetype    | true    | Add field nodetype to log message    |
+| logging/fields/application | true    | Add field application to log message |
+| logging/fields/cluster     | true    | Add field cluster to log message     |
+| logging/fields/nodename    | false   | Add field nodeName to log message    |
+
 #### Add fluent-bit sidecar container for additional types
 
 Fluent-bit is only supported for types: [deploy, development], however it is possible to opt-in for the types [localTemplate, template].
