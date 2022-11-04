@@ -316,11 +316,18 @@ in the template will be used.
 
 For jobs and cronjobs you have to create an application that terminates when it is done and point to it using the normal groupId/artifactId:version semantics
 
-| path       | default    | description                                                                  |
-| ---------- | ---------- | ---------------------------------------------------------------------------- |
-| groupId    |            | groupId for your application. Max 200 length. Required if deploy/development |
-| artifactId | \$fileName | artifactId for your application. Max 50 length                               |
-| version    |            | The version of the image you want to run.                                    |
+| path                      | default    | description                                                                  |
+| ------------------------- | ---------- | ---------------------------------------------------------------------------- |
+| groupId                   |            | groupId for your application. Max 200 length. Required if deploy/development |
+| artifactId                | \$fileName | artifactId for your application. Max 50 length                               |
+| version                   |            | The version of the image you want to run.                                    |
+| liveness                  | false      | Toggle to true to enable liveness check                                      |
+| liveness/path             |            | Set to a path to do a GET request to that path as a liveness check           |
+| liveness/port             | 8080       | If no path present liveness will check if this port is open                  |
+| liveness/delay            | 10         | Number of seconds to wait before running liveness check                      |
+| liveness/timeout          | 1          | Number of seconds timeout before giving up liveness                          |
+| liveness/periodSeconds    | 10         | Number of seconds between each liveness check                                |
+| liveness/failureThreshold | 3          | Number of times to retry liveness check on failure                           |
 
 #### Aditional configuration for cronjobs
 
@@ -644,7 +651,7 @@ logging:
 By default, descriptive fields will be added to the messages logged by the application. It is possible to toggle these fields on or off.
 
 | Name                       | Default | Description                          |
-|----------------------------|---------|--------------------------------------|
+| -------------------------- | ------- | ------------------------------------ |
 | logging/fields/environment | true    | Add field environment to log message |
 | logging/fields/version     | true    | Add field version to log message     |
 | logging/fields/nodetype    | true    | Add field nodetype to log message    |
