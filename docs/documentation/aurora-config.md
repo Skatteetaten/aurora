@@ -572,7 +572,6 @@ Application specific alerts can be automatically registered by adding the follow
 | `alerts/<alertName>/enabled`     | false                                | Enabled lets you enable the specified alert                                                                   |
 | `alerts/<alertName>/expr`        |                                      | Set the promql expression that should trigger an alert                                                        |
 | `alerts/<alertName>/delay`       |                                      | Time in minutes until a condition should cause Prometheus to send alert to alert-manager                      |
-| `alerts/<alertName>/connection`  |                                      | Connection rule between alert definition and recipients via specific channels (deprecated: use `connections`) |
 | `alerts/<alertName>/connections` |                                      | Array of connection rules between alert definition and recipients via specific channels                       |
 | `alerts/<alertName>/severity`    |                                      | Severity of alert that is registered, values: critical, warning                                               |
 | `alerts/<alertName>/summary`     | oppsummering av alarm er ikke angitt | Clear text summary of what the alert does                                                                     |
@@ -585,7 +584,6 @@ or in the _env_ file if they should be used for all applications in that environ
 | path                         | default | desctiption                                                                                                   |
 | ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
 | `alertsDefaults/enabled`     | false   | Enabled lets you enable the specified alert                                                                   |
-| `alertsDefaults/connection`  |         | Connection rule between alert definition and recipients via specific channels (deprecated: use `connections`) |
 | `alertsDefaults/connections` |         | Array of connection rules between alert definition and recipients via specific channels                       |
 | `alertsDefaults/delay`       |         | Time in minutes until a condition should cause Prometheus to send alert to alert-manager                      |
 
