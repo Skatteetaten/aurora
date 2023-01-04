@@ -729,6 +729,17 @@ The topology configuration will add the following labels and annotations to the 
 - `topology/runtime` adds the label `app.kubernetes.io/runtime=<config-value>` on all resources belonging to the deployment.
 - `topology/connectsTo` adds the annotation `app.openshift.io/connects-to=['config-value']` on the DeploymentConfig.
 
+### Configure Maskinporten
+
+| Name                           | Default         | Description                                                                                        |
+|--------------------------------|-----------------|----------------------------------------------------------------------------------------------------|
+| `maskinporten`                 |                 | Simplified configuration can be used to enabled/disable the feature                                |
+| `maskinporten/enabled`         |                 | Enable or disable maskinporten                                                                     |
+| `maskinporten/<name>/enabled`  |                 | Required boolean value. Set to true to mount secret for Maskinporten client with provided clientID |
+| `maskinporten/<name>/clientId` | value from name | The value from name is used by default, this field can be used to override the clientId            |
+
+Note: If maskinporten feature is disabled with simplified configuration or `maskinporten/enabled` then it must be explicitly re-enabled.
+
 ## Example configuration
 
 ### Simple reference-application
