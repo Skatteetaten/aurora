@@ -9,7 +9,7 @@ def overrides = [
     iqEmbedded: true,
     lineCoverageReport: false,
     npmInstallCommand: "ci",
-    nodeVersion: "16",
+    nodeVersion: "18",
     credentialsId: "github",
     versionStrategy: [
       [ branch: 'master', versionHint: '0']
