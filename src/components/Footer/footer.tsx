@@ -10,16 +10,16 @@ console.log(styles);
 
 const links: LinkGroupProps["links"] = [
   {
-    path: "https://www.skatteetaten.no",
-    text: "Skatteetaten.no",
-  },
-  {
     path: "https://github.com/Skatteetaten",
     text: "Github Skatteetaten",
   },
   {
     path: "https://uustatus.no/nb/erklaringer/publisert/e6745fbf-76e5-469b-abb6-3e9fd52c7e9c",
     text: "Tilgjengelighetserklæring",
+  },
+  {
+    path: "https://www.skatteetaten.no",
+    text: "skatteetaten.no",
   },
 ];
 
