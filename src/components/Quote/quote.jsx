@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./quote.module.css";
+import "./quote.css";
 
 const Quote = ({ children, source, ...rest }) => (
-  <div {...rest} className={styles.quote}>
+  <div {...rest} className="quote">
     <p>{children}</p>
     <strong>{source}</strong>
   </div>

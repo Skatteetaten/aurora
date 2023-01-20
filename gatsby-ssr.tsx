@@ -7,7 +7,7 @@ import React from "react";
 import SkeBasis from "@skatteetaten/frontend-components/SkeBasis";
 import Layout from "starter/components/Layout";
 
-export const wrapRootElement = ({ element }) => {
+export const wrapRootElement = ({ element }: any) => {
   return (
     <SkeBasis>
       <Layout>{element}</Layout>

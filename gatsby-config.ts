@@ -1,6 +1,6 @@
 const gatsbyConfig = {
   siteMetadata: {
-    title: "the Aurora Platform",
+    title: "The Aurora Platform",
     menu: [
       {
         href: "/",
@@ -12,9 +12,14 @@ const gatsbyConfig = {
       },
     ],
   },
-  pathPrefix: "/aurora",
+  pathPrefix: "/documentation-template",
   plugins: [
-    "gatsby-plugin-react-helmet",
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        icon: `src/images/favicon.png`,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

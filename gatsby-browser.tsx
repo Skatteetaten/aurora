@@ -12,10 +12,10 @@ export const onInitialClientRender = () => {
   body.setAttribute("style", "display: block");
 };
 
-export const wrapPageElement = ({ element }) => {
-  return <Layout>{element}</Layout>;
-};
-
-export const wrapRootElement = ({ element }) => {
-  return <SkeBasis>{element}</SkeBasis>;
+export const wrapRootElement = ({ element }: any) => {
+  return (
+    <SkeBasis>
+      <Layout>{element}</Layout>
+    </SkeBasis>
+  );
 };

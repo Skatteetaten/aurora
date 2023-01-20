@@ -1,63 +1,27 @@
 #!/usr/bin/env groovy
+def jenkinsfile
 
-Map<String, Object> props = [
-  credentialsId                : 'github',
-  nodeVersion                  : 'node-12'
+def overrides = [
+    scriptVersion  : 'v7',
+    pipelineScript: 'https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git',
+    iqOrganizationName: "Team AOS",
+    iqBreakOnUnstable: false,
+    iqEmbedded: true,
+    lineCoverageReport: false,
+    npmInstallCommand: "ci",
+    nodeVersion: "16",
+    credentialsId: "github",
+    versionStrategy: [
+      [ branch: 'master', versionHint: '0']
+    ],
+    github: [
+      enabled: env.BRANCH_NAME == "master",
+      deployToGHPagesCmd: "npm run deploy"
+    ]
 ]
 
-def git
-def npm
-
-fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git', 'v7') {
-  git = fileLoader.load('git/git')
-  npm = fileLoader.load('node.js/npm')
+fileLoader.withGit(overrides.pipelineScript, overrides.scriptVersion) {
+  jenkinsfile = fileLoader.load('templates/webleveransepakke')
 }
 
-node(props.nodeVersion) {
-  if (env.BRANCH_NAME != "master") {
-    currentBuild.result = 'ABORTED'
-    error('Branch is not master')
-  }
-
-  if (props.nodeVersion) {
-    echo 'Using Node version: ' + props.nodeVersion
-    npm.setVersion(props.nodeVersion)
-  }
-
-  stage('Clean Workspace') {
-    deleteDir()
-    sh 'ls -lah'
-  }
-
-  stage('Checkout') {
-    checkout scm
-  }
-
-  stage('Install dependencies') {
-    npm.run('ci')
-  }
-
-  stage('Build') {
-    npm.build()
-  }
-
-  stage('Deploy to GitHub') {
-    try { 
-      withCredentials([usernamePassword(credentialsId: props.credentialsId, usernameVariable: 'GIT_USERNAME',
-        passwordVariable: 'GIT_PASSWORD')]) {
-        git.setGitConfig()
-        sh("git config --global credential.https://github.com.username ${env.GIT_USERNAME}")
-        sh("git config --global credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-
-        sh("GIT_ASKPASS=true npm run deploy")
-      }
-    } finally {
-      sh("git config --global --unset credential.https://github.com.username")
-      sh("git config --global --unset credential.helper")
-    }
-  }
-
-  stage('Clear workspace') {
-    step([$class: 'WsCleanup'])
-  }
-}
+jenkinsfile.run(overrides.scriptVersion, overrides)

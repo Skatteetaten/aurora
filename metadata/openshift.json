@@ -1,0 +1,15 @@
+{
+  "docker": {
+    "maintainer": "Aurora OpenShift Utvikling <utvpaas@skatteetaten.no>",
+    "labels": {
+      "io.k8s.description": "Documentation template for Github",
+      "io.openshift.tags": "aurora,documentation,github"
+    }
+  },
+  "web": {
+    "static": "public",
+    "headers": {
+      "Cache-Control": "public, max-age=3600"
+    }
+  }
+}

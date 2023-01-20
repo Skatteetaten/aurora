@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import styles from "./breadcrumb.module.css";
+import * as styles from "./breadcrumb.module.css";
 
 export default class Breadcrumb extends React.PureComponent {
   static propTypes = {

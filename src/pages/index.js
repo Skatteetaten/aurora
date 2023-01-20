@@ -5,6 +5,9 @@ import { SingleColumnRow, DoubleColumnRow } from "../components/Columns";
 import auroraApi from "../../docs/frontpage/images/aurora-api.svg";
 import auroraObserve from "../../docs/frontpage/images/aurora-run.svg";
 import auroraBuild from "../../docs/frontpage/images/aurora-build.svg";
+import { graphql } from "gatsby";
+import { renderAst } from "../components/renderAst";
+import "./index.css";
 
 const InfoSeparator = () => (
   <SingleColumnRow>
@@ -14,7 +17,11 @@ const InfoSeparator = () => (
 
 const InfoRow = ({ title, picture, children, left }) => {
   const Picture = () => (
-    <img src={picture} style={{ maxWidth: "100%", maxHeight: "600px" }} />
+    <img
+      src={picture}
+      alt={title}
+      style={{ maxWidth: "100%", maxHeight: "600px" }}
+    />
   );
 
   return (
@@ -29,18 +36,12 @@ const InfoRow = ({ title, picture, children, left }) => {
   );
 };
 
-const IndexPage = ({
-  data: {
-    allMarkdownRemark: { edges },
-  },
-}) => {
+const IndexPage = (props) => {
   const FrontPageContent = ({ path }) => {
-    const content = edges.find((edge) => {
+    const edge = props.data.allMarkdownRemark.edges.find((edge) => {
       return edge.node.fields.slug === path;
     });
-    return (
-      content && <div dangerouslySetInnerHTML={{ __html: content.node.html }} />
-    );
+    return <div key={edge.node.id}>{renderAst(edge.node.htmlAst)}</div>;
   };
 
   return (
@@ -91,10 +92,16 @@ export default IndexPage;
 
 export const pageQuery = graphql`
   query IndexQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
     allMarkdownRemark {
       edges {
         node {
-          html
+          id
+          htmlAst
           fields {
             slug
           }
@@ -103,3 +110,7 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+export const Head = ({ data }) => {
+  return <title>{data.site.siteMetadata.title}</title>;
+};
