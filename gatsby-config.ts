@@ -12,7 +12,7 @@ const gatsbyConfig = {
       },
     ],
   },
-  pathPrefix: "/documentation-template",
+  pathPrefix: "/aurora",
   plugins: [
     {
       resolve: `gatsby-plugin-manifest`,
