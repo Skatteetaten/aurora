@@ -36,6 +36,10 @@ const gatsbyConfig = {
           {
             resolve: "gatsby-remark-copy-linked-files",
             options: {
+              // Enable JS for https://github.com/jonschlinkert/gray-matter#optionsengines (default: false)
+              // It's not advised to set this to "true" and this option will likely be removed in the future
+              jsFrontmatterEngine: false,
+
               // `ignoreFileExtensions` defaults to [`png`, `jpg`, `jpeg`, `bmp`, `tiff`]
               // as we assume you'll use gatsby-remark-images to handle
               // images in markdown as it automatically creates responsive

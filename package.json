@@ -47,7 +47,11 @@
     "typescript-plugin-css-modules": "4.1.1"
   },
   "overrides": {
-    "eslint-import-resolver-node": "0.3.6"
+    "eslint-import-resolver-node": "0.3.6",
+    "clipboardy@2.3.0": {
+      "execa": "2"
+    },
+    "es5-ext": "0.10.53"
   },
   "prettier": {
     "singleQuote": false
