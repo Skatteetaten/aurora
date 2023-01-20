@@ -2,7 +2,7 @@
   "docker": {
     "maintainer": "Aurora OpenShift Utvikling <utvpaas@skatteetaten.no>",
     "labels": {
-      "io.k8s.description": "Documentation template for Github",
+      "io.k8s.description": "Documentation for The Aurora Platform",
       "io.openshift.tags": "aurora,documentation,github"
     }
   },
