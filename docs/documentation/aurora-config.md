@@ -199,11 +199,11 @@ compared to, for instance, a CI/CD pipeline.
 
 #### template
 
-Supports deploying an application from a template available on the cluster. See [Guidelines for developing templates](#template_dev_guidelines).
+Supports deploying an application from a template available on the cluster. See [Guidelines for developing templates](#guidelines-for-developing-templates).
 
 #### localTemplate
 
-Supports deploying an application from a template available in the AuroraConfig folder. See [Guidelines for developing templates](#template_dev_guidelines).
+Supports deploying an application from a template available in the AuroraConfig folder. See [Guidelines for developing templates](#guidelines-for-developing-templates).
 
 #### cronjob
 
