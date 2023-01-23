@@ -216,7 +216,7 @@ Supports running a job as a Job resource on Kubernetes
 ### Configuration for Deployment Types "deploy" and "development"
 
 | path                                                | default     | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| --------------------------------------------------- | ----------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | releaseTo                                           |             | Used to release a given version as a shared tag in the docker registry. Other env can then use it in 'version'. NB! Must be manually updated with AO/Aurora Konsoll                                                                                                                                                                                                                                                                                                                 |
 | debug                                               | false       | Toggle to enable remote debugging on port 5005. Port forward this port locally and setup remote debugging in your Java IDE.                                                                                                                                                                                                                                                                                                                                                         |
 | deployStrategy/type                                 | rolling     | Specify type of deployment, either rolling or recreate                                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -238,7 +238,7 @@ Supports running a job as a Job resource on Kubernetes
 | management                                          | true        | Toggle of if your application does not expose an management interface                                                                                                                                                                                                                                                                                                                                                                                                               |
 | management/path                                     | /actuator   | Change the path of where the management interface is exposed                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | management/port                                     | 8081        | Change the port of where the management interface is exposed                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| nodeSelector                                        |             | Note: This property will be removed, it is replaced by `nodeProperties`. Configure node-selector to use specific node. Takes map-value e.g. `nodeSelector/\<label\>/\<value\>`. Note that this must only be used in agreement with operations who will provide the label name and value.                                                                                                                                                                                            |
+| nodeSelector                                        |             | Note: This property will be removed, it is replaced by `nodeProperties`. Configure node-selector to use specific node. Takes map-value e.g. `nodeSelector/<label>/<value>`. Note that this must only be used in agreement with operations who will provide the label name and value.                                                                                                                                                                                                |
 | readiness                                           | true        | Toggle to false to turn off default readiness check                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | readiness/path                                      |             | Set to a path to do a GET request to that path as a readiness check                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | readiness/port                                      | 8080        | If no path present readiness will check if this port is open                                                                                                                                                                                                                                                                                                                                                                                                                        |
@@ -317,7 +317,7 @@ in the template will be used.
 For jobs and cronjobs you have to create an application that terminates when it is done and point to it using the normal groupId/artifactId:version semantics
 
 | path                      | default              | description                                                                  |
-|---------------------------|----------------------|------------------------------------------------------------------------------|
+| ------------------------- | -------------------- | ---------------------------------------------------------------------------- |
 | groupId                   |                      | groupId for your application. Max 200 length. Required if deploy/development |
 | artifactId                | \$fileName           | artifactId for your application. Max 50 length                               |
 | version                   |                      | The version of the image you want to run.                                    |
@@ -363,7 +363,7 @@ Some deployments may require nodes with extended properties, such as larger avai
 For the deployment to be able to deploy on special nodes they must be configured with `nodeProperties`.
 
 | path                            | default | description                                                                          |
-|---------------------------------|---------|--------------------------------------------------------------------------------------|
+| ------------------------------- | ------- | ------------------------------------------------------------------------------------ |
 | nodeProperties/largeMem/enabled |         | Configures the deployment so it can be deployed on nodes with more available memory. |
 
 Note: using nodeProperties should be in agreement with operations.
@@ -518,7 +518,7 @@ If you want to change the default configuration for one application you need to 
 | --------------------------------------- | -------------------------------------- | -------------------------------------------------------------- |
 | `database/<name>/enabled`               | true                                   | Set to false to disable database                               |
 | `database/<name>/flavor`                | \$databaseDefaults/flavor              | Override default flavor.                                       |
-| `database/<name>/name`                  | <name>                                 | Override the name of the database.                             |
+| `database/<name>/name`                  | \<name\>                               | Override the name of the database.                             |
 | `database/<name>/id`                    |                                        | Set the id of the database to get an exact match.              |
 | `database/<name>/tryReuse`              | false                                  | If there is no active schema, try to find schema in cooldown.  |
 | `database/<name>/applicationLabel`      |                                        | Override the application name set on the database registration |
@@ -545,11 +545,11 @@ The config field objectArea(specified below) has the following acceptable patter
 
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
-| path                  | default | description                                                                                                                          |
-| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                             |
-| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined           |
-| s3Defaults/tenant     |         | Tenant account where buckets are created, format: <affiliation>-<cluster>. In order to use simplified config, this has to be defined |
+| path                  | default | description                                                                                                                              |
+| --------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                                 |
+| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined               |
+| s3Defaults/tenant     |         | Tenant account where buckets are created, format: \<affiliation\>-\<cluster\>. In order to use simplified config, this has to be defined |
 
 The simplified syntax is as follows:
 
@@ -563,32 +563,32 @@ For expanded syntax the following applies:
 | ---------------------------- | ------- | --------------------------------------------------------- |
 | `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea. |
 | `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.          |
-| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in <objectArea>              |
-| `s3/<objectArea>/tenant`     |         | Overrides the Tenant set in <tenant>                      |
+| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>            |
+| `s3/<objectArea>/tenant`     |         | Overrides the Tenant set in \<tenant\>                    |
 
 ### Registration of alerts
 
 Application specific alerts can be automatically registered by adding the following configuration.
 
-| path                             | default                              | description                                                                                                   |
-| -------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `alerts/<alertName>/enabled`     | false                                | Enabled lets you enable the specified alert                                                                   |
-| `alerts/<alertName>/expr`        |                                      | Set the promql expression that should trigger an alert                                                        |
-| `alerts/<alertName>/delay`       |                                      | Time in minutes until a condition should cause Prometheus to send alert to alert-manager                      |
-| `alerts/<alertName>/connections` |                                      | Array of connection rules between alert definition and recipients via specific channels                       |
-| `alerts/<alertName>/severity`    |                                      | Severity of alert that is registered, values: critical, warning                                               |
-| `alerts/<alertName>/summary`     | oppsummering av alarm er ikke angitt | Clear text summary of what the alert does                                                                     |
-| `alerts/<alertName>/description` | beskrivelse av alarm er ikke angitt  | Clear text description of the alert                                                                           |
+| path                             | default                              | description                                                                              |
+| -------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `alerts/<alertName>/enabled`     | false                                | Enabled lets you enable the specified alert                                              |
+| `alerts/<alertName>/expr`        |                                      | Set the promql expression that should trigger an alert                                   |
+| `alerts/<alertName>/delay`       |                                      | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
+| `alerts/<alertName>/connections` |                                      | Array of connection rules between alert definition and recipients via specific channels  |
+| `alerts/<alertName>/severity`    |                                      | Severity of alert that is registered, values: critical, warning                          |
+| `alerts/<alertName>/summary`     | oppsummering av alarm er ikke angitt | Clear text summary of what the alert does                                                |
+| `alerts/<alertName>/description` | beskrivelse av alarm er ikke angitt  | Clear text description of the alert                                                      |
 
 Some configuration values can be set with defaults, these values will be used unless an alert-configuration overrides it.
 `alertsDefaults` can be set in the _base_ file if they should be used for all instances of an application across all environments,
 or in the _env_ file if they should be used for all applications in that environment.
 
-| path                         | default | desctiption                                                                                                   |
-| ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
-| `alertsDefaults/enabled`     | false   | Enabled lets you enable the specified alert                                                                   |
-| `alertsDefaults/connections` |         | Array of connection rules between alert definition and recipients via specific channels                       |
-| `alertsDefaults/delay`       |         | Time in minutes until a condition should cause Prometheus to send alert to alert-manager                      |
+| path                         | default | desctiption                                                                              |
+| ---------------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| `alertsDefaults/enabled`     | false   | Enabled lets you enable the specified alert                                              |
+| `alertsDefaults/connections` |         | Array of connection rules between alert definition and recipients via specific channels  |
+| `alertsDefaults/delay`       |         | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
 
 ### Logging configuration
 
@@ -735,7 +735,7 @@ The topology configuration will add the following labels and annotations to the 
 ### Configure Maskinporten
 
 | Name                           | Default         | Description                                                                                        |
-|--------------------------------|-----------------|----------------------------------------------------------------------------------------------------|
+| ------------------------------ | --------------- | -------------------------------------------------------------------------------------------------- |
 | `maskinporten`                 |                 | Simplified configuration can be used to enabled/disable the feature                                |
 | `maskinporten/enabled`         |                 | Enable or disable maskinporten                                                                     |
 | `maskinporten/<name>/enabled`  |                 | Required boolean value. Set to true to mount secret for Maskinporten client with provided clientID |
