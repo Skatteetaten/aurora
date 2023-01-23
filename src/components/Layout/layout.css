@@ -7,12 +7,22 @@ body {
   margin: 0;
   line-height: 1.5;
   display: none;
+  height: 100%;
 }
 
 @media (min-width: 900px) {
   body {
     font-size: 1.0625rem;
   }
+}
+
+img {
+  max-width: 100%;
+}
+
+.gatsby-highlight pre {
+  max-width: min(992px, 80vw);
+  overflow-x: auto;
 }
 
 a {

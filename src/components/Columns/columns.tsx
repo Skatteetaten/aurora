@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Grid from "@skatteetaten/frontend-components/Grid";
 
 const doubleColGrid = {
@@ -22,13 +22,13 @@ const singleColGrid = {
   xxlPush: 3,
 };
 
-const SingleColumnRow = ({ children }) => (
+const SingleColumnRow: FC = ({ children }) => (
   <Grid.Row>
     <Grid.Col {...singleColGrid}>{children}</Grid.Col>
   </Grid.Row>
 );
 
-const DoubleColumnRow = ({ children }) => (
+const DoubleColumnRow: FC = ({ children }) => (
   <Grid.Row>
     {React.Children.map(children, (child) => {
       if (!child) {
@@ -38,13 +38,5 @@ const DoubleColumnRow = ({ children }) => (
     })}
   </Grid.Row>
 );
-
-DoubleColumnRow.propTypes = {
-  children: (props, propName, componentName) => {
-    if (props[propName].filter((child) => child).length !== 2) {
-      return new Error(`${propName} must contain two elements`);
-    }
-  },
-};
 
 export { SingleColumnRow, DoubleColumnRow };

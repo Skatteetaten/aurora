@@ -1,0 +1,13 @@
+#___gatsby {
+  height: 100%;
+}
+
+#___gatsby > div {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#layout-content {
+  flex: 1;
+}
