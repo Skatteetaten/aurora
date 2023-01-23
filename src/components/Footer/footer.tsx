@@ -6,8 +6,6 @@ import { LinkGroupProps } from "@skatteetaten/frontend-components/LinkGroup/Link
 
 import * as styles from "./footer.module.css";
 
-console.log(styles);
-
 const links: LinkGroupProps["links"] = [
   {
     path: "https://github.com/Skatteetaten",
