@@ -3,7 +3,7 @@ import Grid from "@skatteetaten/frontend-components/Grid";
 import { graphql } from "gatsby";
 import { renderAst } from "../components/renderAst";
 
-import TableOfContents from "starter/components/TableOfContents";
+import TableOfContents from "../components/TableOfContents";
 
 import * as styles from "./documentation-template.module.css";
 import { SingleColumnRow } from "../components/Columns";

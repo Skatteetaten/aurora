@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 import Header from "../Header";
 import Footer from "../Footer";
@@ -7,7 +7,11 @@ import "prismjs/themes/prism.css";
 import "./layout.css";
 import "./fill-remaining-height.css";
 
-const Layout: FC = ({ children }) => {
+type Props = {
+  children: ReactNode;
+};
+
+function Layout(props: Props) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -21,10 +25,10 @@ const Layout: FC = ({ children }) => {
         onToggleMenu={toggleMobileMenu}
         showMobileMenu={showMobileMenu}
       />
-      <div id="layout-content">{children}</div>
+      <div id="layout-content">{props.children}</div>
       <Footer />
     </>
   );
-};
+}
 
 export default Layout;

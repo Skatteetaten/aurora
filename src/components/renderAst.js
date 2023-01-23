@@ -5,4 +5,6 @@ const renderer = new RehypeReact({
   createElement: React.createElement,
 }).Compiler;
 
-export const renderAst = (htmlAst) => renderer(htmlAst);
+export const renderAst = (htmlAst) => {
+  return renderer(htmlAst);
+};

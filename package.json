@@ -39,6 +39,8 @@
     "rehype-react": "7.1.2"
   },
   "devDependencies": {
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
     "gh-pages": "4.0.0",
     "husky": "8.0.3",
     "prettier": "2.8.3",

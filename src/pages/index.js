@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "@skatteetaten/frontend-components/Grid";
+import { Grid } from "@skatteetaten/frontend-components/Grid";
 import Quote from "../components/Quote";
 import { SingleColumnRow, DoubleColumnRow } from "../components/Columns";
 import auroraApi from "../../docs/frontpage/images/aurora-api.svg";
@@ -7,7 +7,6 @@ import auroraObserve from "../../docs/frontpage/images/aurora-run.svg";
 import auroraBuild from "../../docs/frontpage/images/aurora-build.svg";
 import { graphql } from "gatsby";
 import { renderAst } from "../components/renderAst";
-import "./index.css";
 
 const InfoSeparator = () => (
   <SingleColumnRow>
@@ -45,7 +44,7 @@ const IndexPage = (props) => {
   };
 
   return (
-    <div>
+    <>
       <Grid>
         <SingleColumnRow>
           <div style={{ textAlign: "center" }}>
@@ -84,7 +83,7 @@ const IndexPage = (props) => {
           <FrontPageContent path="/frontpage/observe/" />
         </InfoRow>
       </Grid>
-    </div>
+    </>
   );
 };
 
