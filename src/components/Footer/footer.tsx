@@ -13,7 +13,7 @@ const links: LinkGroupProps["links"] = [
   },
   {
     path: "https://uustatus.no/nb/erklaringer/publisert/e6745fbf-76e5-469b-abb6-3e9fd52c7e9c",
-    text: "Tilgjengelighetserklæring",
+    text: "Accessibility statement",
   },
   {
     path: "https://www.skatteetaten.no",
