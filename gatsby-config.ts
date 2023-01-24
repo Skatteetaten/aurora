@@ -5,11 +5,15 @@ const gatsbyConfig: GatsbyConfig = {
     menu: [
       {
         href: "/",
-        name: "The Aurora Platform",
+        name: "Home",
       },
       {
-        href: "/documentation",
-        name: "Documentation",
+        href: "/documentation/aurora-config",
+        name: "Aurora Config",
+      },
+      {
+        href: "/documentation/openshift",
+        name: "The Aurora Platform",
       },
     ],
   },
