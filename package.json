@@ -49,6 +49,7 @@
     "typescript-plugin-css-modules": "4.1.1"
   },
   "overrides": {
+    "ua-parser-js": "0.7.33",
     "eslint-import-resolver-node": "0.3.6",
     "clipboardy@2.3.0": {
       "execa": "2"
