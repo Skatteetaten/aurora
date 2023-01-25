@@ -351,11 +351,8 @@ Jobs and Cronjobs can have
 - databases
 - STS tokens
 - mounts
-
-#### Limitations
-
-Jobs and cronjobs do not support log aggregations and prometheus metrics at the moment. Use the script directive and do a
-http call to a service alongside your job if you need this.
+- logging
+- prometheus metrics
 
 ### Enable deployment on special nodes
 
