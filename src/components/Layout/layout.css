@@ -106,3 +106,14 @@ th {
 a.anchor {
   border: none;
 }
+blockquote {
+  background: #cde1f9;
+  padding: 25px;
+  padding-top: 6px;
+  text-align: center;
+}
+
+blockquote p {
+  font-size: 1.2rem;
+  font-style: italic;
+}

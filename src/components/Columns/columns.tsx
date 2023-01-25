@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import Grid from "@skatteetaten/frontend-components/Grid";
+import React, { ReactNode } from "react";
+import { Grid } from "@skatteetaten/frontend-components/Grid";
 
 const doubleColGrid = {
   sm: 10,
@@ -22,21 +22,27 @@ const singleColGrid = {
   xxlPush: 3,
 };
 
-const SingleColumnRow: FC = ({ children }) => (
-  <Grid.Row>
-    <Grid.Col {...singleColGrid}>{children}</Grid.Col>
-  </Grid.Row>
-);
+type Props = {
+  children: ReactNode;
+};
 
-const DoubleColumnRow: FC = ({ children }) => (
-  <Grid.Row>
-    {React.Children.map(children, (child) => {
-      if (!child) {
-        return false;
-      }
-      return <Grid.Col {...doubleColGrid}>{child}</Grid.Col>;
-    })}
-  </Grid.Row>
-);
+export function SingleColumnRow(props: Props) {
+  return (
+    <Grid.Row>
+      <Grid.Col {...singleColGrid}>{props.children}</Grid.Col>
+    </Grid.Row>
+  );
+}
 
-export { SingleColumnRow, DoubleColumnRow };
+export function DoubleColumnRow(props: Props) {
+  return (
+    <Grid.Row>
+      {React.Children.map(props.children, (child) => {
+        if (!child) {
+          return false;
+        }
+        return <Grid.Col {...doubleColGrid}>{child}</Grid.Col>;
+      })}
+    </Grid.Row>
+  );
+}

@@ -2,8 +2,8 @@ import React from "react";
 import { Link, StaticQuery, graphql } from "gatsby";
 import classnames from "classnames/bind";
 import Logo from "@skatteetaten/frontend-components/TopBanner/assets/logoSKEen.svg";
-import Image from "@skatteetaten/frontend-components/Image";
-import Icon from "@skatteetaten/frontend-components/Icon";
+import { Image } from "@skatteetaten/frontend-components/Image";
+import { Icon } from "@skatteetaten/frontend-components/Icon";
 
 import * as styles from "./header.module.css";
 

@@ -1,8 +1,12 @@
 import path from "path";
 import { createFilePath } from "gatsby-source-filesystem";
 import _ from "lodash";
+import type { GatsbyNode } from "gatsby";
 
-exports.createPages = ({ graphql, actions }: any) => {
+export const createPages: GatsbyNode["createPages"] = ({
+  graphql,
+  actions,
+}) => {
   const { createPage } = actions;
   return new Promise((resolve, reject) => {
     const documentationTemplate = path.resolve(
@@ -48,7 +52,11 @@ exports.createPages = ({ graphql, actions }: any) => {
   });
 };
 
-exports.onCreateNode = ({ node, getNode, actions }: any) => {
+export const onCreateNode: GatsbyNode["onCreateNode"] = ({
+  node,
+  getNode,
+  actions,
+}) => {
   const { createNodeField } = actions;
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `docs` });
@@ -58,14 +66,4 @@ exports.onCreateNode = ({ node, getNode, actions }: any) => {
       value: slug,
     });
   }
-};
-
-exports.onCreateWebpackConfig = ({ stage, actions }: any) => {
-  actions.setWebpackConfig({
-    resolve: {
-      alias: {
-        starter: path.resolve(__dirname, "src"),
-      },
-    },
-  });
 };

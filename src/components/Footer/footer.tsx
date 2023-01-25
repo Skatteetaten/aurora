@@ -13,7 +13,7 @@ const links: LinkGroupProps["links"] = [
   },
   {
     path: "https://uustatus.no/nb/erklaringer/publisert/e6745fbf-76e5-469b-abb6-3e9fd52c7e9c",
-    text: "Tilgjengelighetserklæring",
+    text: "Accessibility statement",
   },
   {
     path: "https://www.skatteetaten.no",
@@ -21,18 +21,20 @@ const links: LinkGroupProps["links"] = [
   },
 ];
 
-export default () => (
-  <FooterContent>
-    <Grid>
-      <Grid.Row>
-        <Grid.Col sm={12} lg={12} xl={2}>
-          <FooterContent.Logo />
-        </Grid.Col>
-        <Grid.Col sm={12} lg={12} xl={4} className={styles.footerLinkgroup}>
-          <h2>Skatteetaten</h2>
-          <LinkGroup links={links} />
-        </Grid.Col>
-      </Grid.Row>
-    </Grid>
-  </FooterContent>
-);
+export function Footer() {
+  return (
+    <FooterContent>
+      <Grid>
+        <Grid.Row>
+          <Grid.Col sm={12} lg={12} xl={2}>
+            <FooterContent.Logo />
+          </Grid.Col>
+          <Grid.Col sm={12} lg={12} xl={4} className={styles.footerLinkgroup}>
+            <h2>Skatteetaten</h2>
+            <LinkGroup links={links} />
+          </Grid.Col>
+        </Grid.Row>
+      </Grid>
+    </FooterContent>
+  );
+}

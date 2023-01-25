@@ -39,6 +39,8 @@
     "rehype-react": "7.1.2"
   },
   "devDependencies": {
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
     "gh-pages": "4.0.0",
     "husky": "8.0.3",
     "prettier": "2.8.3",
@@ -47,6 +49,7 @@
     "typescript-plugin-css-modules": "4.1.1"
   },
   "overrides": {
+    "ua-parser-js": "0.7.33",
     "eslint-import-resolver-node": "0.3.6",
     "clipboardy@2.3.0": {
       "execa": "2"

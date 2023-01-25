@@ -4,18 +4,19 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 import React from "react";
-import Layout from "starter/components/Layout";
-import SkeBasis from "@skatteetaten/frontend-components/SkeBasis";
+import Layout from "./src/components/Layout";
+import { SkeBasis } from "@skatteetaten/frontend-components/SkeBasis";
+import type { GatsbyBrowser } from "gatsby";
 
 export const onInitialClientRender = () => {
   const body = document.getElementsByTagName("body")[0];
   body.setAttribute("style", "display: block");
 };
 
-export const wrapRootElement = ({ element }: any) => {
+export const wrapPageElement: GatsbyBrowser["wrapPageElement"] = (props) => {
   return (
     <SkeBasis>
-      <Layout>{element}</Layout>
+      <Layout>{props.element}</Layout>
     </SkeBasis>
   );
 };

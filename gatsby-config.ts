@@ -1,18 +1,26 @@
-const gatsbyConfig = {
+import type { GatsbyConfig } from "gatsby";
+const gatsbyConfig: GatsbyConfig = {
   siteMetadata: {
     title: "The Aurora Platform",
     menu: [
       {
         href: "/",
-        name: "The Aurora Platform",
+        name: "Home",
       },
       {
-        href: "/documentation",
-        name: "Documentation",
+        href: "/documentation/aurora-config",
+        name: "Aurora Config",
+      },
+      {
+        href: "/documentation/openshift",
+        name: "The Aurora Platform",
       },
     ],
   },
   pathPrefix: "/aurora",
+  flags: {
+    DEV_SSR: true,
+  },
   plugins: [
     {
       resolve: `gatsby-plugin-manifest`,
@@ -30,16 +38,15 @@ const gatsbyConfig = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
+        // Enable JS for https://github.com/jonschlinkert/gray-matter#optionsengines (default: false)
+        // It's not advised to set this to "true" and this option will likely be removed in the future
+        jsFrontmatterEngine: false,
         plugins: [
           `gatsby-remark-prismjs`,
           `gatsby-remark-autolink-headers`,
           {
             resolve: "gatsby-remark-copy-linked-files",
             options: {
-              // Enable JS for https://github.com/jonschlinkert/gray-matter#optionsengines (default: false)
-              // It's not advised to set this to "true" and this option will likely be removed in the future
-              jsFrontmatterEngine: false,
-
               // `ignoreFileExtensions` defaults to [`png`, `jpg`, `jpeg`, `bmp`, `tiff`]
               // as we assume you'll use gatsby-remark-images to handle
               // images in markdown as it automatically creates responsive
