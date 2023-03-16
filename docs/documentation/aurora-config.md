@@ -190,9 +190,9 @@ the application.
 
 #### development
 
-The development deployment type is similar to the release deployment type but it will not deploy a prebuilt image and
-instead create an OpenShift BuildConfig that can be used to build ad hoc images from DeliveryBundles from your local
-development machine.
+The development deployment type is similar to the deploy deployment type but it will not deploy a prebuilt image from container registry.
+Instead an OpenShift ImageStream will be created that can be used to send images created from DeliveryBundles from your local
+development machine (see `ao dev rollout`).
 
 This will usually significantly reduce the time needed to get code from a development machine running on OpenShift
 compared to, for instance, a CI/CD pipeline.
