@@ -754,8 +754,9 @@ about.yaml
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 ```
 
 reference.yaml
@@ -766,7 +767,7 @@ artifactId: openshift-reference-springboot-server
 version: 1
 type: deploy
 replicas: 3
-certificate: true
+sts: true
 route: true
 database: true
 config:
@@ -792,14 +793,15 @@ The complete config is then evaluated as
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 groupId: no.skatteetaten.aurora.openshift
 artifactId: openshift-reference-springboot-server
 version: 1
 type: deploy
 replicas: 3
-certificate: true
+sts: true
 route: true
 database: true
 config:
@@ -815,8 +817,9 @@ about.yaml
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 ```
 
 sample-atomhopper.yaml
@@ -850,8 +853,9 @@ The complete config is then evaluated as
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 type: template
 template: aurora-atomhopper-1.0.0
 databaseDefaults:
