@@ -49,6 +49,8 @@
     "typescript-plugin-css-modules": "4.2.3"
   },
   "overrides": {
+    "http-cache-semantics": "4.1.1",
+    "core-js-pure": "3.29.1",
     "ua-parser-js": "0.7.33",
     "eslint-import-resolver-node": "0.3.6",
     "clipboardy@2.3.0": {
