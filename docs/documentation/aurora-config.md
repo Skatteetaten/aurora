@@ -190,9 +190,9 @@ the application.
 
 #### development
 
-The development deployment type is similar to the release deployment type but it will not deploy a prebuilt image and
-instead create an OpenShift BuildConfig that can be used to build ad hoc images from DeliveryBundles from your local
-development machine.
+The development deployment type is similar to the deploy deployment type but it will not deploy a prebuilt image from container registry.
+Instead an OpenShift ImageStream will be created that can be used to send images created from DeliveryBundles from your local
+development machine (see `ao dev rollout`).
 
 This will usually significantly reduce the time needed to get code from a development machine running on OpenShift
 compared to, for instance, a CI/CD pipeline.
@@ -496,34 +496,36 @@ If there is no schema the default behavior is to create one.
 
 It is possible to change the default values for this process so that each application that wants a database can just use the `database=true` instruction
 
-| path                                     | default        | description                                                                                                                                                                                                |
-| ---------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| databaseDefaults/flavor                  | ORACLE_MANAGED | One of `ORACLE_MANAGED`, `POSTGRES_MANAGED`.                                                                                                                                                               |
-| databaseDefaults/generate                | true           | Set this to false to avoid generating a new schema if your lables does not match an existing one                                                                                                           |
-| databaseDefaults/ignoreMissingSchema     | false          | Set this to ignore missing schema when generate = false. Schemas identified with ID are not ignored.                                                                                                       |
-| databaseDefaults/name                    | @name@         | The default name to given a database when using database=true                                                                                                                                              |
-| databaseDefaults/tryReuse                | false          | Try to reuse schema in cooldown if there is no active schema. Sets this as the default behavior                                                                                                            |
-| databaseDefaults/instance/name           |                | The name of the instance you want to use for yor db schemas                                                                                                                                                |
-| databaseDefaults/instance/fallback       | true           | If your instance does not match by labels, a fallback instance will be used if available. Default is true for ORACLE_MANAGED and false for POSTGRES_MANAGED                                                |
-| databaseDefaults/instance/labels/\<key\> |                | Set key=value pair that will be sent when matching database instances. Default is affiliation=@affiliation@                                                                                                |
-| database                                 | false          | Toggle this to add a database with \$name to your application.                                                                                                                                             |
-| `database/<name>`                        |                | Simplified config for multiple databases.If you want to add multiple databases specify a name for each. Set to 'auto' for auto generation or a given ID to pin it. Set to false to turn off this database. |
+| path                                     | default        | description                                                                                                                                                                                                             |
+| ---------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| databaseDefaults/flavor                  | ORACLE_MANAGED | One of `ORACLE_MANAGED`, `POSTGRES_MANAGED`.                                                                                                                                                                            |
+| databaseDefaults/generate                | true           | Set this to false to avoid generating a new schema if your lables does not match an existing one                                                                                                                        |
+| databaseDefaults/ignoreMissingSchema     | false          | Set this to ignore missing schema when generate = false. Schemas identified with ID are not ignored.                                                                                                                    |
+| databaseDefaults/name                    | @name@         | The default name to given a database when using database=true                                                                                                                                                           |
+| databaseDefaults/tryReuse                | false          | Try to reuse schema in cooldown if there is no active schema. Sets this as the default behavior                                                                                                                         |
+| databaseDefaults/cooldownDuration        |                | Set a time duration in format 1d, 12h that indicate how long the database schema should be in cooldown before deletion. Can't be longer than default cooldown in cluster. UTV-clusters: 7 days, TEST-clusters: 30 days. |
+| databaseDefaults/instance/name           |                | The name of the instance you want to use for yor db schemas                                                                                                                                                             |
+| databaseDefaults/instance/fallback       | true           | If your instance does not match by labels, a fallback instance will be used if available. Default is true for ORACLE_MANAGED and false for POSTGRES_MANAGED                                                             |
+| databaseDefaults/instance/labels/\<key\> |                | Set key=value pair that will be sent when matching database instances. Default is affiliation=@affiliation@                                                                                                             |
+| database                                 | false          | Toggle this to add a database with \$name to your application.                                                                                                                                                          |
+| `database/<name>`                        |                | Simplified config for multiple databases.If you want to add multiple databases specify a name for each. Set to 'auto' for auto generation or a given ID to pin it. Set to false to turn off this database.              |
 
 If you want to change the default configuration for one application you need to use the expanded syntax
 
-| path                                    | default                                | description                                                    |
-| --------------------------------------- | -------------------------------------- | -------------------------------------------------------------- |
-| `database/<name>/enabled`               | true                                   | Set to false to disable database                               |
-| `database/<name>/flavor`                | \$databaseDefaults/flavor              | Override default flavor.                                       |
-| `database/<name>/name`                  | \<name\>                               | Override the name of the database.                             |
-| `database/<name>/id`                    |                                        | Set the id of the database to get an exact match.              |
-| `database/<name>/tryReuse`              | false                                  | If there is no active schema, try to find schema in cooldown.  |
-| `database/<name>/applicationLabel`      |                                        | Override the application name set on the database registration |
-| `database/<name>/generate`              | \$databaseDefaults/generate            | Override default generate.                                     |
-| `database/<name>/ignoreMissingSchema`   | \$databaseDefaults/ignoreMissingSchema | Override default ignoreMissingSchema.                          |
-| `database/<name>/instance/name`         | \$databaseDefaults/instance/name       | Override default instance/name.                                |
-| `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback   | Override default instance/fallback.                            |
-| `database/<name>/instance/labels/<key>` |                                        | Add/override labels for instance.                              |
+| path                                    | default                                | description                                                                                                                                                                                                             |
+| --------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `database/<name>/enabled`               | true                                   | Set to false to disable database                                                                                                                                                                                        |
+| `database/<name>/flavor`                | \$databaseDefaults/flavor              | Override default flavor.                                                                                                                                                                                                |
+| `database/<name>/name`                  | \<name\>                               | Override the name of the database.                                                                                                                                                                                      |
+| `database/<name>/id`                    |                                        | Set the id of the database to get an exact match.                                                                                                                                                                       |
+| `database/<name>/tryReuse`              | false                                  | If there is no active schema, try to find schema in cooldown.                                                                                                                                                           |
+| `database/<name>/cooldownDuration`      |                                        | Set a time duration in format 1d, 12h that indicate how long the database schema should be in cooldown before deletion. Can't be longer than default cooldown in cluster. UTV-clusters: 7 days, TEST-clusters: 30 days. |
+| `database/<name>/applicationLabel`      |                                        | Override the application name set on the database registration                                                                                                                                                          |
+| `database/<name>/generate`              | \$databaseDefaults/generate            | Override default generate.                                                                                                                                                                                              |
+| `database/<name>/ignoreMissingSchema`   | \$databaseDefaults/ignoreMissingSchema | Override default ignoreMissingSchema.                                                                                                                                                                                   |
+| `database/<name>/instance/name`         | \$databaseDefaults/instance/name       | Override default instance/name.                                                                                                                                                                                         |
+| `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback   | Override default instance/fallback.                                                                                                                                                                                     |
+| `database/<name>/instance/labels/<key>` |                                        | Add/override labels for instance.                                                                                                                                                                                       |
 
 To share a database schema between multiple applications then one application must be defined as the owner of the schema.
 The `<name>` must be the same in the configuration files, and for applications that do not own the schema `applicationLabel` must be set and match the name of the application owning the schema.
@@ -752,8 +754,9 @@ about.yaml
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 ```
 
 reference.yaml
@@ -764,7 +767,7 @@ artifactId: openshift-reference-springboot-server
 version: 1
 type: deploy
 replicas: 3
-certificate: true
+sts: true
 route: true
 database: true
 config:
@@ -790,14 +793,15 @@ The complete config is then evaluated as
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 groupId: no.skatteetaten.aurora.openshift
 artifactId: openshift-reference-springboot-server
 version: 1
 type: deploy
 replicas: 3
-certificate: true
+sts: true
 route: true
 database: true
 config:
@@ -813,8 +817,9 @@ about.yaml
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 ```
 
 sample-atomhopper.yaml
@@ -848,8 +853,9 @@ The complete config is then evaluated as
 schemaVersion: v1
 affiliation: paas
 permissions:
-  group: [PAAS_OPS, PAAS_DEV]
-splunkIndex: paas-test
+  admin: [PAAS_OPS, PAAS_DEV]
+logging:
+  index: paas-test
 type: template
 template: aurora-atomhopper-1.0.0
 databaseDefaults:

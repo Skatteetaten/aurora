@@ -21,15 +21,15 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@skatteetaten/frontend-components": "6.0.3",
+    "@skatteetaten/frontend-components": "6.0.5",
     "classnames": "2.3.2",
-    "gatsby": "5.4.2",
-    "gatsby-plugin-manifest": "5.4.0",
-    "gatsby-remark-autolink-headers": "6.4.0",
-    "gatsby-remark-copy-linked-files": "6.4.0",
-    "gatsby-remark-prismjs": "7.4.0",
-    "gatsby-source-filesystem": "5.4.0",
-    "gatsby-transformer-remark": "6.4.0",
+    "gatsby": "5.8.0",
+    "gatsby-plugin-manifest": "5.8.0",
+    "gatsby-remark-autolink-headers": "6.8.0",
+    "gatsby-remark-copy-linked-files": "6.8.0",
+    "gatsby-remark-prismjs": "7.8.0",
+    "gatsby-source-filesystem": "5.8.0",
+    "gatsby-transformer-remark": "6.8.0",
     "github-slugger": "2.0.0",
     "lodash": "4.17.21",
     "prismjs": "1.29.0",
@@ -39,22 +39,25 @@
     "rehype-react": "7.1.2"
   },
   "devDependencies": {
-    "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.10",
-    "gh-pages": "4.0.0",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "gh-pages": "5.0.0",
     "husky": "8.0.3",
-    "prettier": "2.8.3",
+    "prettier": "2.8.6",
     "pretty-quick": "3.1.3",
-    "rimraf": "4.1.1",
-    "typescript-plugin-css-modules": "4.1.1"
+    "rimraf": "4.4.0",
+    "typescript-plugin-css-modules": "4.2.3"
   },
   "overrides": {
+    "http-cache-semantics": "4.1.1",
+    "core-js-pure": "3.29.1",
     "ua-parser-js": "0.7.33",
     "eslint-import-resolver-node": "0.3.6",
     "clipboardy@2.3.0": {
       "execa": "2"
     },
-    "es5-ext": "0.10.53"
+    "es5-ext": "0.10.53",
+    "webpack": "5.76.2"
   },
   "prettier": {
     "singleQuote": false
