@@ -7,9 +7,12 @@
     }
   },
   "web": {
-    "static": "public",
-    "headers": {
-      "Cache-Control": "public, max-age=3600"
+    "webapp": {
+      "content": "public",
+      "path": "/aurora",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
     }
   }
 }
