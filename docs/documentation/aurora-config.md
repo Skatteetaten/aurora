@@ -8,7 +8,8 @@ description: "Opinionated way of configuring cloud applications"
 
 TLDR; [Take me to the Configuration Reference!](#configuration-reference)
 
-Aurora Config is a custom file based configuration format developed by the Norwegian Tax Administration designed to be a concise
+Aurora Config is a custom file based configuration format developed by the Norwegian Tax Administration designed to be a
+concise
 representation of how applications are configured and deployed across environments and clusters in an OpenShift
 based infrastructure. Parts of the configuration format is generally reusable by anybody deploying to OpenShift, while
 other parts of it are designed to simplify integrations with specific third party components in our infrastructure.
@@ -78,7 +79,9 @@ _In App1.yaml_
 globalFile: about-alternative.yaml
 ```
 
-In this scenario 'prod/App1.yaml' and 'test/App1.yaml' will inherit from 'about-alternative.yaml' at root level, replacing the default _global_ file. This makes it possible to have alternative global configurations for particular applications.
+In this scenario 'prod/App1.yaml' and 'test/App1.yaml' will inherit from 'about-alternative.yaml' at root level,
+replacing the default _global_ file. This makes it possible to have alternative global configurations for particular
+applications.
 
 _In prod/about.yaml_
 
@@ -86,7 +89,8 @@ _In prod/about.yaml_
 globalFile: about-alternative.yaml
 ```
 
-In this scenario 'prod/about.yaml' will inherit from 'about-alternative.yaml' at root level. This makes it possible to have alternative global configurations for entire environments.
+In this scenario 'prod/about.yaml' will inherit from 'about-alternative.yaml' at root level. This makes it possible to
+have alternative global configurations for entire environments.
 
 ## DeploymentSpec and ApplicationId
 
@@ -118,11 +122,15 @@ config/cluster : "@cluster@"
 
 Which options are available for substitution is indicated in the following tables.
 
-Substitutions should be used with care especially if they occur in a file that applies to multiple application instances, e.g. env files and base files.
+Substitutions should be used with care especially if they occur in a file that applies to multiple application
+instances, e.g. env files and base files.
 
-Some configuration options can only be set in the _global_ about file and the _env_ file. These are typically options that
-are only relevant for configuring the environment, for instance environment name, permissions and env.ttl (time to live).
-Since environments have their own folder and the environment is configured in an own about-file, it is not allowed for an
+Some configuration options can only be set in the _global_ about file and the _env_ file. These are typically options
+that
+are only relevant for configuring the environment, for instance environment name, permissions and env.ttl (time to
+live).
+Since environments have their own folder and the environment is configured in an own about-file, it is not allowed for
+an
 _app_-file to override any of the environment specific options. Options that can only be set in the _global_ file or in
 an _env_ file will be described in a section called "About files" and options that can also be set in the _base_ files
 and _app_ files will be describe in a section called "Application files".
@@ -165,7 +173,8 @@ Get notification messages when an application or environment/namespace has been 
 #### Mattermost
 
 In order to use this feature
-one has to use the channelId, which is not the same as the channel name. The channelId can be retrieved by going to a channel, then hitting view
+one has to use the channelId, which is not the same as the channel name. The channelId can be retrieved by going to a
+channel, then hitting view
 info in the channel header. At the bottom of the dialog box you will find a greyed out channel id.
 
 | path                                          | default | description                                                                                                |
@@ -183,15 +192,18 @@ integrations that are supported.
 #### deploy
 
 The deploy deployment type is used for deploying applications using the conventions from the Aurora Platform. You can
-read more about these conventions here: [How we Develop and Build our Applications](https://skatteetaten.github.io/aurora/documentation/openshift/#how-we-develop-and-build-our-applications).
+read more about these conventions
+here: [How we Develop and Build our Applications](https://skatteetaten.github.io/aurora/documentation/openshift/#how-we-develop-and-build-our-applications).
 This is the deployment type that will be most commonly used when deploying internally built applications. This will
 provide integrations with the rest of the NTAs infrastructure and generate the necessary objects to OpenShift to support
 the application.
 
 #### development
 
-The development deployment type is similar to the deploy deployment type but it will not deploy a prebuilt image from container registry.
-Instead an OpenShift ImageStream will be created that can be used to send images created from DeliveryBundles from your local
+The development deployment type is similar to the deploy deployment type but it will not deploy a prebuilt image from
+container registry.
+Instead an OpenShift ImageStream will be created that can be used to send images created from DeliveryBundles from your
+local
 development machine (see `ao dev rollout`).
 
 This will usually significantly reduce the time needed to get code from a development machine running on OpenShift
@@ -199,11 +211,13 @@ compared to, for instance, a CI/CD pipeline.
 
 #### template
 
-Supports deploying an application from a template available on the cluster. See [Guidelines for developing templates](#guidelines-for-developing-templates).
+Supports deploying an application from a template available on the cluster.
+See [Guidelines for developing templates](#guidelines-for-developing-templates).
 
 #### localTemplate
 
-Supports deploying an application from a template available in the AuroraConfig folder. See [Guidelines for developing templates](#guidelines-for-developing-templates).
+Supports deploying an application from a template available in the AuroraConfig folder.
+See [Guidelines for developing templates](#guidelines-for-developing-templates).
 
 #### cronjob
 
@@ -294,12 +308,23 @@ The following baseImage are in use at NTA
 | wingnut11 | 2       | OpenJDK 11       |
 | wingnut17 | 1       | OpenJDK 17       |
 
-### Configuration for Deployment Types "template" and "localTemplate"
+### Configuration specific for Deployment Type "localTemplate"
+
+| path         | default | description                                                                                                                                                                                       |
+| ------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| releaseTo    |         | Used to release a given version as a shared tag in the docker registry. Other env can then use it in 'version'. NB! Must be manually updated with AO/Aurora Konsoll . Requires groupId to be set. |
+| templateFile |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate                                                                     |
+
+### Configuration specific for Deployment Type "template"
+
+| path     | default | description                                                                        |
+| -------- | ------- | ---------------------------------------------------------------------------------- |
+| template |         | Name of template in default namespace to use. This is required if type is template |
+
+### Common configuration for Deployment Types "template" and "localTemplate"
 
 | path                 | default | description                                                                                                                                                                                                                                                                     |
 | -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| template             |         | Name of template in default namespace to use. This is required if type is template                                                                                                                                                                                              |
-| templateFile         |         | Set the location of a local template file. It should be in the templates subfolder. This is required if type is localTemplate                                                                                                                                                   |
 | `parameters/<KEY>`   |         | The parameters option is used to set values for parameters in the template. If the template has either of the parameters VERSION, NAME, SPLUNK_INDEX or REPLICAS, the values of these parameters will be set from the standard version, name and replicas AuroraConfig options. |
 | replicas             |         | If set will override replicas in template                                                                                                                                                                                                                                       |
 | resources/cpu/min    |         | Specify minimum/request cpu. 1000m is 1 core. see [kubernetes_docs](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu)                                                                                                       |
@@ -307,12 +332,13 @@ The following baseImage are in use at NTA
 | resources/memory/min |         | Specify minimum/request memory. See [kubernetes docs](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory)                                                                                                                  |
 | resources/memory/max |         | Specify maximum/limit memory. By default 25% of this will be set to XMX in java.                                                                                                                                                                                                |
 
-Note that resources and replicas have no default values for templates. If they are set they will be applied if not the value
-in the template will be used.
+Note that resources and replicas have no default values for templates. If they are set they will be applied if not the
+value in the template will be used.
 
 ### Configuration for job and cronjobs
 
-For jobs and cronjobs you have to create an application that terminates when it is done and point to it using the normal groupId/artifactId:version semantics
+For jobs and cronjobs you have to create an application that terminates when it is done and point to it using the normal
+groupId/artifactId:version semantics
 
 | path                      | default              | description                                                                  |
 | ------------------------- | -------------------- | ---------------------------------------------------------------------------- |
@@ -368,7 +394,8 @@ Note: using nodeProperties should be in agreement with operations.
 The default behavior is that the application is only visible to other application in the same namespace using
 its service name.
 
-By using routes and CNAME entries, the application can be exposed in a cluster-independent way both on-premise and to Azure resources.
+By using routes and CNAME entries, the application can be exposed in a cluster-independent way both on-premise and to
+Azure resources.
 
 In order to control routes into the application the following fields can be used.
 
@@ -399,16 +426,20 @@ In order to control routes into the application the following fields can be used
 
 If tls is used the host of the route cannot include the '.' key, since we do not support wildcard TLS cert.
 
-Route annotations are usable for template types, but you need to create a Service with name after the NAME parameter yourself.
+Route annotations are usable for template types, but you need to create a Service with name after the NAME parameter
+yourself.
 
 ### Managing Secrets
 
-In order to provide sensitive data to an application (i.e. passwords that cannot be stored directly in the configuration block of the AuroraConfig) it is possible to
+In order to provide sensitive data to an application (i.e. passwords that cannot be stored directly in the configuration
+block of the AuroraConfig) it is possible to
 access Vaults that has been created with the `ao vault` command (see internal link
-https://wiki.sits.no/pages/viewpage.action?pageId=143517331#AO(AuroraOpenShiftCLI)-AOVault). You can access the vaults in two different ways; as a
+https://wiki.sits.no/pages/viewpage.action?pageId=143517331#AO(AuroraOpenShiftCLI)-AOVault). You can access the vaults
+in two different ways; as a
 _mount_ or via the _secretVault_ option.
 
-If a Vault is accessed via the secretVault option and the vault contains a properties file the contents of that file will be made available as
+If a Vault is accessed via the secretVault option and the vault contains a properties file the contents of that file
+will be made available as
 environment variables for the application. Example;
 
 ```
@@ -416,7 +447,8 @@ PASSWORD=s3cr3t
 ENCRYPTION_KEY=8cdca234-9a3b-11e8-9eb6-529269fb1459
 ```
 
-If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See the next section for more details.
+If you want to mount additional Vaults or access vault files directly this can be done with mounting it as a volume. See
+the next section for more details.
 
 | path                                | default           | description                                                                            |
 | ----------------------------------- | ----------------- | -------------------------------------------------------------------------------------- |
@@ -426,9 +458,11 @@ If you want to mount additional Vaults or access vault files directly this can b
 | `secretVaults/<svName>/keys`        |                   | An array of keys from the latest.properties file in the vault you want to include.     |
 | `secretVaults/<svName>/keyMappings` |                   | An map of key -> value that will rewrite the key in the secret to another ENV var name |
 
-Note that it is possible to fetch multiple files from the same vault, the `svName` must be different for each one and you must set name to the same.
+Note that it is possible to fetch multiple files from the same vault, the `svName` must be different for each one and
+you must set name to the same.
 
-The old way of specifying secretVaults (detailed below is deprecated). There will be a migration feature soon. This configuration pattern only suppored
+The old way of specifying secretVaults (detailed below is deprecated). There will be a migration feature soon. This
+configuration pattern only suppored
 a single vault/file.
 
 | path                    | default | description                                                                            |
@@ -452,11 +486,13 @@ It is possible to use substitutions in keys/keyMappings but it should be used wi
 | `mounts/<mountName>/exist`       | false         | If this is set to true the existing resource must exist already.                                                                                    |
 | `mounts/<mountName>/secretVault` |               | The name of the Vault to mount. This will mount the entire contents of the specified vault at the specified path. Type must be Secret, Exist false. |
 
-The combination of type=PVC and exist=true is not supported by policy. We do not want normal java/web applications to use PVC mounts unnless strictly neccesary.
+The combination of type=PVC and exist=true is not supported by policy. We do not want normal java/web applications to
+use PVC mounts unnless strictly neccesary.
 
 ### NTA webseal integration
 
-Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
+Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be
+added to limit who can access the application
 
 | path                   | default | description                                                                                                                                                                                                                                                 |
 | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -466,11 +502,13 @@ Webseal is used for client traffic from within NTA to reach an application. Inte
 | webseal/strict         | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, as clients may then be able to bypass the authorization. Strict will only generate warnings when both routes will be created. Set strict to false to disable warnings. |
 | webseal/clusterTimeout |         | Set he timeout of the openshift route for this webseal junction. Should be valid durationString. Example 1s                                                                                                                                                 |
 
-If you want to use webseal with a template type you need to create a Service with default ports named after the name parameter
+If you want to use webseal with a template type you need to create a Service with default ports named after the name
+parameter
 
 ### NTA STS integration
 
-STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between them
+STS certificate: An SSL certificate with a given commonName is used to identify applications to secure traffic between
+them
 
 For v1 of the STS service use:
 
@@ -488,11 +526,13 @@ For v2 use:
 
 ### NTA Dbh integration
 
-[dbh](https://github.com/skatteetaten/dbh) is a service that enables an application to ask for credentials to a database schema.
+[dbh](https://github.com/skatteetaten/dbh) is a service that enables an application to ask for credentials to a database
+schema.
 
 If there is no schema the default behavior is to create one.
 
-It is possible to change the default values for this process so that each application that wants a database can just use the `database=true` instruction
+It is possible to change the default values for this process so that each application that wants a database can just use
+the `database=true` instruction
 
 | path                                     | default        | description                                                                                                                                                                                                             |
 | ---------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -525,8 +565,10 @@ If you want to change the default configuration for one application you need to 
 | `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback   | Override default instance/fallback.                                                                                                                                                                                     |
 | `database/<name>/instance/labels/<key>` |                                        | Add/override labels for instance.                                                                                                                                                                                       |
 
-To share a database schema between multiple applications then one application must be defined as the owner of the schema.
-The `<name>` must be the same in the configuration files, and for applications that do not own the schema `applicationLabel` must be set and match the name of the application owning the schema.
+To share a database schema between multiple applications then one application must be defined as the owner of the
+schema.
+The `<name>` must be the same in the configuration files, and for applications that do not own the
+schema `applicationLabel` must be set and match the name of the application owning the schema.
 
 The `database` property configuration should not be put in global or env files.
 For `databaseDefaults` should be used for database configuration for a whole or multiple environments.
@@ -538,7 +580,8 @@ configuration that should be the same for all applications in an environment sho
 To use the S3 integration, a bucket needs to exist before enabling s3 in auroraconfig.
 Refer to internal documentation to see how a new bucket is created.
 
-The config field objectArea(specified below) has the following acceptable pattern: lowercase characters, numbers, hyphen(-) and period(.).
+The config field objectArea(specified below) has the following acceptable pattern: lowercase characters, numbers,
+hyphen(-) and period(.).
 
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
@@ -577,8 +620,10 @@ Application specific alerts can be automatically registered by adding the follow
 | `alerts/<alertName>/summary`     | oppsummering av alarm er ikke angitt | Clear text summary of what the alert does                                                |
 | `alerts/<alertName>/description` | beskrivelse av alarm er ikke angitt  | Clear text description of the alert                                                      |
 
-Some configuration values can be set with defaults, these values will be used unless an alert-configuration overrides it.
-`alertsDefaults` can be set in the _base_ file if they should be used for all instances of an application across all environments,
+Some configuration values can be set with defaults, these values will be used unless an alert-configuration overrides
+it.
+`alertsDefaults` can be set in the _base_ file if they should be used for all instances of an application across all
+environments,
 or in the _env_ file if they should be used for all applications in that environment.
 
 | path                         | default | desctiption                                                                              |
@@ -590,7 +635,8 @@ or in the _env_ file if they should be used for all applications in that environ
 ### Logging configuration
 
 To configure logging it is necessary to add the logging configuration block to the aurora config.
-If the configuration is not specified then the application(s) will log via Splunk Connect to a default index `log-ocp-<env>`.
+If the configuration is not specified then the application(s) will log via Splunk Connect to a default
+index `log-ocp-<env>`.
 
 **Note**: Log files are expected to reside under `/u01/logs`
 
@@ -621,7 +667,8 @@ Available defined log types:
 | slow        | log4j           | \*.slow          |
 | stacktrace  | log4j           | \*.stacktrace    |
 
-To configure a specific, of the available log types, then `logging.loggers.<logname>` must be configured (replace `<logname>` with one of the log type names).
+To configure a specific, of the available log types, then `logging.loggers.<logname>` must be configured (
+replace `<logname>` with one of the log type names).
 
 ```yaml
 logging:
@@ -633,7 +680,8 @@ logging:
 
 #### Separate indexes with custom file pattern
 
-We have support for specifying custom file patterns if you do not follow the default patterns. We strongly advice you to use the default loggers config if possible.
+We have support for specifying custom file patterns if you do not follow the default patterns. We strongly advice you to
+use the default loggers config if possible.
 We do not allow custom sourcetypes, we currently support [_json, access_combined, gc_log, log4j].
 If you need support for another sourcetype you need to contact us.
 When you use custom logging, you take full ownership and responsibility of capturing logs with correct file pattern.
@@ -657,7 +705,8 @@ logging:
 
 #### Configurable fields
 
-By default, descriptive fields will be added to the messages logged by the application. It is possible to toggle these fields on or off.
+By default, descriptive fields will be added to the messages logged by the application. It is possible to toggle these
+fields on or off.
 
 | Name                       | Default | Description                          |
 | -------------------------- | ------- | ------------------------------------ |
@@ -670,8 +719,10 @@ By default, descriptive fields will be added to the messages logged by the appli
 
 #### Add fluent-bit sidecar container for additional types
 
-Fluent-bit is only supported for types: [deploy, development], however it is possible to opt-in for the types [localTemplate, template, job, cronJob].
-You are not guaranteed that it will work for all types and your specific use case. You might have to configure custom logging
+Fluent-bit is only supported for types: [deploy, development], however it is possible to opt-in for the
+types [localTemplate, template, job, cronJob].
+You are not guaranteed that it will work for all types and your specific use case. You might have to configure custom
+logging
 if the logfiles do not conform to the normal filenames.
 
 ```yaml
@@ -687,7 +738,8 @@ logging:
 #### Disable fluent-bit sidecar logging
 
 Setting `logging.index` to an empty value will prevent the application from running with a logging sidecar.
-This can be useful in situations where a fluent-bit sidecar is unwanted, for example a job that may hang if the pod starts with a fluent-bit container.
+This can be useful in situations where a fluent-bit sidecar is unwanted, for example a job that may hang if the pod
+starts with a fluent-bit container.
 
 ```yaml
 logging:
@@ -696,7 +748,8 @@ logging:
 
 ### Topology
 
-Support for organizing the [OpenShift topology view](https://docs.openshift.com/container-platform/4.10/applications/odc-viewing-application-composition-using-topology-view.html)
+Support for organizing
+the [OpenShift topology view](https://docs.openshift.com/container-platform/4.10/applications/odc-viewing-application-composition-using-topology-view.html)
 is available with the `topology` configuration.
 
 | Name                  | Default | Description                                                             |
@@ -714,19 +767,24 @@ Notes:
 The `partOf` property is only used for visual grouping of deployments,
 Each project decide themselves how to use the visual grouping, and there are no pre-defined values.
 
-The `runtime` property is used to select a display icon. For example when `topology/runtime=spring-boot` is set, the topology view will show a spring-boot icon.
-Supported icons are listed in the logos array in the link below (it is not necessary to include the `icon-` part of the name):
+The `runtime` property is used to select a display icon. For example when `topology/runtime=spring-boot` is set, the
+topology view will show a spring-boot icon.
+Supported icons are listed in the logos array in the link below (it is not necessary to include the `icon-` part of the
+name):
 
 - https://github.com/openshift/console/blob/master/frontend/public/components/catalog/catalog-item-icon.tsx
-- Alternatively supported icons can be found by right-click on the topology view and `Add to project` -> `Container image` and check the `Runtime icon` dropdown list.
+- Alternatively supported icons can be found by right-click on the topology view
+  and `Add to project` -> `Container image` and check the `Runtime icon` dropdown list.
 
 The `connectsTo` property indicate which applications the deployment connects to in one direction (sends requests to).
 The topology view can only visualize connections in the same namespace.
 
 The topology configuration will add the following labels and annotations to the deployment
 
-- `topology/partOf` adds the label `app.kubernetes.io/part-of=<config-value>` on all resources belonging to the deployment.
-- `topology/runtime` adds the label `app.kubernetes.io/runtime=<config-value>` on all resources belonging to the deployment.
+- `topology/partOf` adds the label `app.kubernetes.io/part-of=<config-value>` on all resources belonging to the
+  deployment.
+- `topology/runtime` adds the label `app.kubernetes.io/runtime=<config-value>` on all resources belonging to the
+  deployment.
 - `topology/connectsTo` adds the annotation `app.openshift.io/connects-to=['config-value']` on the DeploymentConfig.
 
 ### Configure Maskinporten
@@ -738,13 +796,15 @@ The topology configuration will add the following labels and annotations to the 
 | `maskinporten/<name>/enabled`  |                 | Required boolean value. Set to true to mount secret for Maskinporten client with provided clientID |
 | `maskinporten/<name>/clientId` | value from name | The value from name is used by default, this field can be used to override the clientId            |
 
-Note: If maskinporten feature is disabled with simplified configuration or `maskinporten/enabled` then it must be explicitly re-enabled.
+Note: If maskinporten feature is disabled with simplified configuration or `maskinporten/enabled` then it must be
+explicitly re-enabled.
 
 ## Example configuration
 
 ### Simple reference-application
 
-Below is an example of how you could configure an instance of the [reference application](https://github.com/skatteetaten/openshift-reference-springboot-server)
+Below is an example of how you could configure an instance of
+the [reference application](https://github.com/skatteetaten/openshift-reference-springboot-server)
 
 about.yaml
 
@@ -929,7 +989,8 @@ alerts:
 
 When creating templates the following guidelines should be followed:
 
-- include the following parameters VERSION, NAME and if appropriate REPLICAS. They will be populated from relevant AuroraConfig fields
+- include the following parameters VERSION, NAME and if appropriate REPLICAS. They will be populated from relevant
+  AuroraConfig fields
 - the following labels will be added to the template: app, affiliation, updatedBy
 - if the template does not have a VERSION parameter it will not be upgradable from internal web tools
 - Each container in the template will get additional ENV variables applied if NTA specific integrations are applied.
