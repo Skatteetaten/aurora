@@ -703,6 +703,16 @@ logging:
       pattern: "*-custom-aud.log"
 ```
 
+#### Configuring tail input plugin for fluentbit
+
+Refer to fluentbit docs [for tail input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail) to see definition
+of configuration parameters we refer to in table below.
+
+| Name                  | Default | Description                                                                                                                                                          |
+| --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| logging/bufferSize    | 20      | Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to `bufferSize * 5` |
+| logging/bufferMaxSize | 512k    | Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.                                                               |
+
 #### Configurable fields
 
 By default, descriptive fields will be added to the messages logged by the application. It is possible to toggle these
