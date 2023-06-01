@@ -703,6 +703,43 @@ logging:
       pattern: "*-custom-aud.log"
 ```
 
+#### Additional output
+In addition to sending logs to splunk, we also support sending log data to an HTTP collector. This 
+happens in addition to the data being sent to splunk.
+
+Custom logging with `additionalOutput` set:
+```yaml
+logging:
+  custom:
+    application:
+      index: "openshift"
+      sourcetype: "log4j"
+      pattern: "*-custom-app.log"
+    access:
+      index: "openshift"
+      sourcetype: "access_combined"
+      pattern: "*-custom-aud.log"
+    vso:
+      index: "logg-collector-openshift"
+      sourcetype: "log4j"
+      pattern: "collector.log"
+      additionalOutput:
+        vso-output:
+          type: "http"
+          secretVault: "collector-credentials"
+          host: "logg-collector.skead"
+          port: "80"
+          path: "/v1/collect"
+
+secretVaults:
+  collector-credentials:
+    name: collector-credentials
+```
+The secretVault must contain the `CUSTOM_OUTPUT_USERNAME` and `CUSTOM_OUTPUT_PASSWORD` properties 
+used to authenticate with the collector service. 
+
+**Note**: The HTTP collector is not provided by us, and is something you develop yourself.
+
 #### Configuring tail input plugin for fluentbit
 
 Refer to fluentbit docs [for tail input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail) to see definition
