@@ -846,6 +846,33 @@ The topology configuration will add the following labels and annotations to the 
 Note: If maskinporten feature is disabled with simplified configuration or `maskinporten/enabled` then it must be
 explicitly re-enabled.
 
+### Configure Vertical Pod Autoscaling (VPA)
+The Vertical Pod Autoscaler (VPA) in Kubernetes automates resource limits and requests for pods. It adjusts requests
+based on actual usage, optimizing resource allocation. VPA downscales over-requesting pods and upscales under-requesting
+ones. It maintains specified limit/request ratios for containers. This dynamic autoscaling improves resource utilization
+and application performance.
+
+
+| Name                                | Default                           | Description                                                                                                |
+|-------------------------------------|-----------------------------------|------------------------------------------------------------------------------------------------------------|
+| `vpa`                               |                                   | Simplified configuration can be used to enabled/disable the feature.                                       |
+| `vpa/enabled`                       |                                   | Enable or disable vpa.                                                                                     |
+| `vpa/updateMode`                    | Auto                              | Supported values are ["Auto", "Off"]                                                                       |
+| `vpa/minimumAvailableReplicas`      | 1                                 | The minimum number of available replicas needed before initiating scaling operations.                      | 
+ | `vpa/resources/controlledResources` | ["ResourceCPU", "ResourceMemory"] | Specify the resources to initiate scaling operations. Supported values are ResourceCPU and ResourceMemory. |
+| `vpa/minAllowed/cpu`                |                                   | Set minimum allowed. Optional.                                                                             |
+| `vpa/minAllowed/memory`             |                                   | Set minimum allowed memory. Optional.                                                                      |
+| `vpa/maxAllowed/cpu`                |                                   | Set maximum allowed CPU. Optional.                                                                         |
+| `vpa/maxAllowed/memory`             |                                   | Set maximum allowed memory. Optional.                                                                      |
+
+Note:
+When using VPA, ensure that the pods have well-defined resource requests and limits in their initial configuration. 
+These values act as guidelines for VPA to adjust the resource requests later. While VPA doesn't strictly follow these 
+initial values, it uses them as starting points to iteratively adjust resource requests based on real usage patterns. 
+During autoscaling, VPA ensures that the new resource requests set for a pod do not exceed the specified resource limits, 
+respecting the upper boundaries defined in the initial pod configuration.
+
+
 ## Example configuration
 
 ### Simple reference-application
