@@ -883,7 +883,7 @@ resource usage and the requested resources.
 | `hpa/enabled`     |         | Enable or disable the hpa feature. Type boolean.                                                                                                                                                         |
 | `hpa/minReplicas` |         | Minimum number of replicas. Type Integer.                                                                                                                                                                |
 | `hpa/maxReplicas` |         | Maximum number of replicas. Type Integer.                                                                                                                                                                |
-| `hpa/behaviour`   |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information. Type behavior.               |
+| `hpa/behavior`   |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information. Type behavior.               |
 | `hpa/metrics`     |         | Defines the metrics to act up on. Se examples section or https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html. Type list of resources. |
 
 Example of common use case
