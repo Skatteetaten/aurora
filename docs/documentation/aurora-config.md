@@ -877,14 +877,71 @@ It's essential to configure resource requests and limits for your pods to ensure
 resource utilization metrics. By providing these values, HPA can calculate the scaling ratio based on the actual 
 resource usage and the requested resources.
 
+| Name              | Default | Description                                                                                                                                                               |
+|-------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `hpa`             |         | Simplified configuration can be used to enabled/disable the feature. Type boolea                                                                                          |
+| `hpa/enabled`     |         | Enable or disable the hpa feature. Type boolean.                                                                                                                          |
+| `hpa/minReplicas` |         | Minimum number of replicas. Type Integer.                                                                                                                                 |
+| `hpa/maxReplicas` |         | Maximum number of replicas. Type Integer.                                                                                                                                 |
+| `hpa/behaviour`   |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information |
+| `hpa/metrics`     |         | Defines the metrics to act up on. Se examples section or https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html.                          |
 
-| Name             | Default | Description                                                                                                                                                                |
-|------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `hpa`            |         | Simplified configuration can be used to enabled/disable the feature                                                                                                        |
-| `hpa/minReplicas` |         | Minimum number of replicas                                                                                                                                                 |
-| `hpa/maxReplicas` |         | Maximum number of replicas                                                                                                                                                 |
-| `hpa/behaviour`  |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information |
-| `hpa/metrics` | | Defines scaling metrics                                                                                                                                                    |
+Example of common use case
+```yaml
+hpa:
+  minReplicas: 2
+  maxReplicas: 10
+  metrics: 
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  - type: Resource
+    resource: 
+      name: memory 
+      target: 
+        type: AverageValue
+        averageValue: 500Mi
+```
+
+More advanced example
+```yaml
+hpa:
+  enabled: true
+  minReplicas: '2'
+  maxReplicas: '10'
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: AverageValue
+        averageValue: 500m
+  behavior:
+    scaleDown:
+      policies:
+      - type: Pods
+        value: 4
+        periodSeconds: 60
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+      selectPolicy: Min
+      stabilizationWindowSeconds: 300
+    scaleUp:
+      policies:
+      - type: Pods
+        value: 5
+        periodSeconds: 70
+      - type: Percent
+        value: 12
+        periodSeconds: 80
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+```
+Warning: This feature cannot be used in combination with the VPA feature.
 
 ## Example configuration
 
