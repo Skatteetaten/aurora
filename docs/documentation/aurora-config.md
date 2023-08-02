@@ -846,6 +846,46 @@ The topology configuration will add the following labels and annotations to the 
 Note: If maskinporten feature is disabled with simplified configuration or `maskinporten/enabled` then it must be
 explicitly re-enabled.
 
+### Configure Horizontal Pod Autoscaling (HPA)
+Horizontal Pod Autoscaling (HPA) is a powerful feature that allows you to automatically adjust the number of pods in
+your deployments based on specific resource utilization or custom metrics. By dynamically scaling the number of pods
+up or down, HPA ensures that your applications can handle varying workloads effectively.
+
+The primary purpose of HPA is to maintain a balance between resource availability and application performance. When 
+your workload experiences increased demand, such as a spike in incoming requests or data processing, HPA will 
+automatically increase the number of pods to meet the demand and distribute the workload across multiple instances.
+
+Conversely, during periods of low demand, HPA can scale down the number of pods to conserve resources and
+reduce unnecessary costs. This autoscaling capability is particularly useful when you have fluctuating workloads
+or unpredictable usage patterns.
+
+HPA can scale pods based on different metrics:
+
+    Resource Utilization Metrics: HPA can scale pods based on the actual CPU or memory utilization of the running pods. 
+    You can set a threshold for CPU or memory utilization, and when the observed utilization exceeds that threshold, 
+    HPA will initiate scaling actions.
+
+    Custom Metrics: In addition to resource metrics, HPA supports scaling based on custom metrics. These metrics can be 
+    specific to your application and may include things like the rate of incoming requests, response times, or any 
+    other custom metric that you define.
+
+    External Metrics: HPA can also scale based on external metrics obtained from sources outside of the Kubernetes 
+    cluster. For instance, if your workload depends on an external service that provides metrics relevant to scaling 
+    decisions, you can configure HPA to use these external metrics.
+
+It's essential to configure resource requests and limits for your pods to ensure HPA can function correctly with 
+resource utilization metrics. By providing these values, HPA can calculate the scaling ratio based on the actual 
+resource usage and the requested resources.
+
+
+| Name             | Default | Description                                                                                                                                                                |
+|------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `hpa`            |         | Simplified configuration can be used to enabled/disable the feature                                                                                                        |
+| `hpa/minReplicas` |         | Minimum number of replicas                                                                                                                                                 |
+| `hpa/maxReplicas` |         | Maximum number of replicas                                                                                                                                                 |
+| `hpa/behaviour`  |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information |
+| `hpa/metrics` | | Defines scaling metrics                                                                                                                                                    |
+
 ## Example configuration
 
 ### Simple reference-application
