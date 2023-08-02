@@ -905,6 +905,10 @@ hpa:
         type: AverageValue
         averageValue: 500Mi
 ```
+This configuration snippet defines two resource-based metrics for HorizontalPodAutoscaler:
+
+    CPU Metric: It uses CPU resource and sets a target utilization of 50%.
+    Memory Metric: It uses memory resource and sets a target average value of 500Mi (megabytes).
 
 More advanced example
 ```yaml
@@ -941,6 +945,25 @@ hpa:
       selectPolicy: Max
       stabilizationWindowSeconds: 0
 ```
+
+This configuration defines the following settings for HorizontalPodAutoscaler (HPA):
+
+    Metrics: The HPA uses the CPU resource and sets a target average value of 500 milli-CPU (mCPU).
+
+    Behavior: The scaling behavior includes both scaleDown and scaleUp policies.
+
+        Scale Down Policies: It applies two policies to scale down the number of replicas:
+            If the CPU utilization is below the target for at least 60 seconds, it scales down to a minimum of 4 replicas.
+            If the CPU utilization is below the target by 10% for at least 60 seconds, it scales down based on the percentage.
+
+        Scale Up Policies: It applies two policies to scale up the number of replicas:
+            If the CPU utilization is above the target for at least 70 seconds, it scales up to a maximum of 5 replicas.
+            If the CPU utilization is above the target by 12% for at least 80 seconds, it scales up based on the percentage.
+
+        Select Policy: When both scale up and scale down conditions are met, it selects the one with the maximum change.
+
+        Stabilization Window: After a scaling event, it waits for 300 seconds (5 minutes) before considering the next scaling action. For scale down, there is a stabilization window, but for scale up, there is no stabilization window (instant scaling).
+
 Warning: This feature cannot be used in combination with the VPA feature.
 
 ## Example configuration
