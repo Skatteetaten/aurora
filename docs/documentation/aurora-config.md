@@ -846,6 +846,34 @@ The topology configuration will add the following labels and annotations to the 
 Note: If maskinporten feature is disabled with simplified configuration or `maskinporten/enabled` then it must be
 explicitly re-enabled.
 
+### Configure Vertical Pod Autoscaling (VPA)
+The Vertical Pod Autoscaler (VPA) in Kubernetes automates resource limits and requests for pods. It adjusts requests
+based on actual usage, optimizing resource allocation. VPA downscales over-requesting pods and upscales under-requesting
+ones. It maintains specified limit/request ratios for containers. This dynamic autoscaling improves resource utilization
+and application performance.
+
+
+| Name                                | Default                           | Description                                                                                                                           |
+|-------------------------------------|-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| `vpa`                               |                                   | Simplified configuration can be used to enabled/disable the feature. Type boolean.                                                    |
+| `vpa/enabled`                       |                                   | Enable or disable vpa. Type boolean.                                                                                                  |
+| `vpa/updateMode`                    | Auto                              | Supported values are ["Auto", "Off"]. Type String.                                                                                    |
+| `vpa/minimumAvailableReplicas`      | 1                                 | The minimum number of available replicas needed before initiating scaling operations. Type Integer.                                   | 
+ | `vpa/resources/controlledResources` | ["ResourceCPU", "ResourceMemory"] | Specify the resources to initiate scaling operations. Supported values are ResourceCPU and ResourceMemory. Type list of Strings.      |
+| `vpa/minAllowed/cpu`                |                                   | Set minimum allowed. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.        |
+| `vpa/minAllowed/memory`             |                                   | Set minimum allowed memory. Optional. Type Quantity  https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
+| `vpa/maxAllowed/cpu`                |                                   | Set maximum allowed CPU. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
+| `vpa/maxAllowed/memory`             |                                   | Set maximum allowed memory. Optional. Type Quanity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.  |
+
+Note:
+When using VPA, ensure that the pods have well-defined resource requests and limits in their initial configuration. 
+These values act as guidelines for VPA to adjust the resource requests later. While VPA doesn't strictly follow these 
+initial values, it uses them as starting points to iteratively adjust resource requests based on real usage patterns. 
+During autoscaling, VPA ensures that the new resource requests set for a pod do not exceed the specified resource limits, 
+respecting the upper boundaries defined in the initial pod configuration.
+
+Warning: This feature requires a minimum of 2 available replicas and cannot be used in combination with HPA.
+
 ### Configure Horizontal Pod Autoscaling (HPA)
 Horizontal Pod Autoscaling (HPA) is a powerful feature that allows you to automatically adjust the number of pods in
 your deployments based on specific resource utilization or custom metrics. By dynamically scaling the number of pods
