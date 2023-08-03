@@ -1002,7 +1002,7 @@ handling like retries, batching, authentication, and data enrichment. By having 
 services, we achieve swift data offloading, minimizing any impact on the services' performance.
 
 The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using 
-an agent collector as a daemonSet running on each node, while the second mode deploys the agent collector alongside 
+an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside 
 the service as a sidecar container. For the majority of our users, the first approach should be sufficient and 
 straightforward.
 
@@ -1032,7 +1032,8 @@ telemetry data collection process to suit specific requirements and optimize per
 
 Currently, our support includes memory requirement tuning, but we anticipate the addition of more advanced features, 
 such as data enrichment, in the near future. This solution will continue to evolve over time, adapting to the needs 
-of development teams as they require more sophisticated functionalities.
+of development teams as they require more sophisticated functionalities. For more information about the supported 
+capabilities in the Grafana Agent, please follow this link https://grafana.com/docs/agent/latest/flow/reference/. 
 
 | Name                              | Default                  | Description                                                                                                                             |
 |-----------------------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
