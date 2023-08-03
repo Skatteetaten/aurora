@@ -874,6 +874,126 @@ respecting the upper boundaries defined in the initial pod configuration.
 
 Warning: This feature requires a minimum of 2 available replicas and cannot be used in combination with HPA.
 
+### Configure Horizontal Pod Autoscaling (HPA)
+Horizontal Pod Autoscaling (HPA) is a powerful feature that allows you to automatically adjust the number of pods in
+your deployments based on specific resource utilization or custom metrics. By dynamically scaling the number of pods
+up or down, HPA ensures that your applications can handle varying workloads effectively.
+
+The primary purpose of HPA is to maintain a balance between resource availability and application performance. When 
+your workload experiences increased demand, such as a spike in incoming requests or data processing, HPA will 
+automatically increase the number of pods to meet the demand and distribute the workload across multiple instances.
+
+Conversely, during periods of low demand, HPA can scale down the number of pods to conserve resources and
+reduce unnecessary costs. This autoscaling capability is particularly useful when you have fluctuating workloads
+or unpredictable usage patterns.
+
+HPA can scale pods based on different metrics:
+
+    Resource Utilization Metrics: HPA can scale pods based on the actual CPU or memory utilization of the running pods. 
+    You can set a threshold for CPU or memory utilization, and when the observed utilization exceeds that threshold, 
+    HPA will initiate scaling actions.
+
+    Custom Metrics: In addition to resource metrics, HPA supports scaling based on custom metrics. These metrics can be 
+    specific to your application and may include things like the rate of incoming requests, response times, or any 
+    other custom metric that you define.
+
+    External Metrics: HPA can also scale based on external metrics obtained from sources outside of the Kubernetes 
+    cluster. For instance, if your workload depends on an external service that provides metrics relevant to scaling 
+    decisions, you can configure HPA to use these external metrics.
+
+It's essential to configure resource requests and limits for your pods to ensure HPA can function correctly with 
+resource utilization metrics. By providing these values, HPA can calculate the scaling ratio based on the actual 
+resource usage and the requested resources.
+
+| Name              | Default | Description                                                                                                                                                                                              |
+|-------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `hpa`             |         | Simplified configuration can be used to enabled/disable the feature. Type boolea                                                                                                                         |
+| `hpa/enabled`     |         | Enable or disable the hpa feature. Type boolean.                                                                                                                                                         |
+| `hpa/minReplicas` |         | Minimum number of replicas. Type Integer.                                                                                                                                                                |
+| `hpa/maxReplicas` |         | Maximum number of replicas. Type Integer.                                                                                                                                                                |
+| `hpa/behavior`   |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information. Type behavior.               |
+| `hpa/metrics`     |         | Defines the metrics to act up on. Se examples section or https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html. Type list of resources. |
+
+Example of common use case
+```yaml
+hpa:
+  minReplicas: 2
+  maxReplicas: 10
+  metrics: 
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  - type: Resource
+    resource: 
+      name: memory 
+      target: 
+        type: AverageValue
+        averageValue: 500Mi
+```
+This configuration snippet defines two resource-based metrics for HorizontalPodAutoscaler:
+
+    CPU Metric: It uses CPU resource and sets a target utilization of 50%.
+    Memory Metric: It uses memory resource and sets a target average value of 500Mi (megabytes).
+
+More advanced example
+```yaml
+hpa:
+  enabled: true
+  minReplicas: '2'
+  maxReplicas: '10'
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: AverageValue
+        averageValue: 500m
+  behavior:
+    scaleDown:
+      policies:
+      - type: Pods
+        value: 4
+        periodSeconds: 60
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+      selectPolicy: Min
+      stabilizationWindowSeconds: 300
+    scaleUp:
+      policies:
+      - type: Pods
+        value: 5
+        periodSeconds: 70
+      - type: Percent
+        value: 12
+        periodSeconds: 80
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+```
+
+This configuration defines the following settings for HorizontalPodAutoscaler (HPA):
+
+    Metrics: The HPA uses the CPU resource and sets a target average value of 500 milli-CPU (mCPU).
+
+    Behavior: The scaling behavior includes both scaleDown and scaleUp policies.
+
+        Scale Down Policies: It applies two policies to scale down the number of replicas:
+            If the CPU utilization is below the target for at least 60 seconds, it scales down to a minimum of 4 replicas.
+            If the CPU utilization is below the target by 10% for at least 60 seconds, it scales down based on the percentage.
+
+        Scale Up Policies: It applies two policies to scale up the number of replicas:
+            If the CPU utilization is above the target for at least 70 seconds, it scales up to a maximum of 5 replicas.
+            If the CPU utilization is above the target by 12% for at least 80 seconds, it scales up based on the percentage.
+
+        Select Policy: When both scale up and scale down conditions are met, it selects the one with the maximum change.
+
+        Stabilization Window: After a scaling event, it waits for 300 seconds (5 minutes) before considering the next scaling action. For scale down, there is a stabilization window, but for scale up, there is no stabilization window (instant scaling).
+
+Warning: This feature cannot be used in combination with the VPA feature.
+
 ## Example configuration
 
 ### Simple reference-application
