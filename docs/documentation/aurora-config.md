@@ -994,6 +994,74 @@ This configuration defines the following settings for HorizontalPodAutoscaler (H
 
 Warning: This feature cannot be used in combination with the VPA feature.
 
+### Configure the trace collector(Grafana Agent)
+We use the Grafana Agent to receive, process, and export telemetry data, eliminating the need for multiple 
+agents/collectors. It supports open source observability data formats (e.g. OTEL http, OTEL grpc, Zipkin) and integrates with 
+Grafana Enterprise Trace solution. Using a collector alongside services enables quick data offloading and additional 
+handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our 
+services, we achieve swift data offloading, minimizing any impact on the services' performance.
+
+The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using 
+an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside 
+the service as a sidecar container. For the majority of our users, the first approach should be sufficient and 
+straightforward.
+
+| Name            | Default | Description                                                                      |
+|-----------------|---------|----------------------------------------------------------------------------------|
+| `trace`         |         | Simplified configuration can be used to enabled/disable the feature. Type boolean |
+| `trace/enabled` |         | Enable or disable the trace feature. Type boolean.                               |
+
+Example
+
+```yaml
+trace: true
+```
+In this example, we will expose the following environment variables: OTLP_GRPC_TRACING_ENDPOINT, 
+ZIPKIN_TRACING_ENDPOINT, and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the nearest node 
+collector, in the format IP:port.
+
+By setting these environment variables correctly, the telemetry data will be directed to the appropriate collectors,
+It's worth noting that certain frameworks, such as Spring Boot, may require an additional step. When using these 
+frameworks, it is essential to include the appropriate protocol prefix, such as "http://" or "https://", in the 
+specified endpoint URL.
+
+
+The second approach with the sidecar container is tailored for more advanced users who require 
+greater control over the configuration and data flow. With the sidecar approach, users can fine-tune and customize the 
+telemetry data collection process to suit specific requirements and optimize performance.
+
+Currently, our support includes memory requirement tuning, but we anticipate the addition of more advanced features, 
+such as data enrichment, in the near future. This solution will continue to evolve over time, adapting to the needs 
+of development teams as they require more sophisticated functionalities. For more information about the supported 
+capabilities in the Grafana Agent, please follow this link https://grafana.com/docs/agent/latest/flow/reference/. 
+
+| Name                              | Default                  | Description                                                                                                                             |
+|-----------------------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `trace/sidecar/enabled`           |                          | Enable or disable the trace sidecar feature. Type boolean.                                                                              |
+| `trace/sidecar/version`           | latest supported version | Version of the grafana agent collector                                                                                                  |
+| `trace/resources/requests/cpu`    | 50m                      | cpu request for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
+| `trace/resources/requests/memory` | 100Mi                    | memory request for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
+| `trace/resources/limits/cpu`      | 100m                     | cpu limit for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.      |
+| `trace/resources/limits/memory`   | 200Mi                    | memory limit for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.   |
+
+Example
+
+```yaml
+trace:
+  sidecar:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        cpu: 200m
+        memory: 200Mi
+```
+In this example, we expose the following environment variables: OTLP_GRPC_TRACING_ENDPOINT, ZIPKIN_TRACING_ENDPOINT, 
+and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the sidecar collector, with the format 
+localhost:port. Just like the first approach, this may also require adding the appropriate protocol prefix. 
+
 ## Example configuration
 
 ### Simple reference-application
