@@ -182,6 +182,15 @@ info in the channel header. At the bottom of the dialog box you will find a grey
 | `notification/mattermost/<channelId>`         |         | Simplified config for enabling a mattermost notification for the given channelId. This requires a boolean. |
 | `notification/mattermost/<channelId>/enabled` | true    | Set to false to disable notification for the given channel.                                                |
 
+#### Email
+Notifications can also be sent to mailing groups by configuring the mail option in the notification field
+
+| path                                    | default | description                                                                       |
+|-----------------------------------------| ------- |-----------------------------------------------------------------------------------|
+| `notification/mail/<emailAddr>`         |         | Simplified config for enabling an email notification for the given email address  |
+| `notification/mail/<emailAddr>/enabled` | true    | Set to false to disable notification for the given email address.                 |
+
+
 ### Deployment Types
 
 The configuration option `type` indicates the deployment type the application has. The value of this field affects
