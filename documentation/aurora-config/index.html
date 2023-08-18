@@ -2111,10 +2111,10 @@ Memory Metric: It uses memory resource and sets a target average value of 500Mi 
       <span class="token key atrule">policies</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> Pods
         <span class="token key atrule">value</span><span class="token punctuation">:</span> <span class="token number">5</span>
-        <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">70</span>
+        <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">60</span>
       <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> Percent
         <span class="token key atrule">value</span><span class="token punctuation">:</span> <span class="token number">12</span>
-        <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">80</span>
+        <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">60</span>
       <span class="token key atrule">selectPolicy</span><span class="token punctuation">:</span> Max
       <span class="token key atrule">stabilizationWindowSeconds</span><span class="token punctuation">:</span> <span class="token number">0</span></code></pre></div>
 <p>This configuration defines the following settings for HorizontalPodAutoscaler (HPA):</p>
@@ -2123,16 +2123,17 @@ Memory Metric: It uses memory resource and sets a target average value of 500Mi 
 Behavior: The scaling behavior includes both scaleDown and scaleUp policies.
 
     Scale Down Policies: It applies two policies to scale down the number of replicas:
-        If the CPU utilization is below the target for at least 60 seconds, it scales down to a minimum of 4 replicas.
-        If the CPU utilization is below the target by 10% for at least 60 seconds, it scales down based on the percentage.
+        The first policy will scale down with at most 4 pods if the CPU utilization is below target for 60 seconds
+        The second policy will scale down with at most 10% of the current replicas if the CPU utilization is below target for 60 seconds
+        SelectPolicy: Min, select the policy with the smallest change in replica count.
 
     Scale Up Policies: It applies two policies to scale up the number of replicas:
-        If the CPU utilization is above the target for at least 70 seconds, it scales up to a maximum of 5 replicas.
-        If the CPU utilization is above the target by 12% for at least 80 seconds, it scales up based on the percentage.
+        The first policy will scale up with at most 5 pods if the CPU utilization is above target for 60 seconds
+        The second policy will scale up with at most 10% of the current replicas if the CPU utilization is above target for 60 seconds
+        SelectPolicy: Max, select the policy with the largest change in replicas count.
 
-    Select Policy: When both scale up and scale down conditions are met, it selects the one with the maximum change.
-
-    Stabilization Window: After a scaling event, it waits for 300 seconds (5 minutes) before considering the next scaling action. For scale down, there is a stabilization window, but for scale up, there is no stabilization window (instant scaling).</code></pre></div>
+    Stabilization Window: When the metrics indicate that the target should be scaled down the algorithm looks into previously computed desired states, and uses the highest value from the specified interval. For scale-down the past 300 seconds will be considered, for
+    scale-up there is no stabilization window, and the application is scaled-up immediately when the threshold is reached. </code></pre></div>
 <p>Warning: This feature cannot be used in combination with the VPA feature.</p>
 <h3 id="configure-the-trace-collectorgrafana-agent" style="position:relative"><a href="#configure-the-trace-collectorgrafana-agent" aria-label="configure the trace collectorgrafana agent permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configure the trace collector(Grafana Agent)</h3>
 <p>We use the Grafana Agent to receive, process, and export telemetry data, eliminating the need for multiple
