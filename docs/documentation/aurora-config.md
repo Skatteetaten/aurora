@@ -1045,14 +1045,14 @@ such as data enrichment, in the near future. This solution will continue to evol
 of development teams as they require more sophisticated functionalities. For more information about the supported 
 capabilities in the Grafana Agent, please follow this link https://grafana.com/docs/agent/latest/flow/reference/. 
 
-| Name                              | Default                  | Description                                                                                                                             |
-|-----------------------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `trace/sidecar/enabled`           |                          | Enable or disable the trace sidecar feature. Type boolean.                                                                              |
-| `trace/sidecar/version`           | latest supported version | Version of the grafana agent collector                                                                                                  |
-| `trace/resources/requests/cpu`    | 50m                      | cpu request for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
-| `trace/resources/requests/memory` | 100Mi                    | memory request for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
-| `trace/resources/limits/cpu`      | 100m                     | cpu limit for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.      |
-| `trace/resources/limits/memory`   | 200Mi                    | memory limit for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.   |
+| Name                                      | Default                  | Description                                                                                                                             |
+|-------------------------------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `trace/sidecar/enabled`                   |                          | Enable or disable the trace sidecar feature. Type boolean.                                                                              |
+| `trace/sidecar/version`                   | latest supported version | Version of the grafana agent collector                                                                                                  |
+| `trace/sidecar/resources/requests/cpu`    | 50m                      | cpu request for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
+| `trace/sidecar/resources/requests/memory` | 100Mi                    | memory request for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
+| `trace/sidecar/resources/limits/cpu`      | 100m                     | cpu limit for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.      |
+| `trace/sidecar/resources/limits/memory`   | 200Mi                    | memory limit for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.   |
 
 Example
 
