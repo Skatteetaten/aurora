@@ -1501,7 +1501,7 @@ hyphen(-) and period(.).</p>
 
 
 
-<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td>s3Defaults/bucketName</td><td></td><td>Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined</td></tr><tr><td>s3Defaults/objectArea</td><td></td><td>Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined</td></tr><tr><td>s3Defaults/tenant</td><td></td><td>Tenant account where buckets are created, format: &lt;affiliation&gt;-&lt;cluster&gt;. In order to use simplified config, this has to be defined</td></tr></tbody></table>
+<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td>s3Defaults/bucketName</td><td></td><td>Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined</td></tr><tr><td>s3Defaults/objectArea</td><td></td><td>Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined</td></tr><tr><td>s3Defaults/tenant</td><td></td><td>This field is DEPRECATED and is scheduled for removal in 2024. S3 tenants must now be predefined for the affiliation, and this field is ignored.</td></tr></tbody></table>
 <p>The simplified syntax is as follows:</p>
 
 
@@ -1518,7 +1518,7 @@ hyphen(-) and period(.).</p>
 
 
 
-<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td>s3</td><td>false</td><td>Simplified config that is dependant upon that s3Defaults/bucketName, s3Defaults/objectArea and s3Defaults/tenant is set</td></tr></tbody></table>
+<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td>s3</td><td>false</td><td>Simplified config that is dependant upon that s3Defaults/bucketName and s3Defaults/objectArea is set</td></tr></tbody></table>
 <p>For expanded syntax the following applies:</p>
 
 
@@ -1550,7 +1550,7 @@ hyphen(-) and period(.).</p>
 
 
 
-<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td><code class="language-text">s3/&lt;objectArea&gt;/enabled</code></td><td>true</td><td>Enabled lets you disable s3 for that specific objectArea.</td></tr><tr><td><code class="language-text">s3/&lt;objectArea&gt;/bucketName</code></td><td></td><td>Set the bucketName for that specific objectArea.</td></tr><tr><td><code class="language-text">s3/&lt;objectArea&gt;/objectArea</code></td><td></td><td>Overrides the objectArea set in &lt;objectArea&gt;</td></tr><tr><td><code class="language-text">s3/&lt;objectArea&gt;/tenant</code></td><td></td><td>Overrides the Tenant set in &lt;tenant&gt;</td></tr></tbody></table>
+<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td><code class="language-text">s3/&lt;objectArea&gt;/enabled</code></td><td>true</td><td>Enabled lets you disable s3 for that specific objectArea.</td></tr><tr><td><code class="language-text">s3/&lt;objectArea&gt;/bucketName</code></td><td></td><td>Set the bucketName for that specific objectArea.</td></tr><tr><td><code class="language-text">s3/&lt;objectArea&gt;/objectArea</code></td><td></td><td>Overrides the objectArea set in &lt;objectArea&gt;</td></tr><tr><td><code class="language-text">s3/&lt;objectArea&gt;/tenant</code></td><td></td><td>This field is DEPRECATED and is scheduled for removal in 2024.  S3 tenants must now be predefined for the affiliation, and this field is ignored.</td></tr></tbody></table>
 <h3 id="registration-of-alerts" style="position:relative"><a href="#registration-of-alerts" aria-label="registration of alerts permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Registration of alerts</h3>
 <p>Application specific alerts can be automatically registered by adding the following configuration.</p>
 
