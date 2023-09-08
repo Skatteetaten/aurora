@@ -594,26 +594,26 @@ hyphen(-) and period(.).
 
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
-| path                  | default | description                                                                                                                              |
-| --------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                                 |
-| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined               |
-| s3Defaults/tenant     |         | Tenant account where buckets are created, format: \<affiliation\>-\<cluster\>. In order to use simplified config, this has to be defined |
+| path                  | default | description                                                                                                                                      |
+| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                                         |
+| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined                       |
+| s3Defaults/tenant     |         | This field is DEPRECATED and is scheduled for removal in 2024. S3 tenants must now be predefined for the affiliation, and this field is ignored. |
 
 The simplified syntax is as follows:
 
-| path | default | description                                                                                                             |
-| ---- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
-| s3   | false   | Simplified config that is dependant upon that s3Defaults/bucketName, s3Defaults/objectArea and s3Defaults/tenant is set |
+| path | default | description                                                                                          |
+| ---- | ------- | ---------------------------------------------------------------------------------------------------- |
+| s3   | false   | Simplified config that is dependant upon that s3Defaults/bucketName and s3Defaults/objectArea is set |
 
 For expanded syntax the following applies:
 
-| path                         | default | description                                               |
-| ---------------------------- | ------- | --------------------------------------------------------- |
-| `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea. |
-| `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.          |
-| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>            |
-| `s3/<objectArea>/tenant`     |         | Overrides the Tenant set in \<tenant\>                    |
+| path                         | default | description                                                                                                                                       |
+| ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea.                                                                                         |
+| `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.                                                                                                  |
+| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>                                                                                                    |
+| `s3/<objectArea>/tenant`     |         | This field is DEPRECATED and is scheduled for removal in 2024.  S3 tenants must now be predefined for the affiliation, and this field is ignored. |
 
 ### Registration of alerts
 
