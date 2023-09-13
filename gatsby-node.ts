@@ -1,9 +1,12 @@
-const path = require(`path`);
-const { createFilePath } = require("gatsby-source-filesystem");
-const _ = require("lodash");
-const slash = require(`slash`);
+import path from "path";
+import { createFilePath } from "gatsby-source-filesystem";
+import _ from "lodash";
+import type { GatsbyNode } from "gatsby";
 
-exports.createPages = ({ graphql, actions }) => {
+export const createPages: GatsbyNode["createPages"] = ({
+  graphql,
+  actions,
+}) => {
   const { createPage } = actions;
   return new Promise((resolve, reject) => {
     const documentationTemplate = path.resolve(
@@ -25,19 +28,19 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
         `
-      ).then((result) => {
+      ).then((result: any) => {
         if (result.errors) {
           reject(result.errors);
         }
 
         // Create docs pages.
-        result.data.allMarkdownRemark.edges.forEach((edge) => {
+        result.data.allMarkdownRemark.edges.forEach((edge: any) => {
           const slug = _.get(edge, `node.fields.slug`);
           if (!slug) return;
 
           createPage({
             path: `${edge.node.fields.slug}`, // required
-            component: slash(documentationTemplate),
+            component: documentationTemplate,
             context: {
               slug: edge.node.fields.slug,
             },
@@ -49,7 +52,11 @@ exports.createPages = ({ graphql, actions }) => {
   });
 };
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+export const onCreateNode: GatsbyNode["onCreateNode"] = ({
+  node,
+  getNode,
+  actions,
+}) => {
   const { createNodeField } = actions;
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `docs` });
@@ -59,14 +66,4 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       value: slug,
     });
   }
-};
-
-exports.onCreateWebpackConfig = ({ stage, actions }) => {
-  actions.setWebpackConfig({
-    resolve: {
-      alias: {
-        starter: path.resolve(__dirname, "src"),
-      },
-    },
-  });
 };

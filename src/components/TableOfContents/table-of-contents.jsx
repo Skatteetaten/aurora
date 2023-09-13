@@ -5,7 +5,7 @@ import GithubSlugger from "github-slugger";
 import Icon from "@skatteetaten/frontend-components/Icon";
 import classNames from "classnames";
 
-import styles from "./table-of-contents.module.css";
+import * as styles from "./table-of-contents.module.css";
 
 const slugger = new GithubSlugger();
 

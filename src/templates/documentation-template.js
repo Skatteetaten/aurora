@@ -1,47 +1,32 @@
 import React from "react";
 import Grid from "@skatteetaten/frontend-components/Grid";
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
+import { renderAst } from "../components/renderAst";
 
-import Breadcrumb from "starter/components/Breadcrumb";
-import TableOfContents from "starter/components/TableOfContents";
+import TableOfContents from "../components/TableOfContents";
 
-import styles from "./documentation-template.module.css";
-
-const mainGrid = {
-  sm: 10,
-  smPush: 1,
-  md: 10,
-  mdPush: 1,
-  lg: 10,
-  lgPush: 1,
-  xl: 10,
-  xlPush: 1,
-  xxl: 10,
-  xxlPush: 1,
-};
+import * as styles from "./documentation-template.module.css";
+import { SingleColumnRow } from "../components/Columns";
 
 export default function Template({ data }) {
   const { markdownRemark } = data;
-  const { frontmatter, fields, html, headings } = markdownRemark;
+  const { frontmatter, fields, htmlAst, headings } = markdownRemark;
+
   return (
     <Grid>
-      <Grid.Row>
-        <Grid.Col {...mainGrid}>
-          <Breadcrumb
-            className={styles.breadcrumb}
-            path={fields.slug}
-            renderLink={({ href, name }) => <Link to={href}>{name}</Link>}
+      <SingleColumnRow>
+        <h1>{frontmatter.title}</h1>
+        {headings && (
+          <TableOfContents
+            headings={headings}
+            slug={fields.slug}
+            minHeaders={1}
           />
-          <h1>{frontmatter.title}</h1>
-          {headings && (
-            <TableOfContents headings={headings} slug={fields.slug} />
-          )}
-          <div
-            className={styles.documentationContainer}
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-        </Grid.Col>
-      </Grid.Row>
+        )}
+        <div className={styles.documentationContainer}>
+          {renderAst(htmlAst)}
+        </div>
+      </SingleColumnRow>
     </Grid>
   );
 }
@@ -49,7 +34,7 @@ export default function Template({ data }) {
 export const pageQuery = graphql`
   query DocumentationBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+      htmlAst
       headings {
         value
         depth
@@ -63,3 +48,6 @@ export const pageQuery = graphql`
     }
   }
 `;
+export const Head = ({ data }) => (
+  <title>{data.markdownRemark.frontmatter.title}</title>
+);

@@ -1,20 +1,33 @@
-const gatsbyConfig = {
+import type { GatsbyConfig } from "gatsby";
+const gatsbyConfig: GatsbyConfig = {
   siteMetadata: {
-    title: "the Aurora Platform",
+    title: "The Aurora Platform",
     menu: [
       {
         href: "/",
-        name: "The Aurora Platform",
+        name: "Home",
       },
       {
-        href: "/documentation",
-        name: "Documentation",
+        href: "/documentation/aurora-config",
+        name: "Aurora Config",
+      },
+      {
+        href: "/documentation/openshift",
+        name: "The Aurora Platform",
       },
     ],
   },
   pathPrefix: "/aurora",
+  flags: {
+    DEV_SSR: true,
+  },
   plugins: [
-    "gatsby-plugin-react-helmet",
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        icon: `src/images/favicon.png`,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -25,6 +38,9 @@ const gatsbyConfig = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
+        // Enable JS for https://github.com/jonschlinkert/gray-matter#optionsengines (default: false)
+        // It's not advised to set this to "true" and this option will likely be removed in the future
+        jsFrontmatterEngine: false,
         plugins: [
           `gatsby-remark-prismjs`,
           `gatsby-remark-autolink-headers`,
