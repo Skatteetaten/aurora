@@ -23,7 +23,7 @@
   "dependencies": {
     "@skatteetaten/frontend-components": "6.0.5",
     "classnames": "2.3.2",
-    "gatsby": "5.8.0",
+    "gatsby": "5.12.4",
     "gatsby-plugin-manifest": "5.8.0",
     "gatsby-remark-autolink-headers": "6.8.0",
     "gatsby-remark-copy-linked-files": "6.8.0",
