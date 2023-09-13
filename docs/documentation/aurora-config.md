@@ -500,8 +500,10 @@ use PVC mounts unnless strictly neccesary.
 
 ### NTA webseal integration
 
-Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be
-added to limit who can access the application
+Note: Webseal integration is being replaced by AzureAD integration. You should user either one or the other, even though
+they can both be used during the transition from Webseal to AzureAD.
+
+Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
 
 | path                   | default | description                                                                                                                                                                                                                                                 |
 | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -513,6 +515,37 @@ added to limit who can access the application
 
 If you want to use webseal with a template type you need to create a Service with default ports named after the name
 parameter
+
+### NTA AzureAD integration
+
+When migrating from webseal to AzureAD integration, first leave in the webseal configuration.
+After the azureAD integration is set up, you will receive a mail telling you to remove the webseal configuration.
+This will ensure that your application will be available during the transition.
+
+AzureAD is used for client traffic from within NTA to reach an application. Internal tax workers have roles that
+must be added to limit who can access the application. Use ATS for authorization against data.
+
+Example:
+
+    azure:
+        azureAppFqdn: "<service>-<affiliation>-<env>.amutv.skead.no"
+        groups:
+        - "list"
+        - "of"
+        - "security_groups"
+        jwtToStsConverter:
+            enabled: true
+
+| path                            | default                                                                                | description                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| azure                           | false                                                                                  | Toggle or assign an object to expose application through Azure.                                                                                                                                                                                                                                                                                                    |
+| azure/azureAppFqdn              | -                                                                                      | Fully qualified domain name for the exposed service. If you are migrating from webseal, this should be the same hostname use to access the application on webseal. This supports hostnames on the form "service-name.am\[utv&#124;test&#124;\].skead.no". service-name cannot contain periods. For tests, use service-name.funkyutv.skead.no and set azureAppTest. |
+| azure/azureAppTest              | false                                                                                  | Set to true to avoid exposing the application over the internet. The application will be exposed over a special internal route.                                                                                                                                                                                                                                    |
+| azure/groups                    | []                                                                                     | List of groups that are granted access to the application. An empty list means everyone in the organisation can access the application.                                                                                                                                                                                                                            |
+| azure/jwtToStsConverter/enabled | true                                                                                   | Whether a clinger instance should be deployed as a sidecar proxy for the service. This is a simple way of making the application available after moving from webseal. The clinger proxy will be set up with correct application ID and will validate the token from Azure and convert it into an iv-user header as if the request came from webseal.               |
+| azure/jwtToStsConverter/jwksUrl | http://login-microsoftonline-com.app2ext.intern-preprod.skead.no/common/discovery/keys | The url for the JWKS used to sign keys in AzureAD. This will typically be a general setting per environment. When testing, use the internal address https://funky-appsikk.apps.utv04.paas.skead.no/api/keys.                                                                                                                                                       |
+
+Note: this feature is currently in beta testing and should only be used in cooporation with the platform team.
 
 ### NTA STS integration
 
