@@ -1105,6 +1105,20 @@ In this example, we expose the following environment variables: OTLP_GRPC_TRACIN
 and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the sidecar collector, with the format 
 localhost:port. Just like the first approach, this may also require adding the appropriate protocol prefix. 
 
+### Configure pod disruption budget
+Pod disruption budget allows for configuring the minimum number of pods that must be available.
+The OpenShift platform will try to keep the minimum configured number of pods running.
+For example if a deployment of two pods, with `podDisruptionBudget` enabled, run on a node that is getting shut down,
+then OpenShift will keep the node running until a new pod has started satisfying the `minAvailable` budget setting.
+
+| Name                               | Default                                            | Description                                                                                                                                                                  |
+|------------------------------------|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `podDisruptionBudget`              |                                                    | Simplified configuration can be used to enabled/disable the feature. Type boolean                                                                                            |
+| `podDisruptionBudget/enabled`      |                                                    | Enable/disable podDisruptionBudget feature. Type boolean                                                                                                                     |
+| `podDisruptionBudget/minAvailable` | 1 (when `replicas` > 1) or 0 (when `replicas` = 1) | Configure minimum available pods on cluster. Type Integer 2, Numeric String '2' or percentage '50%'. Can never be '100%' or higher or equal to configured number of replicas |
+Note: if replicas is 1, then `podDisruptionBudget/minAvailable` will be modified 0.
+If podDisruptionBudget is enabled without configuring `minAvailable` it will default to 1 if replicas > 1, or 0 if replicas == 1.
+
 ## Example configuration
 
 ### Simple reference-application
