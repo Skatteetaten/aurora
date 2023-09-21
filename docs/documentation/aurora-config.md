@@ -787,11 +787,11 @@ used to authenticate with the collector service.
 Refer to fluentbit docs [for tail input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail) to see definition
 of configuration parameters we refer to in table below.
 
-| Name                  | Default | Description                                                                                                                                                          |
-| --------------------- |---------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| logging/bufferSize    | 20      | Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to `bufferSize * 5` |
-| logging/bufferMaxSize | 512k    | Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.                                                               |
-| logging/emitterBufferSize |         | Sets the Emitter_Mem_Buf_Limit for multiline matching *-evalevent_xml or *-ats:eval:xml. Container memory limit is set to `(bufferSize + emitterBufferSize) * 5` |
+| Name                  | Default | Description                                                                                                                                                                    |
+| --------------------- |---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| logging/bufferSize    | 20      | Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to `bufferSize * 5`           |
+| logging/bufferMaxSize | 512k    | Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.                                                                         |
+| logging/emitterBufferSize |         | Sets the Emitter_Mem_Buf_Limit in MB for multiline matching *-evalevent_xml, *-ats:eval:xml and log4j. Container memory limit is set to `(bufferSize + emitterBufferSize) * 5` |
 
 
 #### Configurable fields
