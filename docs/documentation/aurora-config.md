@@ -1109,6 +1109,35 @@ In this example, we expose the following environment variables: OTLP_GRPC_TRACIN
 and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the sidecar collector, with the format 
 localhost:port. Just like the first approach, this may also require adding the appropriate protocol prefix. 
 
+### PodDisruptionBudget - configure minimum available number of pods for high availability
+
+A PodDisruptionBudget limits the number of pods that can be down at the same time.
+AuroraConfig supports configuring the minimum number of available healthy pods, that must be available during service operations on the cluster, for example cluster draining and scaling.
+For more details about disruptions and Pod disruption budgets see https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+
+In AuroraConfig support for PodDisruptionBudget is implemented for minimum available pods, a PodDisruptionBudget resource will be created in the namespace when using this functionality.
+To use PodDisruptionBudget `replicas` must be at least 2. If `replicas` is below 2 or the deployment is paused, then the PodDisruptionBudget resource will not be created but a warning will be displayed.
+It is not possible to configure minimum number of available pods to be equal to or above `replicas`.
+
+| Name                             | Default | Description                                                                                                                      |
+|----------------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------|
+| podDisruptionBudget              |         | Simplified configuration can be used to enable/disable the feature                                                               |
+| podDisruptionBudget/enabled      |         | Can be used to enable/disable the feature                                                                                        |
+| podDisruptionBudget/minAvailable | 1       | Specify the minimum available healthy pods, the feature will count as enabled when this is specified and not explicitly disabled |
+
+Minimal example - will create a PodDisruptionBudget with minimum 1 available healthy pod
+```yaml
+replicas: 2
+podDisruptionBudget: true
+```
+
+Minimum available example - will create a PodDisruptionBudget with minimum 3 available healthy pods
+```yaml
+replicas: 8
+podDisruptionBudget:
+    minAvailable: 3
+```
+
 ## Example configuration
 
 ### Simple reference-application
