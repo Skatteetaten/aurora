@@ -1053,6 +1053,9 @@ an agent collector as a DaemonSet running on each node, while the second mode de
 the service as a sidecar container. For the majority of our users, the first approach should be sufficient and 
 straightforward.
 
+**Note**: this feature is currently only supported for the deployment types `deploy`, `development`, `cronjob` and `job`.
+The configuration will not be used on other deployment types, but will not fail on validation if configured.
+
 | Name            | Default | Description                                                                      |
 |-----------------|---------|----------------------------------------------------------------------------------|
 | `trace`         |         | Simplified configuration can be used to enabled/disable the feature. Type boolean |
