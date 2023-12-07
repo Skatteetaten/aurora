@@ -905,10 +905,10 @@ and application performance.
 | `vpa/updateMode`                    | Auto                              | Supported values are ["Auto", "Off"]. Type String.                                                                                    |
 | `vpa/minimumAvailableReplicas`      | 2                                 | The minimum number of available replicas needed before initiating scaling operations. Type Integer.                                   | 
  | `vpa/resources/controlledResources` | ["ResourceCPU", "ResourceMemory"] | Specify the resources to initiate scaling operations. Supported values are ResourceCPU and ResourceMemory. Type list of Strings.      |
-| `vpa/minAllowed/cpu`                |                                   | Set minimum allowed. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.        |
-| `vpa/minAllowed/memory`             |                                   | Set minimum allowed memory. Optional. Type Quantity  https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
-| `vpa/maxAllowed/cpu`                |                                   | Set maximum allowed CPU. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
-| `vpa/maxAllowed/memory`             |                                   | Set maximum allowed memory. Optional. Type Quanity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.  |
+| `vpa/resources/minAllowed/cpu`      |                                   | Set minimum allowed. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.        |
+| `vpa/resources/minAllowed/memory`   |                                   | Set minimum allowed memory. Optional. Type Quantity  https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
+| `vpa/resources/maxAllowed/cpu`      |                                   | Set maximum allowed CPU. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
+| `vpa/resources/maxAllowed/memory`   |                                   | Set maximum allowed memory. Optional. Type Quanity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.  |
 
 Note:
 When using VPA, ensure that the pods have well-defined resource requests and limits in their initial configuration. 
