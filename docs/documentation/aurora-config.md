@@ -633,7 +633,6 @@ It could be wise to set some defaults in your base configuration files. The s3De
 | --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                                         |
 | s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined                       |
-| s3Defaults/tenant     |         | This field is DEPRECATED and is scheduled for removal in 2024. S3 tenants must now be predefined for the affiliation, and this field is ignored. |
 
 The simplified syntax is as follows:
 
@@ -648,7 +647,6 @@ For expanded syntax the following applies:
 | `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea.                                                                                        |
 | `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.                                                                                                 |
 | `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>                                                                                                   |
-| `s3/<objectArea>/tenant`     |         | This field is DEPRECATED and is scheduled for removal in 2024. S3 tenants must now be predefined for the affiliation, and this field is ignored. |
 
 ### Registration of alerts
 
