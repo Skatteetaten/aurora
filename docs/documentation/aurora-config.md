@@ -137,18 +137,18 @@ and _app_ files will be describe in a section called "Application files".
 
 #### About files
 
-| path                            | required | default      | substitution | description                                                                                                                                                                                                                                                                     |
-|---------------------------------|--------|--------------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| affiliation                     | Yes    |              | affiliation | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                                                                                             |
-| envName                         |        | \$folderName | env         | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                                                                                            |
-| env/name                        |        |              | env         | An alias for envName                                                                                                                                                                                                                                                            |
-| env/ttl                         |        |              | No          | Set a time duration in format 1d, 12h that indicate how long until this namespace should be deleted                                                                                                                                                                             |
-| permissions/admin               | Yes    |              | No          | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required.                                                                          |
-| permissions/view                |        |              | No          | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                     |
-| permissions/edit                |        |              | No          | The groups in OpenShift that will have the edit role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                     |
-| permissions/adminServiceAccount |        |              | No          | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                          |
-| globalFile                      | No     | about.yaml   | globalFile  | Replaces the global file of the project. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                                                      |
-| dataclassification              | No     |              | No          | Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required.  |         
+| path                            | required | default      | substitution | description                                                                                                                                                                                                                                                                    |
+| ------------------------------- | -------- | ------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| affiliation                     | Yes      |              | affiliation  | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                                                                                            |
+| envName                         |          | \$folderName | env          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                                                                                           |
+| env/name                        |          |              | env          | An alias for envName                                                                                                                                                                                                                                                           |
+| env/ttl                         |          |              | No           | Set a time duration in format 1d, 12h that indicate how long until this namespace should be deleted                                                                                                                                                                            |
+| permissions/admin               | Yes      |              | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required.                                                                         |
+| permissions/view                |          |              | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                    |
+| permissions/edit                |          |              | No           | The groups in OpenShift that will have the edit role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                    |
+| permissions/adminServiceAccount |          |              | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                         |
+| globalFile                      | No       | about.yaml   | globalFile   | Replaces the global file of the project. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                                                     |
+| dataclassification              | No       |              | No           | Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. |
 
 At least one of the groups in permissions/admin must have a user in it.
 
@@ -184,13 +184,13 @@ info in the channel header. At the bottom of the dialog box you will find a grey
 | `notification/mattermost/<channelId>/enabled` | true    | Set to false to disable notification for the given channel.                                                |
 
 #### Email
+
 Notifications can also be sent to mailing groups by configuring the email option in the notification field
 
-| path                                     | default | description                                                                       |
-|------------------------------------------| ------- |-----------------------------------------------------------------------------------|
-| `notification/email/<emailAddr>`         |         | Simplified config for enabling an email notification for the given email address  |
-| `notification/email/<emailAddr>/enabled` | true    | Set to false to disable notification for the given email address.                 |
-
+| path                                     | default | description                                                                      |
+| ---------------------------------------- | ------- | -------------------------------------------------------------------------------- |
+| `notification/email/<emailAddr>`         |         | Simplified config for enabling an email notification for the given email address |
+| `notification/email/<emailAddr>/enabled` | true    | Set to false to disable notification for the given email address.                |
 
 ### Deployment Types
 
@@ -410,7 +410,7 @@ Azure resources.
 In order to control routes into the application the following fields can be used.
 
 | path                                   | default                             | description                                                                                                                                                                                                                                                                                                                                                             |
-| -------------------------------------- | ----------------------------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | route                                  | false                               | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                                                                       |
 | `route/<routename>/enabled`            | true                                | Set to false to turn off route                                                                                                                                                                                                                                                                                                                                          |
 | `route/<routename>/host`               |                                     | Set the host of a route according to the given pattern. If not specified the default will be `routeDefault/host`. If you specify `cname.enabled` or `azure.enabled`, this should be a fully qualified host name.                                                                                                                                                        |
@@ -420,7 +420,7 @@ In order to control routes into the application the following fields can be used
 | `route/<routename>/cname/ttl`          |                                     | Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route `routeDefaults/cname/ttl` will be used.                                                                                                                                                                                                            |
 | `route/<routename>/azure/enabled`      |                                     | If set to `true`, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure. If not set for a route `routeDefaults/azure/enabled` will be used. The Azure route is always exposed with TLS, regardless of the TLS settings on the route.                              |
 | `route/<routename>/azure/cnameTtl`     |                                     | Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route `routeDefaults/azure/cnameTtl` will be used.                                                                                                                                                                                                       |
-| `route/<routename>/tls/enabled`        |                                     | Turn on/off tls for this route. Note that Azure routes always have TLS enabled, regardless of this setting.                                                                                                                                                                                                                                                                                                                                        |
+| `route/<routename>/tls/enabled`        |                                     | Turn on/off tls for this route. Note that Azure routes always have TLS enabled, regardless of this setting.                                                                                                                                                                                                                                                             |
 | `route/<routename>/tls/insecurePolicy` |                                     | When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route `routeDefaults/tls/insecurePolicy` will be used.                                                                                                                                                                                                                    |
 | `route/<routename>/tls/termination`    |                                     | Where to terminate TLS for this route. Edge/Passthrough. If not set use the default value from routeDefaults/tls/termination.                                                                                                                                                                                                                                           |
 | `route/<routename>/annotations/<key>`  |                                     | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options. If the value is empty the annotation will be ignored. |
@@ -428,7 +428,7 @@ In order to control routes into the application the following fields can be used
 | routeDefaults/annotations/\<key\>      |                                     | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/3.10/architecture/networking/routes.html#route-specific-annotations) for some options.                                                       |
 | routeDefaults/cname/enabled            | false                               | If set to `true`, a CNAME entry is created on-prem, allowing for cluster-independent access to the application for all routes.                                                                                                                                                                                                                                          |
 | routeDefaults/cname/ttl                |                                     | Default time to live for the CNAME entry for all routes, after which the client should discard or refresh its cache.                                                                                                                                                                                                                                                    |
-| routeDefaults/azure/enabled            | false                               | If set to `true`, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure for all routes.  The Azure route is always exposed with TLS, regardless of the TLS settings on the route.                                                                                 |
+| routeDefaults/azure/enabled            | false                               | If set to `true`, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure for all routes. The Azure route is always exposed with TLS, regardless of the TLS settings on the route.                                                                                  |
 | routeDefaults/azure/cnameTtl           |                                     | Default time to live for the CNAME entry of all routes, after which the client should discard or refresh its cache.                                                                                                                                                                                                                                                     |
 | routeDefaults/tls/enabled              | false                               | Enable/disable tls for all routes. Note that Azure routes always have TLS enabled, regardless of this setting.                                                                                                                                                                                                                                                          |
 | routeDefaults/tls/insecurePolicy       | \<varies for applicationPlattform\> | For Java the default is None for Web the default is Redirect                                                                                                                                                                                                                                                                                                            |
@@ -504,7 +504,8 @@ use PVC mounts unnless strictly neccesary.
 Note: Webseal integration is being replaced by AzureAD integration. You should user either one or the other, even though
 they can both be used during the transition from Webseal to AzureAD.
 
-Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be added to limit who can access the application
+Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be
+added to limit who can access the application
 
 | path                   | default | description                                                                                                                                                                                                                                                 |
 | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -628,10 +629,10 @@ hyphen(-) and period(.).
 
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
-| path                  | default | description                                                                                                                                         |
-| --------------------- | ------- |-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                                            |
-| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined                          |
+| path                  | default | description                                                                                                                                      |
+| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                                         |
+| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined                       |
 
 The simplified syntax is as follows:
 
@@ -641,11 +642,11 @@ The simplified syntax is as follows:
 
 For expanded syntax the following applies:
 
-| path                         | default | description                                                                                                                                       |
-| ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea.                                                                                         |
-| `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.                                                                                                  |
-| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>                                                                                                    |
+| path                         | default | description                                                                                                                                      |
+| ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea.                                                                                        |
+| `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.                                                                                                 |
+| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>                                                                                                   |
 
 ### Registration of alerts
 
@@ -745,10 +746,12 @@ logging:
 ```
 
 #### Additional output
-In addition to sending logs to splunk, we also support sending log data to an HTTP collector. This 
+
+In addition to sending logs to splunk, we also support sending log data to an HTTP collector. This
 happens in addition to the data being sent to splunk.
 
 Custom logging with `additionalOutput` set:
+
 ```yaml
 logging:
   custom:
@@ -776,8 +779,9 @@ secretVaults:
   collector-credentials:
     name: collector-credentials
 ```
-The secretVault must contain the `CUSTOM_OUTPUT_USERNAME` and `CUSTOM_OUTPUT_PASSWORD` properties 
-used to authenticate with the collector service. 
+
+The secretVault must contain the `CUSTOM_OUTPUT_USERNAME` and `CUSTOM_OUTPUT_PASSWORD` properties
+used to authenticate with the collector service.
 
 **Note**: The HTTP collector is not provided by us, and is something you develop yourself.
 
@@ -786,12 +790,11 @@ used to authenticate with the collector service.
 Refer to fluentbit docs [for tail input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail) to see definition
 of configuration parameters we refer to in table below.
 
-| Name                  | Default | Description                                                                                                                                                                    |
-| --------------------- |---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| logging/bufferSize    | 20      | Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to `bufferSize * 5`           |
-| logging/bufferMaxSize | 512k    | Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.                                                                         |
-| logging/emitterBufferSize |         | Sets the Emitter_Mem_Buf_Limit in MB for multiline matching *-evalevent_xml, *-ats:eval:xml and log4j. Container memory limit is set to `(bufferSize + emitterBufferSize) * 5` |
-
+| Name                      | Default | Description                                                                                                                                                                    |
+| ------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| logging/bufferSize        | 20      | Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to `bufferSize * 5`           |
+| logging/bufferMaxSize     | 512k    | Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.                                                                         |
+| logging/emitterBufferSize |         | Sets the Emitter_Mem_Buf_Limit in MB for multiline matching _-evalevent_xml, _-ats:eval:xml and log4j. Container memory limit is set to `(bufferSize + emitterBufferSize) * 5` |
 
 #### Configurable fields
 
@@ -890,41 +893,43 @@ Note: If maskinporten feature is disabled with simplified configuration or `mask
 explicitly re-enabled.
 
 ### Configure Vertical Pod Autoscaling (VPA)
+
 The Vertical Pod Autoscaler (VPA) in Kubernetes automates resource limits and requests for pods. It adjusts requests
 based on actual usage, optimizing resource allocation. VPA downscales over-requesting pods and upscales under-requesting
 ones. It maintains specified limit/request ratios for containers. This dynamic autoscaling improves resource utilization
 and application performance.
 
-
 | Name                                | Default           | Description                                                                                                                           |
-|-------------------------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `vpa`                               |                   | Simplified configuration can be used to enabled/disable the feature. Type boolean.                                                    |
 | `vpa/enabled`                       |                   | Enable or disable vpa. Type boolean.                                                                                                  |
 | `vpa/updateMode`                    | Auto              | Supported values are ["Auto", "Off"]. Type String.                                                                                    |
-| `vpa/minimumAvailableReplicas`      | 2                 | The minimum number of available replicas needed before initiating scaling operations. Type Integer.                                   | 
- | `vpa/resources/controlledResources` | ["cpu", "memory"] | Specify the resources to initiate scaling operations. Supported values are cpu and memory. Type list of Strings.                      |
+| `vpa/minimumAvailableReplicas`      | 2                 | The minimum number of available replicas needed before initiating scaling operations. Type Integer.                                   |
+| `vpa/resources/controlledResources` | ["cpu", "memory"] | Specify the resources to initiate scaling operations. Supported values are cpu and memory. Type list of Strings.                      |
 | `vpa/resources/minAllowed/cpu`      |                   | Set minimum allowed. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.        |
-| `vpa/resources/minAllowed/memory`   |                   | Set minimum allowed memory. Optional. Type Quantity  https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
+| `vpa/resources/minAllowed/memory`   |                   | Set minimum allowed memory. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. |
 | `vpa/resources/maxAllowed/cpu`      |                   | Set maximum allowed CPU. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
 | `vpa/resources/maxAllowed/memory`   |                   | Set maximum allowed memory. Optional. Type Quanity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.  |
 
 Note:
-When using VPA, ensure that the pods have well-defined resource requests and limits in their initial configuration. 
-These values act as guidelines for VPA to adjust the resource requests later. While VPA doesn't strictly follow these 
-initial values, it uses them as starting points to iteratively adjust resource requests based on real usage patterns. 
-During autoscaling, VPA ensures that the new resource requests set for a pod do not exceed the specified resource limits, 
-respecting the upper boundaries defined in the initial pod configuration. As a side note, we highly recommend setting 
+When using VPA, ensure that the pods have well-defined resource requests and limits in their initial configuration.
+These values act as guidelines for VPA to adjust the resource requests later. While VPA doesn't strictly follow these
+initial values, it uses them as starting points to iteratively adjust resource requests based on real usage patterns.
+During autoscaling, VPA ensures that the new resource requests set for a pod do not exceed the specified resource
+limits,
+respecting the upper boundaries defined in the initial pod configuration. As a side note, we highly recommend setting
 minimumAvailableReplicas to a value of 2 or higher to avoid service disruption during scaling.
 
 Warning: This feature cannot be used in combination with HPA.
 
 ### Configure Horizontal Pod Autoscaling (HPA)
+
 Horizontal Pod Autoscaling (HPA) is a powerful feature that allows you to automatically adjust the number of pods in
 your deployments based on specific resource utilization or custom metrics. By dynamically scaling the number of pods
 up or down, HPA ensures that your applications can handle varying workloads effectively.
 
-The primary purpose of HPA is to maintain a balance between resource availability and application performance. When 
-your workload experiences increased demand, such as a spike in incoming requests or data processing, HPA will 
+The primary purpose of HPA is to maintain a balance between resource availability and application performance. When
+your workload experiences increased demand, such as a spike in incoming requests or data processing, HPA will
 automatically increase the number of pods to meet the demand and distribute the workload across multiple instances.
 
 Conversely, during periods of low demand, HPA can scale down the number of pods to conserve resources and
@@ -933,87 +938,90 @@ or unpredictable usage patterns.
 
 HPA can scale pods based on different metrics:
 
-    Resource Utilization Metrics: HPA can scale pods based on the actual CPU or memory utilization of the running pods. 
-    You can set a threshold for CPU or memory utilization, and when the observed utilization exceeds that threshold, 
+    Resource Utilization Metrics: HPA can scale pods based on the actual CPU or memory utilization of the running pods.
+    You can set a threshold for CPU or memory utilization, and when the observed utilization exceeds that threshold,
     HPA will initiate scaling actions.
 
-    Custom Metrics: In addition to resource metrics, HPA supports scaling based on custom metrics. These metrics can be 
-    specific to your application and may include things like the rate of incoming requests, response times, or any 
+    Custom Metrics: In addition to resource metrics, HPA supports scaling based on custom metrics. These metrics can be
+    specific to your application and may include things like the rate of incoming requests, response times, or any
     other custom metric that you define.
 
-    External Metrics: HPA can also scale based on external metrics obtained from sources outside of the Kubernetes 
-    cluster. For instance, if your workload depends on an external service that provides metrics relevant to scaling 
+    External Metrics: HPA can also scale based on external metrics obtained from sources outside of the Kubernetes
+    cluster. For instance, if your workload depends on an external service that provides metrics relevant to scaling
     decisions, you can configure HPA to use these external metrics.
 
-It's essential to configure resource requests and limits for your pods to ensure HPA can function correctly with 
-resource utilization metrics. By providing these values, HPA can calculate the scaling ratio based on the actual 
+It's essential to configure resource requests and limits for your pods to ensure HPA can function correctly with
+resource utilization metrics. By providing these values, HPA can calculate the scaling ratio based on the actual
 resource usage and the requested resources.
 
 | Name              | Default | Description                                                                                                                                                                                              |
-|-------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `hpa`             |         | Simplified configuration can be used to enabled/disable the feature. Type boolea                                                                                                                         |
 | `hpa/enabled`     |         | Enable or disable the hpa feature. Type boolean.                                                                                                                                                         |
 | `hpa/minReplicas` |         | Minimum number of replicas. Type Integer.                                                                                                                                                                |
 | `hpa/maxReplicas` |         | Maximum number of replicas. Type Integer.                                                                                                                                                                |
-| `hpa/behavior`   |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information. Type behavior.               |
+| `hpa/behavior`    |         | Defines advanced scaling behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior for additional information. Type behavior.               |
 | `hpa/metrics`     |         | Defines the metrics to act up on. Se examples section or https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html. Type list of resources. |
 
 Example of common use case
+
 ```yaml
 hpa:
   minReplicas: 2
   maxReplicas: 10
-  metrics: 
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
-  - type: Resource
-    resource: 
-      name: memory 
-      target: 
-        type: AverageValue
-        averageValue: 500Mi
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: AverageValue
+          averageValue: 500Mi
 ```
+
 This configuration snippet defines two resource-based metrics for HorizontalPodAutoscaler:
 
     CPU Metric: It uses CPU resource and sets a target utilization of 50%.
     Memory Metric: It uses memory resource and sets a target average value of 500Mi (megabytes).
 
 More advanced example
+
 ```yaml
 hpa:
   enabled: true
-  minReplicas: '2'
-  maxReplicas: '10'
+  minReplicas: "2"
+  maxReplicas: "10"
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: AverageValue
-        averageValue: 500m
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: AverageValue
+          averageValue: 500m
   behavior:
     scaleDown:
       policies:
-      - type: Pods
-        value: 4
-        periodSeconds: 60
-      - type: Percent
-        value: 10
-        periodSeconds: 60
+        - type: Pods
+          value: 4
+          periodSeconds: 60
+        - type: Percent
+          value: 10
+          periodSeconds: 60
       selectPolicy: Min
       stabilizationWindowSeconds: 300
     scaleUp:
       policies:
-      - type: Pods
-        value: 5
-        periodSeconds: 60
-      - type: Percent
-        value: 12
-        periodSeconds: 60
+        - type: Pods
+          value: 5
+          periodSeconds: 60
+        - type: Percent
+          value: 12
+          periodSeconds: 60
       selectPolicy: Max
       stabilizationWindowSeconds: 0
 ```
@@ -1035,56 +1043,59 @@ This configuration defines the following settings for HorizontalPodAutoscaler (H
             SelectPolicy: Max, select the policy with the largest change in replicas count.
 
         Stabilization Window: When the metrics indicate that the target should be scaled down the algorithm looks into previously computed desired states, and uses the highest value from the specified interval. For scale-down the past 300 seconds will be considered, for
-        scale-up there is no stabilization window, and the application is scaled-up immediately when the threshold is reached. 
+        scale-up there is no stabilization window, and the application is scaled-up immediately when the threshold is reached.
 
 Warning: This feature cannot be used in combination with the VPA feature.
 
 ### Configure the trace collector(Grafana Agent)
-We use the Grafana Agent to receive, process, and export telemetry data, eliminating the need for multiple 
-agents/collectors. It supports open source observability data formats (e.g. OTEL http, OTEL grpc, Zipkin) and integrates with 
-Grafana Enterprise Trace solution. Using a collector alongside services enables quick data offloading and additional 
-handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our 
+
+We use the Grafana Agent to receive, process, and export telemetry data, eliminating the need for multiple
+agents/collectors. It supports open source observability data formats (e.g. OTEL http, OTEL grpc, Zipkin) and integrates
+with
+Grafana Enterprise Trace solution. Using a collector alongside services enables quick data offloading and additional
+handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our
 services, we achieve swift data offloading, minimizing any impact on the services' performance.
 
-The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using 
-an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside 
-the service as a sidecar container. For the majority of our users, the first approach should be sufficient and 
+The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using
+an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside
+the service as a sidecar container. For the majority of our users, the first approach should be sufficient and
 straightforward.
 
-**Note**: this feature is currently only supported for the deployment types `deploy`, `development`, `cronjob` and `job`.
+**Note**: this feature is currently only supported for the deployment types `deploy`, `development`, `cronjob`
+and `job`.
 The configuration will not be used on other deployment types, but will not fail on validation if configured.
 
-| Name            | Default | Description                                                                      |
-|-----------------|---------|----------------------------------------------------------------------------------|
+| Name            | Default | Description                                                                       |
+| --------------- | ------- | --------------------------------------------------------------------------------- |
 | `trace`         |         | Simplified configuration can be used to enabled/disable the feature. Type boolean |
-| `trace/enabled` |         | Enable or disable the trace feature. Type boolean.                               |
+| `trace/enabled` |         | Enable or disable the trace feature. Type boolean.                                |
 
 Example
 
 ```yaml
 trace: true
 ```
-In this example, we will expose the following environment variables: OTLP_GRPC_TRACING_ENDPOINT, 
-ZIPKIN_TRACING_ENDPOINT, and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the nearest node 
+
+In this example, we will expose the following environment variables: OTLP_GRPC_TRACING_ENDPOINT,
+ZIPKIN_TRACING_ENDPOINT, and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the nearest node
 collector, in the format IP:port.
 
 By setting these environment variables correctly, the telemetry data will be directed to the appropriate collectors,
-It's worth noting that certain frameworks, such as Spring Boot, may require an additional step. When using these 
-frameworks, it is essential to include the appropriate protocol prefix, such as "http://" or "https://", in the 
+It's worth noting that certain frameworks, such as Spring Boot, may require an additional step. When using these
+frameworks, it is essential to include the appropriate protocol prefix, such as "http://" or "https://", in the
 specified endpoint URL.
 
-
-The second approach with the sidecar container is tailored for more advanced users who require 
-greater control over the configuration and data flow. With the sidecar approach, users can fine-tune and customize the 
+The second approach with the sidecar container is tailored for more advanced users who require
+greater control over the configuration and data flow. With the sidecar approach, users can fine-tune and customize the
 telemetry data collection process to suit specific requirements and optimize performance.
 
-Currently, our support includes memory requirement tuning, but we anticipate the addition of more advanced features, 
-such as data enrichment, in the near future. This solution will continue to evolve over time, adapting to the needs 
-of development teams as they require more sophisticated functionalities. For more information about the supported 
-capabilities in the Grafana Agent, please follow this link https://grafana.com/docs/agent/latest/flow/reference/. 
+Currently, our support includes memory requirement tuning, but we anticipate the addition of more advanced features,
+such as data enrichment, in the near future. This solution will continue to evolve over time, adapting to the needs
+of development teams as they require more sophisticated functionalities. For more information about the supported
+capabilities in the Grafana Agent, please follow this link https://grafana.com/docs/agent/latest/flow/reference/.
 
 | Name                                      | Default                  | Description                                                                                                                             |
-|-------------------------------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
 | `trace/sidecar/enabled`                   |                          | Enable or disable the trace sidecar feature. Type boolean.                                                                              |
 | `trace/sidecar/version`                   | latest supported version | Version of the grafana agent collector                                                                                                  |
 | `trace/sidecar/resources/requests/cpu`    | 50m                      | cpu request for the agent container. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.    |
@@ -1106,38 +1117,149 @@ trace:
         cpu: 200m
         memory: 200Mi
 ```
-In this example, we expose the following environment variables: OTLP_GRPC_TRACING_ENDPOINT, ZIPKIN_TRACING_ENDPOINT, 
-and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the sidecar collector, with the format 
-localhost:port. Just like the first approach, this may also require adding the appropriate protocol prefix. 
+
+In this example, we expose the following environment variables: OTLP_GRPC_TRACING_ENDPOINT, ZIPKIN_TRACING_ENDPOINT,
+and OTLP_HTTP_TRACING_ENDPOINT. These variables are used to point to the sidecar collector, with the format
+localhost:port. Just like the first approach, this may also require adding the appropriate protocol prefix.
 
 ### PodDisruptionBudget - configure minimum available number of pods for high availability
 
 A PodDisruptionBudget limits the number of pods that can be down at the same time.
-AuroraConfig supports configuring the minimum number of available healthy pods, that must be available during service operations on the cluster, for example cluster draining and scaling.
-For more details about disruptions and Pod disruption budgets see https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+AuroraConfig supports configuring the minimum number of available healthy pods, that must be available during service
+operations on the cluster, for example cluster draining and scaling.
+For more details about disruptions and Pod disruption budgets
+see https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 
-In AuroraConfig support for PodDisruptionBudget is implemented for minimum available pods, a PodDisruptionBudget resource will be created in the namespace when using this functionality.
-To use PodDisruptionBudget `replicas` must be at least 2. If `replicas` is below 2 or the deployment is paused, then the PodDisruptionBudget resource will not be created but a warning will be displayed.
+In AuroraConfig support for PodDisruptionBudget is implemented for minimum available pods, a PodDisruptionBudget
+resource will be created in the namespace when using this functionality.
+To use PodDisruptionBudget `replicas` must be at least 2. If `replicas` is below 2 or the deployment is paused, then the
+PodDisruptionBudget resource will not be created but a warning will be displayed.
 It is not possible to configure minimum number of available pods to be equal to or above `replicas`.
 
 | Name                             | Default | Description                                                                                                                      |
-|----------------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | podDisruptionBudget              |         | Simplified configuration can be used to enable/disable the feature                                                               |
 | podDisruptionBudget/enabled      |         | Can be used to enable/disable the feature                                                                                        |
 | podDisruptionBudget/minAvailable | 1       | Specify the minimum available healthy pods, the feature will count as enabled when this is specified and not explicitly disabled |
 
 Minimal example - will create a PodDisruptionBudget with minimum 1 available healthy pod
+
 ```yaml
 replicas: 2
 podDisruptionBudget: true
 ```
 
 Minimum available example - will create a PodDisruptionBudget with minimum 3 available healthy pods
+
 ```yaml
 replicas: 8
 podDisruptionBudget:
-    minAvailable: 3
+  minAvailable: 3
 ```
+
+### Configure Access Control
+
+Through the access control configuration, users can grant and request ATS roles from applications that
+offer or require specific roles. A prerequisite is that the role in question must be pre-defined and
+present in the ATS environment. The sole responsibility of this feature is to connect the requester to
+a role granted by some other application. Moreover, it is necessary to define the appropriate data
+classification for the namespace, and the granter must have explicit permission to delegate access to
+the role(s) in question.
+
+#### Request access to roles
+
+Applications can request access to roles by specifying an egress configuration. The egress configuration is
+a list, in the format outlined in the following table.
+
+| Name                                   | Default | Description                                                                                                                                          |
+| -------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accesscontrol/egress/[]/application`  |         | The name of the application we request access to. This value is mandatory and can be expressed using the supported glob pattern. Type String         |
+| `accesscontrol/egress/[]/namespace`    |         | The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String           |
+| `accesscontrol/egress/[]/cluster`      |         | The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String |
+| `accesscontrol/egress/[]/wanted_roles` |         | List of wanted roles. Type list of Strings                                                                                                           |
+
+Aurora config example
+
+```yaml
+accesscontrol:
+    egress:
+        - application: foo
+          namespace: *
+          cluster: utv*
+          wanted_roles:
+              - FOO_READER
+              - FOO_WRITER
+        - application: bar
+          namespace: barspace
+          cluster: utv02
+          wanted_roles:
+              - BAR_READER
+              - BAR_WRITER
+
+```
+
+In this example, we are requesting access to the roles FOO_READER and FOO_WRITER owned by the application
+'foo', running in a namespace matching the pattern ‘\*’ and a cluster with a name matching the pattern
+‘utv\*’. Additionally, we are also requesting access to the roles BAR_READER and BAR_WRITER for
+the application 'bar' in the 'barspace' namespace on the 'utv02' cluster.
+
+If the roles are assigned, the 'wantedaccess' object connected with this request will be displayed with
+a status of 'successful.' If there are no granted roles for this request or the request is only partially
+performed, the status will be marked as 'pending.' You can review the status of the request using the
+following command:
+
+```shell
+oc get wantedaccess <appname> -n <namespace> -o yaml
+```
+
+#### Grant access to roles
+
+Applications can grant access to roles by specifying an ingress configuration. The ingress configuration
+is a list, in the format outlined in the following table.
+
+| Name                                   | Default | Description                                                                                                                                          |
+| -------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accesscontrol/ingress/[]/application` |         | Name of the application that should be granted access. This value is mandatory and can be expressed using the supported glob pattern. Type String    |
+| `accesscontrol/ingress/[]/namespace`   |         | The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String           |
+| `accesscontrol/ingress/[]/cluster`     |         | The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String |
+| `accesscontrol/ingress/[]/roles`       |         | List of roles to grant the application. Type list of Strings.                                                                                        |
+
+Aurora config example
+
+```yaml
+accesscontrol:
+    ingress:
+        - application: charlie
+          namespace: *
+          cluster: utv*
+          roles:
+              - FOO_READER
+        - application: delta
+          namespace: deltaspace
+          cluster: utv02
+          roles:
+              - FOO_WRITER
+
+```
+
+In this example, we are granting access to the FOO_READER role for the requesting application 'charlie,'
+running in a namespace matching the pattern ‘\*’ and with a cluster named matching the pattern ‘utv\*’.
+Additionally, we are also granting access to the FOO_WRITER role for the requesting application 'delta,'
+running in the 'deltaspace' namespace on the 'utv02' cluster.
+
+If the affiliation to which the application belongs is permitted to grant these roles, the status of
+the connected 'grantedaccess' object will be 'successful' or 'failed' in the case of failures.
+You can review the status of the request using the following command:
+
+```shell
+oc get grantedaccess <appname> -n <namespace> -o yaml
+```
+
+#### Supported glob pattern
+
+Application, namespace, and cluster parameters in both ingress and egress must adhere to the regular
+expression [\\*]|[^\\d](\w)((?!\\*\\w).)+. For example, "test," "test," "test," "test123sd," "",
+and "test213" are considered valid, while "123Test," "tes*st" are not.
 
 ## Example configuration
 
