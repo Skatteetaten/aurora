@@ -1051,10 +1051,14 @@ Warning: This feature cannot be used in combination with the VPA feature.
 
 We use the Grafana Agent to receive, process, and export telemetry data, eliminating the need for multiple
 agents/collectors. It supports open source observability data formats (e.g. OTEL http, OTEL grpc, Zipkin) and integrates
-with
-Grafana Enterprise Trace solution. Using a collector alongside services enables quick data offloading and additional
+with Grafana Enterprise Trace solution. Even though we support multiple protocols, there should be compelling reasons 
+to use anything other than OTEL over GRPC. This is the protocol we support through our starter libraries for Kotlin 
+and Java applications.
+
+Employing a collector alongside services enables quick data offloading and additional
 handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our
-services, we achieve swift data offloading, minimizing any impact on the services' performance.
+services, we achieve swift data offloading, minimizing any impact on the services' performance. The buffering mechanisms 
+supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences problems.
 
 The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using
 an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside
