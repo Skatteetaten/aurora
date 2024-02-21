@@ -439,6 +439,25 @@ If tls is used the host of the route cannot include the '.' key, since we do not
 Route annotations are usable for template types, but you need to create a Service with name after the NAME parameter
 yourself.
 
+### Exposing an external API
+
+For details and context, see internal link https://wiki.sits.no/x/cAH-Kg. We only list the general syntax here.
+
+Note that a route exposed to Azure is needed. That is, with `azure.enabled` set on the route.
+
+| path                                                                       | required | description                                                                                                                                                                                                                   |
+|----------------------------------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `azure/apim/<apiname>/enabled`                                             | no       | Set to false to not expose the api.                                                                                                                                                                                           |
+| `azure/apim/<apiname>/externalHost`                                        | yes      | The host name the API is exposed with. The combination with `path` must be globally unique. This field can not be changed after the API is created.                                                                           |
+| `azure/apim/<apiname>/path`                                                | no       | The path to the API up until the version identifier, if needed. Note that both the path and the version identifier is removed when backend requests are executed. If they are needed, add them to the `serviceUrl` parameter. |
+| `azure/apim/<apiname>/versions/<version>`                                  | yes      | The version of the API, it is appended to `path`. It should be with the pattern vXXX.                                                                                                                                         |
+| `azure/apim/<apiname>/versions/<version>/enabled`                          | no       | Set to false to not expose this version of the api.                                                                                                                                                                           |
+| `azure/apim/<apiname>/versions/<version>/openApiUrl`                       | yes      | HTTPS address of where the openapi schema (json or yaml) is located                                                                                                                                                           |
+| `azure/apim/<apiname>/versions/<version>/serviceUrl`                       | yes      | The service backing the API. It might include path elements. This must match a route with `azure.enabled` set.                                                                                                                |
+| `azure/apim/<apiname>/versions/<version>/policies/<policyName>/enabled`    | no       | Set to false to disable this policy. See the internal documentation for possible policies and parameters.                                                                                                                     |
+| `azure/apim/<apiname>/versions/<version>/policies/<policyName>/parameters` | no       | Map with parameters specific to the policy, if needed. See the internal documentation for possible policies and parameters.                                                                                                   |
+
+
 ### Managing Secrets
 
 In order to provide sensitive data to an application (i.e. passwords that cannot be stored directly in the configuration
