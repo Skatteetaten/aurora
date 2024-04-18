@@ -164,7 +164,7 @@ At least one of the groups in permissions/admin must have a user in it.
 | ttl                 |          |                | No           | Set a time duration in format 1d, 12h that indicate how long until this application should be deleted                                                                                                                                             |
 | version             | Yes      |                | No           | Version of the application to run. Can be set to any of the [valid version strategies](https://skatteetaten.github.io/aurora/documentation/openshift/#deployment-and-patching-strategy). Version is not required for template/localTemplate files |
 | segment             |          |                | segment      | The segment the application exist in.                                                                                                                                                                                                             |
-| message             |          |                | message      | A message that will be added to the ApplicationDeployment CRD.                                                                                                                                                                                   |
+| message             |          |                | message      | A message that will be added to the ApplicationDeployment CRD.                                                                                                                                                                                    |
 | globalFile          | No       | about.yaml     | globalFile   | Replaces the global file of the application. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                    |
 
 ### Notifications
@@ -409,30 +409,30 @@ Azure resources.
 
 In order to control routes into the application the following fields can be used.
 
-| path                                   | default                             | description                                                                                                                                                                                                                                                                                                                                                             |
-| -------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| route                                  | false                               | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                                                                       |
-| `route/<routename>/enabled`            | true                                | Set to false to turn off route                                                                                                                                                                                                                                                                                                                                          |
-| `route/<routename>/host`               |                                     | Set the host of a route according to the given pattern. If not specified the default will be `routeDefault/host`. If you specify `cname.enabled` or `azure.enabled`, this should be a fully qualified host name.                                                                                                                                                        |
-| `route/<routename>/path`               |                                     | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                                                                      |
+| path                                   | default                             | description                                                                                                                                                                                                                                                                                                                                                                                           |
+| -------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| route                                  | false                               | Toggle to expose application via HTTP. Routes can also be configured with expanded syntax. And routeDefault can be set for all routes. See below.                                                                                                                                                                                                                                                     |
+| `route/<routename>/enabled`            | true                                | Set to false to turn off route                                                                                                                                                                                                                                                                                                                                                                        |
+| `route/<routename>/host`               |                                     | Set the host of a route according to the given pattern. If not specified the default will be `routeDefault/host`. If you specify `cname.enabled` or `azure.enabled`, this should be a fully qualified host name.                                                                                                                                                                                      |
+| `route/<routename>/path`               |                                     | Set to create a path based route. You should use the same name/affiliation/env/separator combination for all path based routes to get the same URL                                                                                                                                                                                                                                                    |
 | `route/<routename>/annotations/<key>`  |                                     | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/4.14/networking/routes/route-configuration.html#nw-route-specific-annotations_route-configuration) for some options. If the value is empty the annotation will be ignored. |
-| `route/<routename>/cname/enabled`      |                                     | If set to `true`, a CNAME entry is created on-prem, allowing for cluster-independent access to the application. If not set for a route `routeDefaults/cname/enabled` will be used.                                                                                                                                                                                      |
-| `route/<routename>/cname/ttl`          |                                     | Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route `routeDefaults/cname/ttl` will be used.                                                                                                                                                                                                            |
-| `route/<routename>/azure/enabled`      |                                     | If set to `true`, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure. If not set for a route `routeDefaults/azure/enabled` will be used. The Azure route is always exposed with TLS, regardless of the TLS settings on the route.                              |
-| `route/<routename>/azure/cnameTtl`     |                                     | Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route `routeDefaults/azure/cnameTtl` will be used.                                                                                                                                                                                                       |
-| `route/<routename>/tls/enabled`        |                                     | Turn on/off tls for this route. Note that Azure routes always have TLS enabled, regardless of this setting.                                                                                                                                                                                                                                                             |
-| `route/<routename>/tls/insecurePolicy` |                                     | When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route `routeDefaults/tls/insecurePolicy` will be used.                                                                                                                                                                                                                    |
-| `route/<routename>/tls/termination`    |                                     | Where to terminate TLS for this route. Edge/Passthrough. If not set use the default value from routeDefaults/tls/termination.                                                                                                                                                                                                                                           |
+| `route/<routename>/cname/enabled`      |                                     | If set to `true`, a CNAME entry is created on-prem, allowing for cluster-independent access to the application. If not set for a route `routeDefaults/cname/enabled` will be used.                                                                                                                                                                                                                    |
+| `route/<routename>/cname/ttl`          |                                     | Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route `routeDefaults/cname/ttl` will be used.                                                                                                                                                                                                                                          |
+| `route/<routename>/azure/enabled`      |                                     | If set to `true`, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure. If not set for a route `routeDefaults/azure/enabled` will be used. The Azure route is always exposed with TLS, regardless of the TLS settings on the route.                                                            |
+| `route/<routename>/azure/cnameTtl`     |                                     | Time to live for the CNAME entry, after which the client should discard or refresh its cache. If not set for a route `routeDefaults/azure/cnameTtl` will be used.                                                                                                                                                                                                                                     |
+| `route/<routename>/tls/enabled`        |                                     | Turn on/off tls for this route. Note that Azure routes always have TLS enabled, regardless of this setting.                                                                                                                                                                                                                                                                                           |
+| `route/<routename>/tls/insecurePolicy` |                                     | When TLS is enabled how do you handle insecure traffic. Allow/Redirect/None. If not set for a route `routeDefaults/tls/insecurePolicy` will be used.                                                                                                                                                                                                                                                  |
+| `route/<routename>/tls/termination`    |                                     | Where to terminate TLS for this route. Edge/Passthrough. If not set use the default value from routeDefaults/tls/termination.                                                                                                                                                                                                                                                                         |
 | `route/<routename>/annotations/<key>`  |                                     | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/4.14/networking/routes/route-configuration.html#nw-route-specific-annotations_route-configuration) for some options. If the value is empty the annotation will be ignored. |
-| routeDefaults/host                     | @name@-@affiliation@-@env@          | Set the host of a route according to the given pattern. If you specify `cname.enabled` or `azure.enabled`, this should be a fully qualified host name.                                                                                                                                                                                                                  |
+| routeDefaults/host                     | @name@-@affiliation@-@env@          | Set the host of a route according to the given pattern. If you specify `cname.enabled` or `azure.enabled`, this should be a fully qualified host name.                                                                                                                                                                                                                                                |
 | routeDefaults/annotations/\<key\>      |                                     | Set annotations for a given route. Note that you should use &#124; instead of / in annotation keys. so 'haproxy.router.openshift.io &#124; balance'. See [route annotations](https://docs.openshift.com/container-platform/4.14/networking/routes/route-configuration.html#nw-route-specific-annotations_route-configuration) for some options.                                                       |
-| routeDefaults/cname/enabled            | false                               | If set to `true`, a CNAME entry is created on-prem, allowing for cluster-independent access to the application for all routes.                                                                                                                                                                                                                                          |
-| routeDefaults/cname/ttl                |                                     | Default time to live for the CNAME entry for all routes, after which the client should discard or refresh its cache.                                                                                                                                                                                                                                                    |
-| routeDefaults/azure/enabled            | false                               | If set to `true`, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure for all routes. The Azure route is always exposed with TLS, regardless of the TLS settings on the route.                                                                                  |
-| routeDefaults/azure/cnameTtl           |                                     | Default time to live for the CNAME entry of all routes, after which the client should discard or refresh its cache.                                                                                                                                                                                                                                                     |
-| routeDefaults/tls/enabled              | false                               | Enable/disable tls for all routes. Note that Azure routes always have TLS enabled, regardless of this setting.                                                                                                                                                                                                                                                          |
-| routeDefaults/tls/insecurePolicy       | \<varies for applicationPlattform\> | For Java the default is None for Web the default is Redirect                                                                                                                                                                                                                                                                                                            |
-| routeDefaults/tls/termination          | edge                                | Where do you terminate TLS? Edge or Passthrough. Reencrypt is not supported for now.                                                                                                                                                                                                                                                                                    |
+| routeDefaults/cname/enabled            | false                               | If set to `true`, a CNAME entry is created on-prem, allowing for cluster-independent access to the application for all routes.                                                                                                                                                                                                                                                                        |
+| routeDefaults/cname/ttl                |                                     | Default time to live for the CNAME entry for all routes, after which the client should discard or refresh its cache.                                                                                                                                                                                                                                                                                  |
+| routeDefaults/azure/enabled            | false                               | If set to `true`, the application is exposed to Azure resources, and a CNAME entry is created in Azure, allowing for cluster-independent access to the application from Azure for all routes. The Azure route is always exposed with TLS, regardless of the TLS settings on the route.                                                                                                                |
+| routeDefaults/azure/cnameTtl           |                                     | Default time to live for the CNAME entry of all routes, after which the client should discard or refresh its cache.                                                                                                                                                                                                                                                                                   |
+| routeDefaults/tls/enabled              | false                               | Enable/disable tls for all routes. Note that Azure routes always have TLS enabled, regardless of this setting.                                                                                                                                                                                                                                                                                        |
+| routeDefaults/tls/insecurePolicy       | \<varies for applicationPlattform\> | For Java the default is None for Web the default is Redirect                                                                                                                                                                                                                                                                                                                                          |
+| routeDefaults/tls/termination          | edge                                | Where do you terminate TLS? Edge or Passthrough. Reencrypt is not supported for now.                                                                                                                                                                                                                                                                                                                  |
 
 If tls is used the host of the route cannot include the '.' key, since we do not support wildcard TLS cert.
 
@@ -445,8 +445,8 @@ For details and context, see internal link https://wiki.sits.no/x/cAH-Kg. We onl
 
 Note that a route exposed to Azure is needed. That is, with `azure.enabled` set on the route.
 
-| path                                                                       | required | description                                                                                                                                                                                                                   |
-|----------------------------------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| path                                                                      | required | description                                                                                                                                                                                                                   |
+| ------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `azure/api/<apiname>/enabled`                                             | no       | Set to false to not expose the api.                                                                                                                                                                                           |
 | `azure/api/<apiname>/externalHost`                                        | yes      | The host name the API is exposed with. The combination with `path` must be globally unique. This field can not be changed after the API is created.                                                                           |
 | `azure/api/<apiname>/path`                                                | no       | The path to the API up until the version identifier, if needed. Note that both the path and the version identifier is removed when backend requests are executed. If they are needed, add them to the `serviceUrl` parameter. |
@@ -456,7 +456,6 @@ Note that a route exposed to Azure is needed. That is, with `azure.enabled` set 
 | `azure/api/<apiname>/versions/<version>/serviceUrl`                       | yes      | The service backing the API. It might include path elements. This must match a route with `azure.enabled` set.                                                                                                                |
 | `azure/api/<apiname>/versions/<version>/policies/<policyName>/enabled`    | no       | Set to false to disable this policy. See the internal documentation for possible policies and parameters.                                                                                                                     |
 | `azure/api/<apiname>/versions/<version>/policies/<policyName>/parameters` | no       | Map with parameters specific to the policy, if needed. See the internal documentation for possible policies and parameters.                                                                                                   |
-
 
 ### Managing Secrets
 
@@ -648,10 +647,10 @@ hyphen(-) and period(.).
 
 It could be wise to set some defaults in your base configuration files. The s3Defaults are as follows:
 
-| path                  | default | description                                                                                                                                      |
-| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                                         |
-| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined                       |
+| path                  | default | description                                                                                                                |
+| --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| s3Defaults/bucketName |         | Bucketname defined upon creation of s3 bucket. In order to use simplified config, this has to be defined                   |
+| s3Defaults/objectArea |         | Objectarea is our read friendly abstraction for s3 objectprefix. In order to use simplified config, this has to be defined |
 
 The simplified syntax is as follows:
 
@@ -661,11 +660,11 @@ The simplified syntax is as follows:
 
 For expanded syntax the following applies:
 
-| path                         | default | description                                                                                                                                      |
-| ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea.                                                                                        |
-| `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.                                                                                                 |
-| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>                                                                                                   |
+| path                         | default | description                                               |
+| ---------------------------- | ------- | --------------------------------------------------------- |
+| `s3/<objectArea>/enabled`    | true    | Enabled lets you disable s3 for that specific objectArea. |
+| `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.          |
+| `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>            |
 
 ### Registration of alerts
 
@@ -809,11 +808,11 @@ used to authenticate with the collector service.
 Refer to fluentbit docs [for tail input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail) to see definition
 of configuration parameters we refer to in table below.
 
-| Name                      | Default | Description                                                                                                                                                                    |
-| ------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| logging/bufferSize        | 20      | Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to `bufferSize * 5`           |
-| logging/bufferMaxSize     | 512k    | Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.                                                                         |
-| logging/emitterBufferSize |         | Sets the Emitter_Mem_Buf_Limit in MB for multiline matching _-evalevent_xml, _-ats:eval:xml and log4j. Container memory limit is set to `(bufferSize + emitterBufferSize) * 5` |
+| Name                      | Default | Description                                                                                                                                                                          |
+| ------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| logging/bufferSize        | 20      | Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to `bufferSize * 5`                 |
+| logging/bufferMaxSize     | 512k    | Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.                                                                               |
+| logging/emitterBufferSize |         | Sets the `Emitter_Mem_Buf_Limit` in MB for multiline matching `_-evalevent_xml`, `_-ats:eval:xml` and log4j. Container memory limit is set to `(bufferSize + emitterBufferSize) * 5` |
 
 #### Configurable fields
 
@@ -1070,13 +1069,13 @@ Warning: This feature cannot be used in combination with the VPA feature.
 
 We use the Grafana Agent to receive, process, and export telemetry data, eliminating the need for multiple
 agents/collectors. It supports open source observability data formats (e.g. OTEL http, OTEL grpc, Zipkin) and integrates
-with Grafana Enterprise Trace solution. Even though we support multiple protocols, there should be compelling reasons 
-to use anything other than OTEL over GRPC. This is the protocol we support through our starter libraries for Kotlin 
+with Grafana Enterprise Trace solution. Even though we support multiple protocols, there should be compelling reasons
+to use anything other than OTEL over GRPC. This is the protocol we support through our starter libraries for Kotlin
 and Java applications.
 
 Employing a collector alongside services enables quick data offloading and additional
 handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our
-services, we achieve swift data offloading, minimizing any impact on the services' performance. The buffering mechanisms 
+services, we achieve swift data offloading, minimizing any impact on the services' performance. The buffering mechanisms
 supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences problems.
 
 The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using
@@ -1192,33 +1191,35 @@ the role(s) in question.
 #### Request access to roles
 
 Applications can request access to roles by specifying an egress configuration. The egress configuration is
-a list, in the format outlined in the following table.
+an object, in the format outlined in the following table.
 
-| Name                                   | Default | Description                                                                                                                                          |
-| -------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accesscontrol/egress/[]/application`  |         | The name of the application we request access to. This value is mandatory and can be expressed using the supported glob pattern. Type String         |
-| `accesscontrol/egress/[]/namespace`    |         | The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String           |
-| `accesscontrol/egress/[]/cluster`      |         | The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String |
-| `accesscontrol/egress/[]/wanted_roles` |         | List of wanted roles. Type list of Strings                                                                                                           |
+| Name                                      | Default | Description                                                                                                                                          |
+| ----------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accesscontrol/egress/<name>/enabled`     |         | Set to false to disable access request. Type Boolean                                                                                                 |
+| `accesscontrol/egress/<name>/application` |         | The name of the application we request access to. This value is mandatory and can be expressed using the supported glob pattern. Type String         |
+| `accesscontrol/egress/<name>/namespace`   |         | The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String           |
+| `accesscontrol/egress/<name>/cluster`     |         | The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String |
+| `accesscontrol/egress/<name>/wantedRoles` |         | List of wanted roles. Cannot be an empty list. Type list of Strings                                                                                  |
 
 Aurora config example
 
 ```yaml
 accesscontrol:
     egress:
-        - application: foo
-          namespace: *
-          cluster: utv*
-          wanted_roles:
+        foo:
+            application: foo
+            namespace: *
+            cluster: utv*
+            wantedRoles:
               - FOO_READER
               - FOO_WRITER
-        - application: bar
-          namespace: barspace
-          cluster: utv02
-          wanted_roles:
+        bar:
+            application: bar
+            namespace: barspace
+            cluster: utv02
+            wantedRoles:
               - BAR_READER
               - BAR_WRITER
-
 ```
 
 In this example, we are requesting access to the roles FOO_READER and FOO_WRITER owned by the application
@@ -1238,29 +1239,32 @@ oc get wantedaccess <appname> -n <namespace> -o yaml
 #### Grant access to roles
 
 Applications can grant access to roles by specifying an ingress configuration. The ingress configuration
-is a list, in the format outlined in the following table.
+is an object, in the format outlined in the following table.
 
-| Name                                   | Default | Description                                                                                                                                          |
-| -------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accesscontrol/ingress/[]/application` |         | Name of the application that should be granted access. This value is mandatory and can be expressed using the supported glob pattern. Type String    |
-| `accesscontrol/ingress/[]/namespace`   |         | The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String           |
-| `accesscontrol/ingress/[]/cluster`     |         | The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String |
-| `accesscontrol/ingress/[]/roles`       |         | List of roles to grant the application. Type list of Strings.                                                                                        |
+| Name                                        | Default | Description                                                                                                                                          |
+| ------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accesscontrol/ingress/<name>/enabled`      |         | Set to false to disable granted access. Type Boolean                                                                                                 |
+| `accesscontrol/ingress/<name>/application`  |         | Name of the application that should be granted access. This value is mandatory and can be expressed using the supported glob pattern. Type String    |
+| `accesscontrol/ingress/<name>/namespace`    |         | The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String           |
+| `accesscontrol/ingress/<name>/cluster`      |         | The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String |
+| `accesscontrol/ingress/<name>/grantedRoles` |         | List of roles to grant the application. Cannot be an empty list. Type list of Strings.                                                               |
 
 Aurora config example
 
 ```yaml
 accesscontrol:
     ingress:
-        - application: charlie
-          namespace: *
-          cluster: utv*
-          roles:
+        charlie:
+            application: charlie
+            namespace: *
+            cluster: utv*
+            grantedRoles:
               - FOO_READER
-        - application: delta
-          namespace: deltaspace
-          cluster: utv02
-          roles:
+        delta:
+            application: delta
+            namespace: deltaspace
+            cluster: utv02
+            grantedRoles:
               - FOO_WRITER
 
 ```
