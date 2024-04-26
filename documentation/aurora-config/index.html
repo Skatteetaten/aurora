@@ -1895,7 +1895,7 @@ of configuration parameters we refer to in table below.</p>
 
 
 
-<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td>logging/bufferSize</td><td>20</td><td>Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to <code class="language-text">bufferSize * 5</code></td></tr><tr><td>logging/bufferMaxSize</td><td>512k</td><td>Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.</td></tr><tr><td>logging/emitterBufferSize</td><td></td><td>Sets the Emitter_Mem_Buf_Limit in MB for multiline matching _-evalevent_xml, _-ats:eval:xml and log4j. Container memory limit is set to <code class="language-text">(bufferSize + emitterBufferSize) * 5</code></td></tr></tbody></table>
+<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td>logging/bufferSize</td><td>20</td><td>Adjust bufferSize for fluentbit. Sets Mem_Buf_Limit to the value. Sets container memory request to the same value. Container memory limit is set to <code class="language-text">bufferSize * 5</code></td></tr><tr><td>logging/bufferMaxSize</td><td>512k</td><td>Sets the Buffer_Max_Size for tail input plugin. Allowed suffix are k(kilo) or m (mega). Unit is Bytes.</td></tr><tr><td>logging/emitterBufferSize</td><td></td><td>Sets the <code class="language-text">Emitter_Mem_Buf_Limit</code> in MB for multiline matching <code class="language-text">_-evalevent_xml</code>, <code class="language-text">_-ats:eval:xml</code> and log4j. Container memory limit is set to <code class="language-text">(bufferSize + emitterBufferSize) * 5</code></td></tr></tbody></table>
 <h4 id="configurable-fields" style="position:relative"><a href="#configurable-fields" aria-label="configurable fields permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configurable fields</h4>
 <p>By default, descriptive fields will be added to the messages logged by the application. It is possible to toggle these
 fields on or off.</p>
@@ -2419,7 +2419,7 @@ classification for the namespace, and the granter must have explicit permission 
 the role(s) in question.</p>
 <h4 id="request-access-to-roles" style="position:relative"><a href="#request-access-to-roles" aria-label="request access to roles permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Request access to roles</h4>
 <p>Applications can request access to roles by specifying an egress configuration. The egress configuration is
-a list, in the format outlined in the following table.</p>
+an object, in the format outlined in the following table.</p>
 
 
 
@@ -2450,23 +2450,29 @@ a list, in the format outlined in the following table.</p>
 
 
 
-<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">accesscontrol/egress/[]/application</code></td><td></td><td>The name of the application we request access to. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/[]/namespace</code></td><td></td><td>The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/[]/cluster</code></td><td></td><td>The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/[]/wanted_roles</code></td><td></td><td>List of wanted roles. Type list of Strings</td></tr></tbody></table>
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/enabled</code></td><td></td><td>Set to false to disable access request. Type Boolean</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/application</code></td><td></td><td>The name of the application we request access to. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/namespace</code></td><td></td><td>The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/cluster</code></td><td></td><td>The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/wantedRoles</code></td><td></td><td>List of wanted roles. Cannot be an empty list. Type list of Strings</td></tr></tbody></table>
 <p>Aurora config example</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">accesscontrol</span><span class="token punctuation">:</span>
     <span class="token key atrule">egress</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">application</span><span class="token punctuation">:</span> foo
-          <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
-          <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
-          <span class="token key atrule">wanted_roles</span><span class="token punctuation">:</span>
+        <span class="token key atrule">foo</span><span class="token punctuation">:</span>
+            <span class="token key atrule">application</span><span class="token punctuation">:</span> foo
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
+            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
+            <span class="token key atrule">wantedRoles</span><span class="token punctuation">:</span>
               <span class="token punctuation">-</span> FOO_READER
               <span class="token punctuation">-</span> FOO_WRITER
-        <span class="token punctuation">-</span> <span class="token key atrule">application</span><span class="token punctuation">:</span> bar
-          <span class="token key atrule">namespace</span><span class="token punctuation">:</span> barspace
-          <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
-          <span class="token key atrule">wanted_roles</span><span class="token punctuation">:</span>
+        <span class="token key atrule">bar</span><span class="token punctuation">:</span>
+            <span class="token key atrule">application</span><span class="token punctuation">:</span> bar
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> barspace
+            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
+            <span class="token key atrule">wantedRoles</span><span class="token punctuation">:</span>
               <span class="token punctuation">-</span> BAR_READER
-              <span class="token punctuation">-</span> BAR_WRITER
-</code></pre></div>
+              <span class="token punctuation">-</span> BAR_WRITER</code></pre></div>
 <p>In this example, we are requesting access to the roles FOO_READER and FOO_WRITER owned by the application
 &#x27;foo&#x27;, running in a namespace matching the pattern ‘*’ and a cluster with a name matching the pattern
 ‘utv*’. Additionally, we are also requesting access to the roles BAR_READER and BAR_WRITER for
@@ -2478,7 +2484,7 @@ following command:</p>
 <div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell">oc get wantedaccess <span class="token operator">&lt;</span>appname<span class="token operator">&gt;</span> <span class="token parameter variable">-n</span> <span class="token operator">&lt;</span>namespace<span class="token operator">&gt;</span> <span class="token parameter variable">-o</span> yaml</code></pre></div>
 <h4 id="grant-access-to-roles" style="position:relative"><a href="#grant-access-to-roles" aria-label="grant access to roles permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Grant access to roles</h4>
 <p>Applications can grant access to roles by specifying an ingress configuration. The ingress configuration
-is a list, in the format outlined in the following table.</p>
+is an object, in the format outlined in the following table.</p>
 
 
 
@@ -2509,19 +2515,26 @@ is a list, in the format outlined in the following table.</p>
 
 
 
-<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">accesscontrol/ingress/[]/application</code></td><td></td><td>Name of the application that should be granted access. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/[]/namespace</code></td><td></td><td>The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/[]/cluster</code></td><td></td><td>The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/[]/roles</code></td><td></td><td>List of roles to grant the application. Type list of Strings.</td></tr></tbody></table>
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/enabled</code></td><td></td><td>Set to false to disable granted access. Type Boolean</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/application</code></td><td></td><td>Name of the application that should be granted access. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/namespace</code></td><td></td><td>The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/cluster</code></td><td></td><td>The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/grantedRoles</code></td><td></td><td>List of roles to grant the application. Cannot be an empty list. Type list of Strings.</td></tr></tbody></table>
 <p>Aurora config example</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">accesscontrol</span><span class="token punctuation">:</span>
     <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">application</span><span class="token punctuation">:</span> charlie
-          <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
-          <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
-          <span class="token key atrule">roles</span><span class="token punctuation">:</span>
+        <span class="token key atrule">charlie</span><span class="token punctuation">:</span>
+            <span class="token key atrule">application</span><span class="token punctuation">:</span> charlie
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
+            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
+            <span class="token key atrule">grantedRoles</span><span class="token punctuation">:</span>
               <span class="token punctuation">-</span> FOO_READER
-        <span class="token punctuation">-</span> <span class="token key atrule">application</span><span class="token punctuation">:</span> delta
-          <span class="token key atrule">namespace</span><span class="token punctuation">:</span> deltaspace
-          <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
-          <span class="token key atrule">roles</span><span class="token punctuation">:</span>
+        <span class="token key atrule">delta</span><span class="token punctuation">:</span>
+            <span class="token key atrule">application</span><span class="token punctuation">:</span> delta
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> deltaspace
+            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
+            <span class="token key atrule">grantedRoles</span><span class="token punctuation">:</span>
               <span class="token punctuation">-</span> FOO_WRITER
 </code></pre></div>
 <p>In this example, we are granting access to the FOO_READER role for the requesting application &#x27;charlie,&#x27;
