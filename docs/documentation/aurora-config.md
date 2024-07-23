@@ -516,25 +516,6 @@ It is possible to use substitutions in keys/keyMappings but it should be used wi
 The combination of type=PVC and exist=true is not supported by policy. We do not want normal java/web applications to
 use PVC mounts unnless strictly neccesary.
 
-### NTA webseal integration
-
-Note: Webseal integration is being replaced by AzureAD integration. You should user either one or the other, even though
-they can both be used during the transition from Webseal to AzureAD.
-
-Webseal is used for client traffic from within NTA to reach an application. Internal tax workers have roles that can be
-added to limit who can access the application
-
-| path                   | default | description                                                                                                                                                                                                                                                 |
-| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| webseal                | false   | Toggle or assign an object to expose application through WebSeal.                                                                                                                                                                                           |
-| webseal/host           |         | Set the hostname of the WebSEAL route (domain varies by cluster). Default is `@name@-@affiliation@-@env@`                                                                                                                                                   |
-| webseal/roles          |         | Set roles required to access this route. This can either be set as CSV or as an array of strings                                                                                                                                                            |
-| webseal/strict         | true    | If the application relies on WebSEAL security it should not have an OpenShift Route, as clients may then be able to bypass the authorization. Strict will only generate warnings when both routes will be created. Set strict to false to disable warnings. |
-| webseal/clusterTimeout |         | Set he timeout of the openshift route for this webseal junction. Should be valid durationString. Example 1s                                                                                                                                                 |
-
-If you want to use webseal with a template type you need to create a Service with default ports named after the name
-parameter
-
 ### NTA AzureAD integration
 
 When migrating from webseal to AzureAD integration, first leave in the webseal configuration.
@@ -564,7 +545,7 @@ Example:
 | azure/jwtToStsConverter/enabled | true                                                                                   | Whether a clinger instance should be deployed as a sidecar proxy for the service. This is a simple way of making the application available after moving from webseal. The clinger proxy will be set up with correct application ID and will validate the token from Azure and convert it into an iv-user header as if the request came from webseal.               |
 | azure/jwtToStsConverter/jwksUrl | http://login-microsoftonline-com.app2ext.intern-preprod.skead.no/common/discovery/keys | The url for the JWKS used to sign keys in AzureAD. This will typically be a general setting per environment. When testing, use the internal address https://funky-appsikk.apps.utv04.paas.skead.no/api/keys.                                                                                                                                                       |
 
-Note: this feature is currently in beta testing and should only be used in cooporation with the platform team.
+Note: this feature is currently in beta testing and should only be used in cooperation with the platform team.
 
 ### NTA STS integration
 
