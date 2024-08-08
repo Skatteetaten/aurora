@@ -433,6 +433,9 @@ In order to control routes into the application the following fields can be used
 | routeDefaults/tls/insecurePolicy       | \<varies for applicationPlattform\> | For Java the default is None for Web the default is Redirect                                                                                                                                                                                                                                                                                                                                          |
 | routeDefaults/tls/termination          | edge                                | Where do you terminate TLS? Edge or Passthrough. Reencrypt is not supported for now.                                                                                                                                                                                                                                                                                                                  |
 
+The `<routeName>` must not end with any of the reserved suffixes:
+- `-azure`
+
 If tls is used the host of the route cannot include the '.' key, since we do not support wildcard TLS cert.
 
 Route annotations are usable for template types, but you need to create a Service with name after the NAME parameter
