@@ -149,6 +149,8 @@ and _app_ files will be describe in a section called "Application files".
 | permissions/adminServiceAccount |          |              | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                         |
 | globalFile                      | No       | about.yaml   | globalFile   | Replaces the global file of the project. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                                                     |
 | dataclassification              | No       |              | No           | Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. |
+| resourcequota/pv/size           | No       |              | No           | Updates maximum storage size in ResourceQuota for PersistentVolumeClaims. Requires that resourcequota/pv/count is specified.                                                                                                                                                   |
+| resourcequota/pv/count          | No       |              | No           | Updates maximum amount of PersistentVolumeClaims specified in ResourceQuota. Requires that resourcequota/pv/size is specified.                                                                                                                                                 |
 
 At least one of the groups in permissions/admin must have a user in it.
 
@@ -434,6 +436,7 @@ In order to control routes into the application the following fields can be used
 | routeDefaults/tls/termination          | edge                                | Where do you terminate TLS? Edge or Passthrough. Reencrypt is not supported for now.                                                                                                                                                                                                                                                                                                                  |
 
 The `<routeName>` must not end with any of the reserved suffixes:
+
 - `-azure`
 
 If tls is used the host of the route cannot include the '.' key, since we do not support wildcard TLS cert.
@@ -536,7 +539,7 @@ Example:
             enabled: true
 
 | path                            | default                                                                                | description                                                                                                                                                                                                                                          |
-| ------------------------------- | -------------------------------------------------------------------------------------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | azure                           | false                                                                                  | Toggle or assign an object to expose application through Azure.                                                                                                                                                                                      |
 | azure/azureAppFqdn              | -                                                                                      | Fully qualified domain name for the exposed service. This supports hostnames on the form "service-name.am\[utv&#124;test&#124;\].skead.no". service-name cannot contain periods. For tests, use service-name.funkyutv.skead.no and set azureAppTest. |
 | azure/azureAppTest              | false                                                                                  | Set to true to avoid exposing the application over the internet. The application will be exposed over a special internal route.                                                                                                                      |
@@ -1055,7 +1058,8 @@ and Java applications.
 Employing a collector alongside services enables quick data offloading and additional
 handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our
 services, we achieve swift data offloading, minimizing any impact on the services' performance. The buffering mechanisms
-supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences problems.
+supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences
+problems.
 
 The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using
 an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside
@@ -1184,21 +1188,21 @@ Aurora config example
 
 ```yaml
 accesscontrol:
-    egress:
-        foo:
-            application: foo
-            namespace: *
-            cluster: utv*
-            wantedRoles:
-              - FOO_READER
-              - FOO_WRITER
-        bar:
-            application: bar
-            namespace: barspace
-            cluster: utv02
-            wantedRoles:
-              - BAR_READER
-              - BAR_WRITER
+  egress:
+    foo:
+      application: foo
+      namespace: *
+      cluster: utv*
+      wantedRoles:
+        - FOO_READER
+        - FOO_WRITER
+    bar:
+      application: bar
+      namespace: barspace
+      cluster: utv02
+      wantedRoles:
+        - BAR_READER
+        - BAR_WRITER
 ```
 
 In this example, we are requesting access to the roles FOO_READER and FOO_WRITER owned by the application
@@ -1232,19 +1236,19 @@ Aurora config example
 
 ```yaml
 accesscontrol:
-    ingress:
-        charlie:
-            application: charlie
-            namespace: *
-            cluster: utv*
-            grantedRoles:
-              - FOO_READER
-        delta:
-            application: delta
-            namespace: deltaspace
-            cluster: utv02
-            grantedRoles:
-              - FOO_WRITER
+  ingress:
+    charlie:
+      application: charlie
+      namespace: *
+      cluster: utv*
+      grantedRoles:
+        - FOO_READER
+    delta:
+      application: delta
+      namespace: deltaspace
+      cluster: utv02
+      grantedRoles:
+        - FOO_WRITER
 
 ```
 
