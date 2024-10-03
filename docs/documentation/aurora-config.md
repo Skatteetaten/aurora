@@ -434,6 +434,7 @@ In order to control routes into the application the following fields can be used
 | routeDefaults/tls/termination          | edge                                | Where do you terminate TLS? Edge or Passthrough. Reencrypt is not supported for now.                                                                                                                                                                                                                                                                                                                  |
 
 The `<routeName>` must not end with any of the reserved suffixes:
+
 - `-azure`
 
 If tls is used the host of the route cannot include the '.' key, since we do not support wildcard TLS cert.
@@ -536,7 +537,7 @@ Example:
             enabled: true
 
 | path                            | default                                                                                | description                                                                                                                                                                                                                                          |
-| ------------------------------- | -------------------------------------------------------------------------------------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | azure                           | false                                                                                  | Toggle or assign an object to expose application through Azure.                                                                                                                                                                                      |
 | azure/azureAppFqdn              | -                                                                                      | Fully qualified domain name for the exposed service. This supports hostnames on the form "service-name.am\[utv&#124;test&#124;\].skead.no". service-name cannot contain periods. For tests, use service-name.funkyutv.skead.no and set azureAppTest. |
 | azure/azureAppTest              | false                                                                                  | Set to true to avoid exposing the application over the internet. The application will be exposed over a special internal route.                                                                                                                      |
@@ -1266,6 +1267,14 @@ oc get grantedaccess <appname> -n <namespace> -o yaml
 Application, namespace, and cluster parameters in both ingress and egress must adhere to the regular
 expression [\\*]|[^\\d](\w)((?!\\*\\w).)+. For example, "test," "test," "test," "test123sd," "",
 and "test213" are considered valid, while "123Test," "tes*st" are not.
+
+### Cluster migration
+
+The cluster migration feature allows users to migrate applications from one cluster to another.
+
+| Name                | Default | Description                                                                                                                                            |
+| ------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `migrateTo/cluster` |         | Specify which cluster to move to. This field ensures that external resources such as S3, database, routing is prepared for migration to a new cluster. |
 
 ## Example configuration
 

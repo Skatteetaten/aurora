@@ -13,7 +13,7 @@ const DocumentationPage = ({
   const contents = edges
     .filter(
       ({ node }) =>
-        node.fields && node.fields.slug.search("/documentation/") >= 0
+        node.fields && node.fields.slug.search("/documentation/") >= 0,
     )
     .map(({ node }) => ({
       to: `${node.fields.slug}`,

@@ -27,7 +27,7 @@ const TableOfContents = ({ headings, slug, minHeaders = 8 }) => {
             key={`${header}-${index}`}
             className={classNames(
               styles.tocLevel,
-              styles[`tocLevel${header.depth}`]
+              styles[`tocLevel${header.depth}`],
             )}
           >
             <Icon iconName="ArrowDown" />
@@ -48,7 +48,7 @@ TableOfContents.propTypes = {
     PropTypes.shape({
       value: PropTypes.string.isRequired,
       depth: PropTypes.number.isRequired,
-    })
+    }),
   ).isRequired,
 };
 
