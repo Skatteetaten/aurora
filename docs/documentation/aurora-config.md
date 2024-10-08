@@ -151,6 +151,7 @@ and _app_ files will be describe in a section called "Application files".
 | dataclassification              | No       |              | No           | Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. |
 | env/resourcequota/pvc/totalSize | No       |              | No           | Maximum storage size in ResourceQuota for PersistentVolumeClaims. Requires that env/resourcequota/pv/count is specified. This option can only be specified in _env_ file. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.      |
 | env/resourcequota/pvc/count     | No       |              | No           | Maximum amount of PersistentVolumeClaims specified in ResourceQuota. Requires that env/resourcequota/pv/size is specified. This option can only be specified in _env_ file.                                                                                                    |
+| dataclassification              | Yes *     |              | No           | Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. * Will be required from migration to Bare Metal clusters|
 
 At least one of the groups in permissions/admin must have a user in it.
 
@@ -1270,6 +1271,14 @@ oc get grantedaccess <appname> -n <namespace> -o yaml
 Application, namespace, and cluster parameters in both ingress and egress must adhere to the regular
 expression [\\*]|[^\\d](\w)((?!\\*\\w).)+. For example, "test," "test," "test," "test123sd," "",
 and "test213" are considered valid, while "123Test," "tes*st" are not.
+
+### Cluster migration
+
+The cluster migration feature allows users to migrate applications from one cluster to another.
+
+| Name                | Default | Description                                                                                                                                            |
+| ------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `migrateTo/cluster` |         | Specify which cluster to move to. This field ensures that external resources such as S3, database, routing is prepared for migration to a new cluster. |
 
 ## Example configuration
 
