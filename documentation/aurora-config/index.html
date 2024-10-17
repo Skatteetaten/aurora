@@ -245,7 +245,21 @@ and <em>app</em> files will be describe in a section called &quot;Application fi
 
 
 
-<table><thead><tr><th>path</th><th>required</th><th>default</th><th>substitution</th><th>description</th></tr></thead><tbody><tr><td>affiliation</td><td>Yes</td><td></td><td>affiliation</td><td>Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.</td></tr><tr><td>envName</td><td></td><td>$folderName</td><td>env</td><td>Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.</td></tr><tr><td>env/name</td><td></td><td></td><td>env</td><td>An alias for envName</td></tr><tr><td>env/ttl</td><td></td><td></td><td>No</td><td>Set a time duration in format 1d, 12h that indicate how long until this namespace should be deleted</td></tr><tr><td>permissions/admin</td><td>Yes</td><td></td><td>No</td><td>The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required.</td></tr><tr><td>permissions/view</td><td></td><td></td><td>No</td><td>The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.</td></tr><tr><td>permissions/edit</td><td></td><td></td><td>No</td><td>The groups in OpenShift that will have the edit role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.</td></tr><tr><td>permissions/adminServiceAccount</td><td></td><td></td><td>No</td><td>The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.</td></tr><tr><td>globalFile</td><td>No</td><td>about.yaml</td><td>globalFile</td><td>Replaces the global file of the project. Note that the default file is the <em>global</em> about file. This option can only be specified in either the <em>base</em> file or <em>env</em> file.</td></tr><tr><td>dataclassification</td><td>Yes *</td><td></td><td>No</td><td>Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. * Will be required from migration to Bare Metal clusters</td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>path</th><th>required</th><th>default</th><th>substitution</th><th>description</th></tr></thead><tbody><tr><td>affiliation</td><td>Yes</td><td></td><td>affiliation</td><td>Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.</td></tr><tr><td>envName</td><td></td><td>$folderName</td><td>env</td><td>Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.</td></tr><tr><td>env/name</td><td></td><td></td><td>env</td><td>An alias for envName</td></tr><tr><td>env/ttl</td><td></td><td></td><td>No</td><td>Set a time duration in format 1d, 12h that indicate how long until this namespace should be deleted</td></tr><tr><td>permissions/admin</td><td>Yes</td><td></td><td>No</td><td>The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required.</td></tr><tr><td>permissions/view</td><td></td><td></td><td>No</td><td>The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.</td></tr><tr><td>permissions/edit</td><td></td><td></td><td>No</td><td>The groups in OpenShift that will have the edit role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.</td></tr><tr><td>permissions/adminServiceAccount</td><td></td><td></td><td>No</td><td>The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.</td></tr><tr><td>globalFile</td><td>No</td><td>about.yaml</td><td>globalFile</td><td>Replaces the global file of the project. Note that the default file is the <em>global</em> about file. This option can only be specified in either the <em>base</em> file or <em>env</em> file.</td></tr><tr><td>dataclassification</td><td>Yes *</td><td></td><td>No</td><td>Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. * Will be required from migration to Bare Metal clusters</td></tr><tr><td>env/resourcequota/pvc/totalSize</td><td>No</td><td></td><td>No</td><td>Maximum storage size in ResourceQuota for PersistentVolumeClaims. Requires that env/resourcequota/pv/count is specified. This option can only be specified in <em>env</em> file. Type Quantity <a href="https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/">https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/</a>.</td></tr><tr><td>env/resourcequota/pvc/count</td><td>No</td><td></td><td>No</td><td>Maximum number of PersistentVolumeClaims specified in ResourceQuota. Requires that env/resourcequota/pv/size is specified. This option can only be specified in <em>env</em> file.</td></tr></tbody></table>
 <p>At least one of the groups in permissions/admin must have a user in it.</p>
 <h4 id="application-files" style="position:relative"><a href="#application-files" aria-label="application files permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Application files</h4>
 
@@ -2219,7 +2233,8 @@ and Java applications.</p>
 <p>Employing a collector alongside services enables quick data offloading and additional
 handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our
 services, we achieve swift data offloading, minimizing any impact on the services&#x27; performance. The buffering mechanisms
-supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences problems.</p>
+supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences
+problems.</p>
 <p>The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using
 an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside
 the service as a sidecar container. For the majority of our users, the first approach should be sufficient and
@@ -2411,21 +2426,21 @@ an object, in the format outlined in the following table.</p>
 <table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/enabled</code></td><td></td><td>Set to false to disable access request. Type Boolean</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/application</code></td><td></td><td>The name of the application we request access to. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/namespace</code></td><td></td><td>The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/cluster</code></td><td></td><td>The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/egress/&lt;name&gt;/wantedRoles</code></td><td></td><td>List of wanted roles. Cannot be an empty list. Type list of Strings</td></tr></tbody></table>
 <p>Aurora config example</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">accesscontrol</span><span class="token punctuation">:</span>
-    <span class="token key atrule">egress</span><span class="token punctuation">:</span>
-        <span class="token key atrule">foo</span><span class="token punctuation">:</span>
-            <span class="token key atrule">application</span><span class="token punctuation">:</span> foo
-            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
-            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
-            <span class="token key atrule">wantedRoles</span><span class="token punctuation">:</span>
-              <span class="token punctuation">-</span> FOO_READER
-              <span class="token punctuation">-</span> FOO_WRITER
-        <span class="token key atrule">bar</span><span class="token punctuation">:</span>
-            <span class="token key atrule">application</span><span class="token punctuation">:</span> bar
-            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> barspace
-            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
-            <span class="token key atrule">wantedRoles</span><span class="token punctuation">:</span>
-              <span class="token punctuation">-</span> BAR_READER
-              <span class="token punctuation">-</span> BAR_WRITER</code></pre></div>
+  <span class="token key atrule">egress</span><span class="token punctuation">:</span>
+    <span class="token key atrule">foo</span><span class="token punctuation">:</span>
+      <span class="token key atrule">application</span><span class="token punctuation">:</span> foo
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
+      <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
+      <span class="token key atrule">wantedRoles</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> FOO_READER
+        <span class="token punctuation">-</span> FOO_WRITER
+    <span class="token key atrule">bar</span><span class="token punctuation">:</span>
+      <span class="token key atrule">application</span><span class="token punctuation">:</span> bar
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> barspace
+      <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
+      <span class="token key atrule">wantedRoles</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> BAR_READER
+        <span class="token punctuation">-</span> BAR_WRITER</code></pre></div>
 <p>In this example, we are requesting access to the roles FOO_READER and FOO_WRITER owned by the application
 &#x27;foo&#x27;, running in a namespace matching the pattern ‘*’ and a cluster with a name matching the pattern
 ‘utv*’. Additionally, we are also requesting access to the roles BAR_READER and BAR_WRITER for
@@ -2476,19 +2491,19 @@ is an object, in the format outlined in the following table.</p>
 <table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/enabled</code></td><td></td><td>Set to false to disable granted access. Type Boolean</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/application</code></td><td></td><td>Name of the application that should be granted access. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/namespace</code></td><td></td><td>The namespace in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/cluster</code></td><td></td><td>The name of the cluster in which the application resides. This value is mandatory and can be expressed using the supported glob pattern. Type String</td></tr><tr><td><code class="language-text">accesscontrol/ingress/&lt;name&gt;/grantedRoles</code></td><td></td><td>List of roles to grant the application. Cannot be an empty list. Type list of Strings.</td></tr></tbody></table>
 <p>Aurora config example</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">accesscontrol</span><span class="token punctuation">:</span>
-    <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
-        <span class="token key atrule">charlie</span><span class="token punctuation">:</span>
-            <span class="token key atrule">application</span><span class="token punctuation">:</span> charlie
-            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
-            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
-            <span class="token key atrule">grantedRoles</span><span class="token punctuation">:</span>
-              <span class="token punctuation">-</span> FOO_READER
-        <span class="token key atrule">delta</span><span class="token punctuation">:</span>
-            <span class="token key atrule">application</span><span class="token punctuation">:</span> delta
-            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> deltaspace
-            <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
-            <span class="token key atrule">grantedRoles</span><span class="token punctuation">:</span>
-              <span class="token punctuation">-</span> FOO_WRITER
+  <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
+    <span class="token key atrule">charlie</span><span class="token punctuation">:</span>
+      <span class="token key atrule">application</span><span class="token punctuation">:</span> charlie
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> *
+      <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv*
+      <span class="token key atrule">grantedRoles</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> FOO_READER
+    <span class="token key atrule">delta</span><span class="token punctuation">:</span>
+      <span class="token key atrule">application</span><span class="token punctuation">:</span> delta
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> deltaspace
+      <span class="token key atrule">cluster</span><span class="token punctuation">:</span> utv02
+      <span class="token key atrule">grantedRoles</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> FOO_WRITER
 </code></pre></div>
 <p>In this example, we are granting access to the FOO_READER role for the requesting application &#x27;charlie,&#x27;
 running in a namespace matching the pattern ‘*’ and with a cluster named matching the pattern ‘utv*’.
