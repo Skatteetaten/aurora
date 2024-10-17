@@ -137,18 +137,20 @@ and _app_ files will be describe in a section called "Application files".
 
 #### About files
 
-| path                            | required | default      | substitution | description                                                                                                                                                                                                                                                                    |
-| ------------------------------- | -------- | ------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| affiliation                     | Yes      |              | affiliation  | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                                                                                            |
-| envName                         |          | \$folderName | env          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                                                                                           |
-| env/name                        |          |              | env          | An alias for envName                                                                                                                                                                                                                                                           |
-| env/ttl                         |          |              | No           | Set a time duration in format 1d, 12h that indicate how long until this namespace should be deleted                                                                                                                                                                            |
-| permissions/admin               | Yes      |              | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required.                                                                         |
-| permissions/view                |          |              | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                    |
-| permissions/edit                |          |              | No           | The groups in OpenShift that will have the edit role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                    |
-| permissions/adminServiceAccount |          |              | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                         |
-| globalFile                      | No       | about.yaml   | globalFile   | Replaces the global file of the project. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                                                     |
-| dataclassification              | Yes *     |              | No           | Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. * Will be required from migration to Bare Metal clusters|
+| path                            | required | default      | substitution | description                                                                                                                                                                                                                                                                                                                              |
+| ------------------------------- | -------- | ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| affiliation                     | Yes      |              | affiliation  | Used to group the project for resource monitoring. All projects start with affiliation. lower case letters max length 10. Required.                                                                                                                                                                                                      |
+| envName                         |          | \$folderName | env          | Change the name of the project. Note that the default value here is the actual name of the folder where the app file is. This option must be specified in either global or env file.                                                                                                                                                     |
+| env/name                        |          |              | env          | An alias for envName                                                                                                                                                                                                                                                                                                                     |
+| env/ttl                         |          |              | No           | Set a time duration in format 1d, 12h that indicate how long until this namespace should be deleted                                                                                                                                                                                                                                      |
+| permissions/admin               | Yes      |              | No           | The groups in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file. Required.                                                                                                                                   |
+| permissions/view                |          |              | No           | The groups in OpenShift that will have the view role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                                                                              |
+| permissions/edit                |          |              | No           | The groups in OpenShift that will have the edit role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                                                                              |
+| permissions/adminServiceAccount |          |              | No           | The service accounts in OpenShift that will have the admin role for the given project. Can either be an array or a space delimited string. This option must be specified in either global or env file.                                                                                                                                   |
+| globalFile                      | No       | about.yaml   | globalFile   | Replaces the global file of the project. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                                                                                                               |
+| dataclassification              | Yes \*   |              | No           | Sets data classification on the namespace, based on the sensitivity level of the data present in the environment. The value can be set to either synt, skarp, or anon and cannot be changed once set. If it needs to be changed, assistance from an administrator is required. \* Will be required from migration to Bare Metal clusters |
+| env/resourcequota/pvc/totalSize | No       |              | No           | Maximum storage size in ResourceQuota for PersistentVolumeClaims. Requires that env/resourcequota/pv/count is specified. This option can only be specified in _env_ file. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.                                                                |
+| env/resourcequota/pvc/count     | No       |              | No           | Maximum number of PersistentVolumeClaims specified in ResourceQuota. Requires that env/resourcequota/pv/size is specified. This option can only be specified in _env_ file.                                                                                                                                                              |
 
 At least one of the groups in permissions/admin must have a user in it.
 
@@ -1056,7 +1058,8 @@ and Java applications.
 Employing a collector alongside services enables quick data offloading and additional
 handling like retries, batching, authentication, and data enrichment. By having collectors work in tandem with our
 services, we achieve swift data offloading, minimizing any impact on the services' performance. The buffering mechanisms
-supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences problems.
+supported by the collector minimize the risk in the event that the Grafana Enterprise Trace solution experiences
+problems.
 
 The Aurora configuration supports two operation modes for telemetry data collection. The first mode involves using
 an agent collector as a DaemonSet running on each node, while the second mode deploys the agent collector alongside
@@ -1185,21 +1188,21 @@ Aurora config example
 
 ```yaml
 accesscontrol:
-    egress:
-        foo:
-            application: foo
-            namespace: *
-            cluster: utv*
-            wantedRoles:
-              - FOO_READER
-              - FOO_WRITER
-        bar:
-            application: bar
-            namespace: barspace
-            cluster: utv02
-            wantedRoles:
-              - BAR_READER
-              - BAR_WRITER
+  egress:
+    foo:
+      application: foo
+      namespace: *
+      cluster: utv*
+      wantedRoles:
+        - FOO_READER
+        - FOO_WRITER
+    bar:
+      application: bar
+      namespace: barspace
+      cluster: utv02
+      wantedRoles:
+        - BAR_READER
+        - BAR_WRITER
 ```
 
 In this example, we are requesting access to the roles FOO_READER and FOO_WRITER owned by the application
@@ -1233,19 +1236,19 @@ Aurora config example
 
 ```yaml
 accesscontrol:
-    ingress:
-        charlie:
-            application: charlie
-            namespace: *
-            cluster: utv*
-            grantedRoles:
-              - FOO_READER
-        delta:
-            application: delta
-            namespace: deltaspace
-            cluster: utv02
-            grantedRoles:
-              - FOO_WRITER
+  ingress:
+    charlie:
+      application: charlie
+      namespace: *
+      cluster: utv*
+      grantedRoles:
+        - FOO_READER
+    delta:
+      application: delta
+      namespace: deltaspace
+      cluster: utv02
+      grantedRoles:
+        - FOO_WRITER
 
 ```
 
