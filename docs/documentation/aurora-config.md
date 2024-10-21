@@ -1278,6 +1278,7 @@ The cluster migration feature allows users to migrate applications from one clus
 | Name                | Default | Description                                                                                                                                            |
 | ------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `migrateTo/cluster` |         | Specify which cluster to move to. This field ensures that external resources such as S3, database, routing is prepared for migration to a new cluster. |
+| `migrateTo/enabled` | true    | Specify if migrateTo should be enabled. Set to false to deactivate the migrateTo functionality for an application.                                     |
 
 ## Example configuration
 
