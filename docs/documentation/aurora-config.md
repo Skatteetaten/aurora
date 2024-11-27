@@ -311,13 +311,12 @@ The following baseImage are in use at NTA
 
 | name      | version | description      |
 | --------- | ------- | ---------------- |
-| wrench10  | 2       | Nodejs10 & Nginx |
-| wrench12  | 2       | Nodejs12 & Nginx |
-| wrench14  | 2       | Nodejs14 & Nginx |
-| wrench16  | 1       | Nodejs16 & Nginx |
+| wrench18  | 1       | Nodejs18 & Nginx |
+| wrench20  | 1       | Nodejs20 & Nginx |
 | wingnut8  | 2       | OpenJdk 8        |
 | wingnut11 | 2       | OpenJDK 11       |
 | wingnut17 | 1       | OpenJDK 17       |
+| wingnut21 | 1       | OpenJDK 21       |
 
 ### Configuration specific for Deployment Type "localTemplate"
 
