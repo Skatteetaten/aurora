@@ -447,232 +447,53 @@ See <a href="#guidelines-for-developing-templates">Guidelines for developing tem
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td>releaseTo</td><td></td><td>Used to release a given version as a shared tag in the docker registry. Other env can then use it in &#x27;version&#x27;. NB! Must be manually updated with AO/Aurora Konsoll</td></tr><tr><td>debug</td><td>false</td><td>Toggle to enable remote debugging on port 5005. Port forward this port locally and setup remote debugging in your Java IDE.</td></tr><tr><td>deployStrategy/type</td><td>rolling</td><td>Specify type of deployment, either rolling or recreate</td></tr><tr><td>deployStrategy/timeout</td><td>180</td><td>Set timeout value in seconds for deployment process</td></tr><tr><td>resources/cpu/min</td><td>10m</td><td>Specify minimum/request cpu. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu">kubernetes_docs</a> for potential values</td></tr><tr><td>resources/cpu/max</td><td>2000m</td><td>Specify maximum/limit cpu. A value of &quot;0&quot; indicates that no CPU limit should be configured.</td></tr><tr><td>resources/memory/min</td><td>128Mi</td><td>Specify minimum/request memory. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory">kubernetes docs</a> for potential values</td></tr><tr><td>resources/memory/max</td><td>512Mi</td><td>Specify maximum/limit memory. By default 25% of this will be set to heap in java8 and 75% in java11.</td></tr><tr><td><code class="language-text">config/JAVA_MAX_MEM_RATIO</code></td><td>25</td><td>Specify heap percentage for Java 8 applications</td></tr><tr><td><code class="language-text">config/JAVA_MAX_RAM_PERCENTAGE</code></td><td>75.0</td><td>Specify heap percentage for Java 11 or Java 17 applications</td></tr><tr><td>groupId</td><td></td><td>groupId for your application. Max 200 length. Required if deploy/development</td></tr><tr><td>artifactId</td><td>$fileName</td><td>artifactId for your application. Max 50 length</td></tr><tr><td>version</td><td></td><td>The version of the image you want to run.</td></tr><tr><td>splunkIndex</td><td></td><td>Set to a valid splunk-index to log to splunk. Only valid if splunk is enabled in the Aurora API</td></tr><tr><td>serviceAccount</td><td></td><td>Set to an existing serviceAccount if you need special privileges</td></tr><tr><td>prometheus</td><td>true</td><td>Toggle to false if application do not have Prometheus metrics</td></tr><tr><td>prometheus/path</td><td>/prometheus</td><td>Change the path of where prometheus is exposed</td></tr><tr><td>prometheus/port</td><td>8081</td><td>Change the port of where prometheus is exposed</td></tr><tr><td>management</td><td>true</td><td>Toggle of if your application does not expose an management interface</td></tr><tr><td>management/path</td><td>/actuator</td><td>Change the path of where the management interface is exposed</td></tr><tr><td>management/port</td><td>8081</td><td>Change the port of where the management interface is exposed</td></tr><tr><td>readiness</td><td>true</td><td>Toggle to false to turn off default readiness check</td></tr><tr><td>readiness/path</td><td></td><td>Set to a path to do a GET request to that path as a readiness check</td></tr><tr><td>readiness/port</td><td>8080</td><td>If no path present readiness will check if this port is open</td></tr><tr><td>readiness/delay</td><td>10</td><td>Number of seconds to wait before running readiness check</td></tr><tr><td>readiness/timeout</td><td>1</td><td>Number of seconds timeout before giving up readiness</td></tr><tr><td>readiness/periodSeconds</td><td>10</td><td>Number of seconds between each readiness check</td></tr><tr><td>readiness/failureThreshold</td><td>3</td><td>Number of times to retry readiness check on failure</td></tr><tr><td>liveness</td><td>false</td><td>Toggle to true to enable liveness check</td></tr><tr><td>liveness/path</td><td></td><td>Set to a path to do a GET request to that path as a liveness check</td></tr><tr><td>liveness/port</td><td>8080</td><td>If no path present liveness will check if this port is open</td></tr><tr><td>liveness/delay</td><td>10</td><td>Number of seconds to wait before running liveness check</td></tr><tr><td>liveness/timeout</td><td>1</td><td>Number of seconds timeout before giving up liveness</td></tr><tr><td>liveness/periodSeconds</td><td>10</td><td>Number of seconds between each liveness check</td></tr><tr><td>liveness/failureThreshold</td><td>3</td><td>Number of times to retry liveness check on failure</td></tr><tr><td>replicas</td><td>1</td><td>Number of replicas of this application to run.</td></tr><tr><td>pause</td><td>false</td><td>Toggle to pause an application. This will scale it down to 0 and add a label showing it is paused.</td></tr><tr><td>toxiproxy</td><td>false</td><td>Toxiproxy feature toggle using default version</td></tr><tr><td>toxiproxy/version</td><td>2.1.3</td><td>Toxiproxy version</td></tr><tr><td>toxiproxy/proxies/&lt;proxyname&gt;/enabled</td><td>true</td><td>Set to <code class="language-text">true</code> to create a Toxiproxy proxy with the name &lt;proxyname&gt;. If set to <code class="language-text">false</code>, it will be skipped. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.</td></tr><tr><td>toxiproxy/proxies/&lt;proxyname&gt;/initialEnabledState</td><td>true</td><td>Set the <em>enabled</em> state of the proxy named &lt;proxyname&gt;.</td></tr><tr><td>toxiproxy/proxies/&lt;proxyname&gt;/urlVariableKey</td><td></td><td>Name of the environment variable that holds the URL to the service that is to be manipulated, given that such a variable exists and contains a valid URL. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.</td></tr><tr><td>toxiproxy/proxies/&lt;proxyname&gt;/serverVariableKey</td><td></td><td>Name of the environment variable that holds the host, given that the host and port of the service that is to be manipulated are given in separate environment variables. This variable must be present in the config section and contain a valid host name. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.</td></tr><tr><td>toxiproxy/proxies/&lt;proxyname&gt;/portVariableKey</td><td></td><td>Name of the environment variable that holds the port, given that the host and port of the service that is to be manipulated are given in separate environment variables. This variable must be present in the config section and contain a valid port number. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.</td></tr><tr><td>toxiproxy/proxies/&lt;proxyname&gt;/databaseName</td><td></td><td>Name of the database that is to be manipulated, given that this name is present in the database config section. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.</td></tr><tr><td>toxiproxy/proxies/&lt;proxyname&gt;/database</td><td>false</td><td>Set to <code class="language-text">true</code> to create a proxy with the name &lt;proxyname&gt; for the application&#x27;s database if the database uses default configuration.</td></tr><tr><td>config</td><td></td><td>Contains a collection of application configuration variables. Keys are normalized according to <a href="https://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html">XCU</a>. More specifically we replace &quot;-. &quot; with _. If a key will be normalized there will be an warning emitted for that key. The value of the env vars is passed as is. Note: If you are using JSON string as the value of the config field, then all quotes in the json value must be escaped. See example below.</td></tr></tbody></table>
+<table><thead><tr><th>path</th><th>default</th><th>description</th></tr></thead><tbody><tr><td>releaseTo</td><td></td><td>Used to release a given version as a shared tag in the docker registry. Other env can then use it in &#x27;version&#x27;. NB! Must be manually updated with AO/Aurora Konsoll</td></tr><tr><td>debug</td><td>false</td><td>Toggle to enable remote debugging. For Java applications use port 5005 and configure remote debugging in your IDE. For Node.js applications (when applicationPlatform: web) use port 9229 and connect via Chrome DevTools (chrome://inspect)</td></tr></tbody></table>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">                                                                                                                                                                                                                                                                  |</code></pre></div>
+<p>| deployStrategy/type                                 | rolling     | Specify type of deployment, either rolling or recreate                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| deployStrategy/timeout                              | 180         | Set timeout value in seconds for deployment process                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| resources/cpu/min                                   | 10m         | Specify minimum/request cpu. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu">kubernetes_docs</a> for potential values                                                                                                                                                                                                                                                                                                       |
+| resources/cpu/max                                   | 2000m       | Specify maximum/limit cpu. A value of &quot;0&quot; indicates that no CPU limit should be configured.                                                                                                                                                                                                                                                                                                                                                                                         |
+| resources/memory/min                                | 128Mi       | Specify minimum/request memory. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory">kubernetes docs</a> for potential values                                                                                                                                                                                                                                                                                                 |
+| resources/memory/max                                | 512Mi       | Specify maximum/limit memory. By default 25% of this will be set to heap in java8 and 75% in java11.                                                                                                                                                                                                                                                                                                                                                                                |
+| <code class="language-text">config/JAVA_MAX_MEM_RATIO</code>                         | 25          | Specify heap percentage for Java 8 applications                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| <code class="language-text">config/JAVA_MAX_RAM_PERCENTAGE</code>                    | 75.0        | Specify heap percentage for Java 11 or Java 17 applications                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| groupId                                             |             | groupId for your application. Max 200 length. Required if deploy/development                                                                                                                                                                                                                                                                                                                                                                                                        |
+| artifactId                                          | $fileName  | artifactId for your application. Max 50 length                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| version                                             |             | The version of the image you want to run.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| splunkIndex                                         |             | Set to a valid splunk-index to log to splunk. Only valid if splunk is enabled in the Aurora API                                                                                                                                                                                                                                                                                                                                                                                     |
+| serviceAccount                                      |             | Set to an existing serviceAccount if you need special privileges                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| prometheus                                          | true        | Toggle to false if application do not have Prometheus metrics                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| prometheus/path                                     | /prometheus | Change the path of where prometheus is exposed                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| prometheus/port                                     | 8081        | Change the port of where prometheus is exposed                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| management                                          | true        | Toggle of if your application does not expose an management interface                                                                                                                                                                                                                                                                                                                                                                                                               |
+| management/path                                     | /actuator   | Change the path of where the management interface is exposed                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| management/port                                     | 8081        | Change the port of where the management interface is exposed                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| readiness                                           | true        | Toggle to false to turn off default readiness check                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| readiness/path                                      |             | Set to a path to do a GET request to that path as a readiness check                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| readiness/port                                      | 8080        | If no path present readiness will check if this port is open                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| readiness/delay                                     | 10          | Number of seconds to wait before running readiness check                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| readiness/timeout                                   | 1           | Number of seconds timeout before giving up readiness                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| readiness/periodSeconds                             | 10          | Number of seconds between each readiness check                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| readiness/failureThreshold                          | 3           | Number of times to retry readiness check on failure                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| liveness                                            | false       | Toggle to true to enable liveness check                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| liveness/path                                       |             | Set to a path to do a GET request to that path as a liveness check                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| liveness/port                                       | 8080        | If no path present liveness will check if this port is open                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| liveness/delay                                      | 10          | Number of seconds to wait before running liveness check                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| liveness/timeout                                    | 1           | Number of seconds timeout before giving up liveness                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| liveness/periodSeconds                              | 10          | Number of seconds between each liveness check                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| liveness/failureThreshold                           | 3           | Number of times to retry liveness check on failure                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| replicas                                            | 1           | Number of replicas of this application to run.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| pause                                               | false       | Toggle to pause an application. This will scale it down to 0 and add a label showing it is paused.                                                                                                                                                                                                                                                                                                                                                                                  |
+| toxiproxy                                           | false       | Toxiproxy feature toggle using default version                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| toxiproxy/version                                   | 2.1.3       | Toxiproxy version                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| toxiproxy/proxies/&lt;proxyname&gt;/enabled             | true        | Set to <code class="language-text">true</code> to create a Toxiproxy proxy with the name &lt;proxyname&gt;. If set to <code class="language-text">false</code>, it will be skipped. Not to be confused with the <em>enabled</em> state of the proxy, which is set by <em>initialEnabledState</em>.                                                                                                                                                                                                                                                                      |
+| toxiproxy/proxies/&lt;proxyname&gt;/initialEnabledState | true        | Set the <em>enabled</em> state of the proxy named &lt;proxyname&gt;.                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| toxiproxy/proxies/&lt;proxyname&gt;/urlVariableKey      |             | Name of the environment variable that holds the URL to the service that is to be manipulated, given that such a variable exists and contains a valid URL. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.                                                                                                                                                                                                                                                    |
+| toxiproxy/proxies/&lt;proxyname&gt;/serverVariableKey   |             | Name of the environment variable that holds the host, given that the host and port of the service that is to be manipulated are given in separate environment variables. This variable must be present in the config section and contain a valid host name. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.                                                                                                                                                  |
+| toxiproxy/proxies/&lt;proxyname&gt;/portVariableKey     |             | Name of the environment variable that holds the port, given that the host and port of the service that is to be manipulated are given in separate environment variables. This variable must be present in the config section and contain a valid port number. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.                                                                                                                                                |
+| toxiproxy/proxies/&lt;proxyname&gt;/databaseName        |             | Name of the database that is to be manipulated, given that this name is present in the database config section. &lt;proxyname&gt; is the name of the Toxiproxy proxy that will be created.                                                                                                                                                                                                                                                                                              |
+| toxiproxy/proxies/&lt;proxyname&gt;/database            | false       | Set to <code class="language-text">true</code> to create a proxy with the name &lt;proxyname&gt; for the application&#x27;s database if the database uses default configuration.                                                                                                                                                                                                                                                                                                                                              |
+| config                                              |             | Contains a collection of application configuration variables. Keys are normalized according to <a href="https://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html">XCU</a>. More specifically we replace &quot;-. &quot; with _. If a key will be normalized there will be an warning emitted for that key. The value of the env vars is passed as is. Note: If you are using JSON string as the value of the config field, then all quotes in the json value must be escaped. See example below. |</p>
 <p>Example specification of an json env var</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">config</span><span class="token punctuation">:</span>
   <span class="token key atrule">FOO</span><span class="token punctuation">:</span> <span class="token string">&#x27;{&quot;BAR&quot;: &quot;BAZ&quot;}&#x27;</span></code></pre></div>
@@ -740,12 +561,7 @@ See <a href="#guidelines-for-developing-templates">Guidelines for developing tem
 
 
 
-
-
-
-
-
-<table><thead><tr><th>name</th><th>version</th><th>description</th></tr></thead><tbody><tr><td>wrench10</td><td>2</td><td>Nodejs10 &amp; Nginx</td></tr><tr><td>wrench12</td><td>2</td><td>Nodejs12 &amp; Nginx</td></tr><tr><td>wrench14</td><td>2</td><td>Nodejs14 &amp; Nginx</td></tr><tr><td>wrench16</td><td>1</td><td>Nodejs16 &amp; Nginx</td></tr><tr><td>wingnut8</td><td>2</td><td>OpenJdk 8</td></tr><tr><td>wingnut11</td><td>2</td><td>OpenJDK 11</td></tr><tr><td>wingnut17</td><td>1</td><td>OpenJDK 17</td></tr></tbody></table>
+<table><thead><tr><th>name</th><th>version</th><th>description</th></tr></thead><tbody><tr><td>wrench18</td><td>1</td><td>Nodejs18 &amp; Nginx</td></tr><tr><td>wrench20</td><td>1</td><td>Nodejs20 &amp; Nginx</td></tr><tr><td>wingnut8</td><td>2</td><td>OpenJdk 8</td></tr><tr><td>wingnut11</td><td>2</td><td>OpenJDK 11</td></tr><tr><td>wingnut17</td><td>1</td><td>OpenJDK 17</td></tr><tr><td>wingnut21</td><td>1</td><td>OpenJDK 21</td></tr></tbody></table>
 <h3 id="configuration-specific-for-deployment-type-localtemplate" style="position:relative"><a href="#configuration-specific-for-deployment-type-localtemplate" aria-label="configuration specific for deployment type localtemplate permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configuration specific for Deployment Type &quot;localTemplate&quot;</h3>
 
 
@@ -2534,7 +2350,12 @@ and &quot;test213&quot; are considered valid, while &quot;123Test,&quot; &quot;t
 
 
 
-<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">migrateTo/cluster</code></td><td></td><td>Specify which cluster to move to. This field ensures that external resources such as S3, database, routing is prepared for migration to a new cluster.</td></tr></tbody></table>
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-text">migrateTo/cluster</code></td><td></td><td>Specify which cluster to move to. This field ensures that external resources such as S3, database, routing is prepared for migration to a new cluster.</td></tr><tr><td><code class="language-text">migrateTo/enabled</code></td><td>true</td><td>Specify if migrateTo should be enabled. Set to false to deactivate the migrateTo functionality for an application.</td></tr></tbody></table>
 <h2 id="example-configuration" style="position:relative"><a href="#example-configuration" aria-label="example configuration permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example configuration</h2>
 <h3 id="simple-reference-application" style="position:relative"><a href="#simple-reference-application" aria-label="simple reference application permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Simple reference-application</h3>
 <p>Below is an example of how you could configure an instance of
