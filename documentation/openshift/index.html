@@ -263,6 +263,8 @@ Following the semver semantics, this includes all bugfixes. Infrastructure chang
 <li>use <em>1.1.1</em> to automatically deploy the newest image for a patch version (any 1.1.1 version) of an application.
 Following the semver semantics, this actually excludes any other application version from being deployed, and hence,
 the application will only be deployed if the infrastructure changes.</li>
+<li>use <em>1.1.1@sha256:</em> to point to a specific tag with a docker digest of the image. On deployment we will validate that the
+tag and docker digest points to an existing image.</li>
 <li>use the full <strong>AuroraVersion</strong> of a release to pin the deployment to that specific combination of application version
 and infrastructure. OpenShift will never automatically redeploy this application since the AuroraVersion tag will never
 change for an image.</li>
