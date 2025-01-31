@@ -263,6 +263,8 @@ AuroraVersion string.
 - use _1.1.1_ to automatically deploy the newest image for a patch version (any 1.1.1 version) of an application.
   Following the semver semantics, this actually excludes any other application version from being deployed, and hence,
   the application will only be deployed if the infrastructure changes.
+- use _1.1.1@sha256:_ to point to a specific tag with a docker digest of the image. On deployment we will validate that the
+  tag and docker digest points to an existing image.
 - use the full **AuroraVersion** of a release to pin the deployment to that specific combination of application version
   and infrastructure. OpenShift will never automatically redeploy this application since the AuroraVersion tag will never
   change for an image.
