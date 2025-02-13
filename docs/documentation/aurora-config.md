@@ -589,7 +589,7 @@ the `database=true` instruction
 | databaseDefaults/instance/labels/\<key\> |                | Set key=value pair that will be sent when matching database instances. Default is affiliation=@affiliation@                                                                                                             |
 | database                                 | false          | Toggle this to add a database with \$name to your application.                                                                                                                                                          |
 | `database/<name>`                        |                | Simplified config for multiple databases.If you want to add multiple databases specify a name for each. Set to 'auto' for auto generation or a given ID to pin it. Set to false to turn off this database.              |
-| databaseDefaults/schema/name             | null           | Set a default schema name that will be created when the database is initialized. Only for postgresql.                                                                                                                   |
+| databaseDefaults/schema/name             |                | Set a default schema name that will be created when the database is initialized. Only for postgresql.                                                                                                                   |
 
 If you want to change the default configuration for one application you need to use the expanded syntax
 
@@ -607,7 +607,7 @@ If you want to change the default configuration for one application you need to 
 | `database/<name>/instance/name`         | \$databaseDefaults/instance/name       | Override default instance/name.                                                                                                                                                                                         |
 | `database/<name>/instance/fallback`     | \$databaseDefaults/instance/fallback   | Override default instance/fallback.                                                                                                                                                                                     |
 | `database/<name>/instance/labels/<key>` |                                        | Add/override labels for instance.                                                                                                                                                                                       |
-| `database/<name>/schema/name`           | null                                   | Set a default schema name that will be created when the database is initialized. Only for postgresql.                                                                                                                   |
+| `database/<name>/schema/name`           |                                        | Set a default schema name that will be created when the database is initialized. Only for postgresql.                                                                                                                   |
 
 To share a database schema between multiple applications then one application must be defined as the owner of the
 schema.
