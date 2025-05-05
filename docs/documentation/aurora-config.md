@@ -378,7 +378,7 @@ groupId/artifactId:version semantics
 | ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | schedule          |         | Cron scheduel validated against http://cron-parser.com/                                                                                |
 | failureCount      | 1       | Number of failed jobs to keep                                                                                                          |
-| successCount      | 3       | Number of successfull jobs to keep                                                                                                     |
+| successCount      | 1       | Number of successfull jobs to keep                                                                                                     |
 | concurrencyPolicy | Forbid  | Any of [concurrencyPolicy](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy)                    |
 | startingDeadline  | 60      | Override the starting deadline for the cronjob, see suspend below                                                                      |
 | suspend           | false   | Suspend/stop the job. Nb! See [suspend](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#suspend) docs for caveats |
