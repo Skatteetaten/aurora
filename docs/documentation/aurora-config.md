@@ -1146,11 +1146,11 @@ To use PodDisruptionBudget `replicas` must be at least 2. If `replicas` is below
 PodDisruptionBudget resource will not be created but a warning will be displayed.
 It is not possible to configure minimum number of available pods to be equal to or above `replicas`.
 
-| Name                             | Default | Description                                                                                                                      |
-| -------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| podDisruptionBudget              |         | Simplified configuration can be used to enable/disable the feature                                                               |
-| podDisruptionBudget/enabled      |         | Can be used to enable/disable the feature                                                                                        |
-| podDisruptionBudget/minAvailable | 1       | Specify the minimum available healthy pods, the feature will count as enabled when this is specified and not explicitly disabled |
+| Name                             | Default | Description                                                                                                                                                                                                   |
+| -------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| podDisruptionBudget              |         | Simplified configuration can be used to enable/disable the feature                                                                                                                                            |
+| podDisruptionBudget/enabled      |         | Can be used to enable/disable the feature                                                                                                                                                                     |
+| podDisruptionBudget/minAvailable |         | Minimum available healthy pods required. PodDisruptionBudget will be enabled if this field is set. If this field is not set and the feature is enabled with one of the other fields then it will default to 1 |
 
 Minimal example - will create a PodDisruptionBudget with minimum 1 available healthy pod
 
