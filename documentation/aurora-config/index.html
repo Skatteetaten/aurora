@@ -2395,7 +2395,7 @@ It is not possible to configure minimum number of available pods to be equal to 
 
 
 
-<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td>podDisruptionBudget</td><td></td><td>Simplified configuration can be used to enable/disable the feature</td></tr><tr><td>podDisruptionBudget/enabled</td><td></td><td>Can be used to enable/disable the feature</td></tr><tr><td>podDisruptionBudget/minAvailable</td><td>1</td><td>Specify the minimum available healthy pods, the feature will count as enabled when this is specified and not explicitly disabled</td></tr></tbody></table>
+<table><thead><tr><th>Name</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td>podDisruptionBudget</td><td></td><td>Simplified configuration can be used to enable/disable the feature</td></tr><tr><td>podDisruptionBudget/enabled</td><td></td><td>Can be used to enable/disable the feature</td></tr><tr><td>podDisruptionBudget/minAvailable</td><td>1</td><td>Minimum available healthy pods required. The feature will be enabled if this field is explicitly set.</td></tr></tbody></table>
 <p>Minimal example - will create a PodDisruptionBudget with minimum 1 available healthy pod</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span>
 <span class="token key atrule">podDisruptionBudget</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre></div>
