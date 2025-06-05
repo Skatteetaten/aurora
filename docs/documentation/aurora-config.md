@@ -171,6 +171,35 @@ At least one of the groups in permissions/admin must have a user in it.
 | message             |          |                | message      | A message that will be added to the ApplicationDeployment CRD.                                                                                                                                                                                    |
 | globalFile          | No       | about.yaml     | globalFile   | Replaces the global file of the application. Note that the default file is the _global_ about file. This option can only be specified in either the _base_ file or _env_ file.                                                                    |
 
+### Custom variable substitutions
+
+The Aurora Config supports custom variable substitutions in the configuration files. These variables can be used to reduce the amount of duplicated configuration with slight differences.
+Custom variables can be declared using the `customSubstitutions` configuration option, this can be declared in any of the files and will follow normal inheritance rules.
+The declared variables can be used with `@variableName@` in any of configuration, but support is limited to configuration options of type string.
+
+Usage example:
+```yaml
+# declaring custom substitution variable - for example declared in an env file
+customSubstitutions:
+  myplaceholder: "variable-value"
+  exampleNamespace: "a-namespace"
+  exampleCluster: "a-cluster"
+```
+
+```yaml
+# using custom substitution variable - for example declared in a base file
+config:
+  MY_ENV_VAR: "@myplaceholder@"
+accesscontrol:
+  egress:
+    myexample:
+      application: "example-app"
+      namespace: "@exampleNamespace@"
+      cluster: "@exampleCluster@"
+      wantedRoles:
+        - SYSTEM_SERVINGAPP
+```
+
 ### Notifications
 
 Get notification messages when an application or environment/namespace has been deployed.
