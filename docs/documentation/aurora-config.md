@@ -177,6 +177,8 @@ The Aurora Config supports custom variable substitutions in the configuration fi
 Custom variables can be declared using the `customSubstitutions` configuration option, this can be declared in any of the files and will follow normal inheritance rules.
 The declared variables can be used with `@variableName@` in any of configuration, but support is limited to configuration options of type string.
 
+Custom variable names may only contain alphanumeric characters, underscores and dashes.
+
 Usage example:
 ```yaml
 # declaring custom substitution variable - for example declared in an env file
