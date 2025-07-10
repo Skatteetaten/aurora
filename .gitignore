@@ -9,3 +9,4 @@ yarn-error.log
 *.iml
 .idea
 *.tgz
+.DS_Store
