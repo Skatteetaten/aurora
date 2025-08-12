@@ -175,9 +175,20 @@ At least one of the groups in permissions/admin must have a user in it.
 
 The Aurora Config supports custom variable substitutions in the configuration files. These variables can be used to reduce the amount of duplicated configuration with slight differences.
 Custom variables can be declared using the `customSubstitutions` configuration option, this can be declared in any of the files and will follow normal inheritance rules.
-The declared variables can be used with `@variableName@` in any of configuration, but support is limited to configuration options of type string.
+The declared variables can be used with `@variableName@` in any of configuration.
+
+Variable substitution support is limited to configuration options of type string, it can not be used on boolean or integer values.
+
+If validation detects that a variable is not declared, it will return an error and prevent deploy.
 
 Custom variable names may only contain alphanumeric characters, underscores and dashes.
+The following reserved placeholders may not be declared:
+
+- `affiliation`
+- `cluster`
+- `env`
+- `name`
+- `segment`
 
 Usage example:
 ```yaml
