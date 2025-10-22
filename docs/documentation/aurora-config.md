@@ -736,7 +736,7 @@ alerts:
     expr: failed_connections > 5
     severity: WARNING
     summary: Many failed connections last 5 minutes
-    description: 
+    description: A detailed description of the alert
 ```
 
 ### Logging configuration
