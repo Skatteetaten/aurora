@@ -714,7 +714,7 @@ This is an overview of the configuration properties for configurable application
 | `alerts/<name>/mattermostchannelid` |         | yes      | string            | Mattermost channel ID for the channel the alert will be sent to               |
 | `alerts/<name>/delay`               | 1       | no       | int               | The number of minutes a condition should be true before firing an alert       |
 | `alerts/<name>/expr`                |         | yes      | string            | The prometheus expression used to determine if an alert should be fired       |
-| `alerts/<name>/severity`            |         | yes      | enum              | The severity of the alert must be WARNING or CRITICAL                         |
+| `alerts/<name>/severity`            |         | yes      | string            | The severity of the alert must be `warning` or `critical`                     |
 | `alerts/<name>/summary`             |         | no       |                   | Short summery of the event triggering the alert ex. application is down       |
 | `alerts/<name>description`          |         | no       |                   | Description of the event triggering the alert                                 |
 | `alerts/<name>/templatevalues`      |         | no       | map[string]string | Used for templating in `expr`. Expects key:value pairs                        |
@@ -734,7 +734,7 @@ alerts:
   failed-connections:
     delay: 5
     expr: failed_connections > 5
-    severity: WARNING
+    severity: warning
     summary: Many failed connections last 5 minutes
     description: A detailed description of the alert
 ```
