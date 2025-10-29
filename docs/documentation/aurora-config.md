@@ -697,31 +697,47 @@ For expanded syntax the following applies:
 | `s3/<objectArea>/bucketName` |         | Set the bucketName for that specific objectArea.          |
 | `s3/<objectArea>/objectArea` |         | Overrides the objectArea set in \<objectArea\>            |
 
-### Registration of alerts
+### Alerts
 
-Application specific alerts can be automatically registered by adding the following configuration.
+This is an overview of the configuration properties for configurable application alerts.
 
-| path                             | default                              | description                                                                              |
-| -------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------- |
-| `alerts/<alertName>/enabled`     | false                                | Enabled lets you enable the specified alert                                              |
-| `alerts/<alertName>/expr`        |                                      | Set the promql expression that should trigger an alert                                   |
-| `alerts/<alertName>/delay`       |                                      | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
-| `alerts/<alertName>/connections` |                                      | Array of connection rules between alert definition and recipients via specific channels  |
-| `alerts/<alertName>/severity`    |                                      | Severity of alert that is registered, values: critical, warning                          |
-| `alerts/<alertName>/summary`     | oppsummering av alarm er ikke angitt | Clear text summary of what the alert does                                                |
-| `alerts/<alertName>/description` | beskrivelse av alarm er ikke angitt  | Clear text description of the alert                                                      |
+| path                                 | default | type          | description                                                             |
+|--------------------------------------|---------|---------------|-------------------------------------------------------------------------|
+| `alertsDefaults/teamid`              |         | string (UUID) | The Team ID from Teamkatalogen                                          |
+| `alertsDefaults/mattermostchannelid` |         | string        | Mattermost channel ID for the channel the alert will be sent to         |
+| `alertsDefaults/delay`               | 1       | int           | The number of minutes a condition should be true before firing an alert |
 
-Some configuration values can be set with defaults, these values will be used unless an alert-configuration overrides
-it.
-`alertsDefaults` can be set in the _base_ file if they should be used for all instances of an application across all
-environments,
-or in the _env_ file if they should be used for all applications in that environment.
+| path                                | default | required | type              | description                                                                   |
+|-------------------------------------|---------|----------|-------------------|-------------------------------------------------------------------------------|
+| `alerts/<name>/enabled`             | true    | no       | boolean           | Set to false to disable a specific alert                                      |
+| `alerts/<name>/teamid`              |         | yes      | string (UUID)     | The Team ID from Teamkatalogen                                                |
+| `alerts/<name>/mattermostchannelid` |         | yes      | string            | Mattermost channel ID for the channel the alert will be sent to               |
+| `alerts/<name>/delay`               | 1       | no       | int               | The number of minutes a condition should be true before firing an alert       |
+| `alerts/<name>/expr`                |         | yes      | string            | The prometheus expression used to determine if an alert should be fired       |
+| `alerts/<name>/severity`            |         | yes      | string            | The severity of the alert must be `warning` or `critical`                     |
+| `alerts/<name>/summary`             |         | no       |                   | Short summery of the event triggering the alert ex. application is down       |
+| `alerts/<name>description`          |         | no       |                   | Description of the event triggering the alert                                 |
+| `alerts/<name>/templatevalues`      |         | no       | map[string]string | Used for templating in `expr`. Expects key:value pairs                        |
+| `alerts/<name>/labels`              |         | no       | map[string]string | Static labels that are added to the alert in Grafana. Expects key:value pairs |
 
-| path                         | default | desctiption                                                                              |
-| ---------------------------- | ------- | ---------------------------------------------------------------------------------------- |
-| `alertsDefaults/enabled`     | false   | Enabled lets you enable the specified alert                                              |
-| `alertsDefaults/connections` |         | Array of connection rules between alert definition and recipients via specific channels  |
-| `alertsDefaults/delay`       |         | Time in minutes until a condition should cause Prometheus to send alert to alert-manager |
+Simplified example, for more details see wiki page for alert configuration.
+```yaml
+# about.yaml
+alertsDefaults:
+  teamid: abcd-efgh
+  mattermostchannelid: somechannelid
+```
+
+```yaml
+# env/app.yaml
+alerts:
+  failed-connections:
+    delay: 5
+    expr: failed_connections > 5
+    severity: warning
+    summary: Many failed connections last 5 minutes
+    description: A detailed description of the alert
+```
 
 ### Logging configuration
 
@@ -1454,65 +1470,6 @@ parameters:
   FEED_NAME: feed
   DB_NAME: atomhopper
   DOMAIN_NAME: localhost
-```
-
-### Example configuration for alerts
-
-Single application _utv/sample-app.yaml_
-
-```yaml
-baseFile: "sample-app.yaml"
----
-alerts:
-  failed-connections:
-    enabled: true
-    delay: "2"
-    connections:
-      - "aurora"
-    expr: "failed_connections > 5"
-    severity: "critical"
-    summary: "Connections has failed over 5 times"
-    description: "Instance has had over 5 connection failures"
-  duplicate-entries:
-    enabled: true
-    delay: "5"
-    connections:
-      - "aurora"
-    expr: "duplicate_entries > 10"
-    severity: "warning"
-    summary: "Duplicate entries has been registered over 10 times"
-    Description: "Application has registered over 10 duplicates"
-```
-
-Default alert configuration with override
-_sample-app.yaml_
-
-```yaml
----
-alertsDefaults:
-  enabled: true
-  delay: "5"
-  connections:
-    - "aurora"
-```
-
-_utv/sample-app.yaml_
-
-```yaml
-baseFile: "sample-app.yaml"
----
-alerts:
-  failed-connections:
-    delay: "1"
-    expr: "failed_connections > 5"
-    severity: "critical"
-    summary: "Connections has failed over 5 times"
-    description: "Instance has had over 5 connection failures"
-  duplicate-entries:
-    expr: "duplicate_entries > 10"
-    severity: "warning"
-    summary: "Duplicate entries has been registered over 10 times"
-    Description: "Application has registered over 10 duplicates"
 ```
 
 ## Guidelines for developing templates
