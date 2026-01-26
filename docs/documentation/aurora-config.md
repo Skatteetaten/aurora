@@ -904,6 +904,19 @@ logging:
   index: ""
 ```
 
+#### Bypassing logging via cribl
+
+From Q1 2026 logging to splunk will be routed via cribl as default. Cribl enables filtering, formatting and 
+enriching logs to follow Norwegian Tax Administration standards for logging. 
+
+If you need to bypass cribl and send logs directly to splunk, you can configure logging destination. Note that logging
+will end up in splunk either way.
+
+
+| Name                | Default | Description                                                                |
+|---------------------|---------|----------------------------------------------------------------------------|
+| logging/destination | cribl   | Specify where logs are sent. Only the values `cribl` or `splunk` are valid |
+
 ### Topology
 
 Support for organizing
