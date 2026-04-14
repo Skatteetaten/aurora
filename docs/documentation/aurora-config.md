@@ -981,7 +981,7 @@ and application performance.
 | ----------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `vpa`                               |                   | Simplified configuration can be used to enabled/disable the feature. Type boolean.                                                    |
 | `vpa/enabled`                       |                   | Enable or disable vpa. Type boolean.                                                                                                  |
-| `vpa/updateMode`                    | Auto              | Supported values are ["Auto", "Off"]. Type String.                                                                                    |
+| `vpa/updateMode`                    | Recreate          | Supported values are ["Recreate", "InPlaceOrRecreate", "Initial", "Off"]. Type String.                                                |
 | `vpa/minimumAvailableReplicas`      | 2                 | The minimum number of available replicas needed before initiating scaling operations. Type Integer.                                   |
 | `vpa/resources/controlledResources` | ["cpu", "memory"] | Specify the resources to initiate scaling operations. Supported values are cpu and memory. Type list of Strings.                      |
 | `vpa/resources/minAllowed/cpu`      |                   | Set minimum allowed. Optional. Type Quantity https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.        |
